@@ -1,0 +1,8 @@
+declare module "@/layouts/side-menu"
+declare module "@/base-components"
+declare module "@/components/top-bar/Main"
+declare module "@/components/mobile-menu/Main"
+declare module "@/components/dark-mode-switcher/Main"
+declare module "@/layouts/top-menu"
+declare module "@/API/ApiUrls"
+declare module "@/Service/ApiService"

@@ -1,14 +1,38 @@
+import React, { useEffect, useState } from 'react';
+import { Link ,useNavigate } from 'react-router-dom';
+ 
 import DarkModeSwitcher from "@/components/dark-mode-switcher/Main";
 import dom from "@left4code/tw-starter/dist/js/dom";
 import logoUrl from "@/assets/images/logo.svg";
 import illustrationUrl from "@/assets/images/illustration.svg";
-import { useEffect } from "react";
-import { Link } from 'react-router-dom';
+import axios from 'axios';
 
-function Main() {
+ function Main() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
   useEffect(() => {
     dom("body").removeClass("main").removeClass("error-page").addClass("login");
   }, []);
+
+  const handleLogin = async () => {
+    try {
+      const response = await axios.post('http://localhost:6080/api/auth/login', {
+        email,
+        password
+      });
+
+       localStorage.setItem('token', response.data.token);
+
+      const themeid =  response.data.themeid ; 
+      console.log(themeid)
+      navigate('/dashbored', { state: { themeid } });
+    } catch (error) {
+      setError('Invalid username or password');
+      console.error('Login error:', error);
+    }
+  };
 
   return (
     <>
@@ -18,9 +42,9 @@ function Main() {
           <div className="block xl:grid grid-cols-2 gap-4">
             {/* BEGIN: Login Info */}
             <div className="hidden xl:flex flex-col min-h-screen">
-              <a href="" className="-intro-x flex items-center pt-5">
+              <a href="/" className="-intro-x flex items-center pt-5">
                 <img
-                  alt="Midone Tailwind HTML Admin Template"
+                  alt="Enigma"
                   className="w-6"
                   src={logoUrl}
                 />
@@ -28,7 +52,7 @@ function Main() {
               </a>
               <div className="my-auto">
                 <img
-                  alt="Midone Tailwind HTML Admin Template"
+                  alt="Illustration"
                   className="-intro-x w-1/2 -mt-16"
                   src={illustrationUrl}
                 />
@@ -57,13 +81,18 @@ function Main() {
                     type="text"
                     className="intro-x login__input form-control py-3 px-4 block"
                     placeholder="Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                   <input
                     type="password"
                     className="intro-x login__input form-control py-3 px-4 block mt-4"
                     placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
+                {error && <p className="text-red-500">{error}</p>}
                 <div className="intro-x flex text-slate-600 dark:text-slate-500 text-xs sm:text-sm mt-4">
                   <div className="flex items-center mr-auto">
                     <input
@@ -78,17 +107,16 @@ function Main() {
                       Remember me
                     </label>
                   </div>
-                  <a href="">Forgot Password?</a>
+                  <a href="/">Forgot Password?</a>
                 </div>
                 <div className="intro-x mt-5 xl:mt-8 text-center xl:text-left">
-                <Link to="/dashbored">
-                  <button className="btn btn-primary py-3 px-4 w-full xl:w-32 xl:mr-3 align-top">
+                  <button
+                    className="btn btn-primary py-3 px-4 w-full xl:w-32 xl:mr-3 align-top"
+                    onClick={handleLogin}
+                  >
                     Login
                   </button>
-                  </Link>
-
                 </div>
-
               </div>
             </div>
             {/* END: Login Form */}
