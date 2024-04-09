@@ -6,27 +6,25 @@ import classnames from "classnames";
 import TopBar from "@/components/top-bar/Main";
 import MobileMenu from "@/components/mobile-menu/Main";
 import DarkModeSwitcher from "@/components/dark-mode-switcher/Main";
-import Menu from './Menu';
-import apiService from '@/Service/ApiService';
-import ApiUrls from '@/API/ApiUrls';
+import Menu from "../../Entity/Menu";
+import apiService from "@/Service/ApiService";
+import ApiUrls from "@/API/ApiUrls";
 
 function Main() {
   const navigate = useNavigate();
   const location = useLocation();
   const menuId = location.state?.themeid;
 
-   const [formattedMenu, setFormattedMenu] = useState<Menu | null>(null)
+  const [formattedMenu, setFormattedMenu] = useState<Menu | null>(null);
 
   const fetchDataAndUpdateMenu = async () => {
     try {
-
-      const menuData = await apiService.get(ApiUrls.GETMENUBYID+menuId);
+      console.log(menuId)
+      const menuData = await apiService.get(ApiUrls.GETMENUBYID + menuId);
       setFormattedMenu(menuData);
-
     } catch (error) {
-      console.error('Error fetching menu data:', error);
+      console.error("Error fetching menu data:", error);
     }
-     
   };
 
   useEffect(() => {
@@ -35,19 +33,19 @@ function Main() {
     document.body.classList.add("main");
   }, []);
 
-   return (
+  return (
     <div className="py-5 md:py-0">
       <DarkModeSwitcher />
       <MobileMenu />
-      <TopBar className="top-bar-boxed--top-menu" />
-      {/* BEGIN: Top Menu */}
-      <nav className="top-nav">
-        <ul>
+      <TopBar  colorMenu={formattedMenu?.colorMenu}  className="top-bar-boxed" />
+ 
+      <nav className="top-nav" style={{paddingTop:'99px'}}>
+        <ul style={{backgroundColor:'#6C0345'}}>
           {formattedMenu?.menuLabels.map((menuLabels, menuKey) => (
-            <li key={menuKey}>
+            <li style={{ margin: '20px' }} key={menuKey}>:
               <a
-                 href={menuLabels.subMenus ? "#" : menuLabels.pathname}
-                 className={classnames({
+                href={menuLabels.subMenus ? "#" : menuLabels.pathname}
+                className={classnames({
                   "top-menu": true,
                   "top-menu--active": menuLabels.title,
                 })}
@@ -92,7 +90,6 @@ function Main() {
                           )}
                         </div>
                       </a>
-         
                     </li>
                   ))}
                 </ul>
@@ -102,13 +99,12 @@ function Main() {
           ))}
         </ul>
       </nav>
+     
       <div className="content content--top-nav">
         <Outlet />
       </div>
-
     </div>
   );
 }
 
 export default Main;
-

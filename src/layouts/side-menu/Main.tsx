@@ -2,82 +2,119 @@ import { Transition } from "react-transition-group";
 import { useState, useEffect } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { helper as $h } from "@/utils";
-import { sideMenu as useSideMenuStore } from "@/stores/side-menu";
 import { useRecoilValue } from "recoil";
-import { linkTo, nestedMenu, enter, leave } from "./index";
+import { linkTo, nestedMenu, enter, leave } from "@/layouts/side-menu";
 import { Lucide } from "@/base-components";
 import classnames from "classnames";
+import SideMenuTooltip from "@/components/side-menu-tooltip/Main";
 import TopBar from "@/components/top-bar/Main";
 import MobileMenu from "@/components/mobile-menu/Main";
-import MainColorSwitcher from "@/components/main-color-switcher/Main";
 import DarkModeSwitcher from "@/components/dark-mode-switcher/Main";
-import SideMenuTooltip from "@/components/side-menu-tooltip/Main";
+import Menu from "../../Entity/Menu";
+import apiService from "@/Service/ApiService";
+import ApiUrls from "@/API/ApiUrls";
+import React from "react";
+import MenuLabel from "../../Entity/MenuLabel";
 
 function Main() {
   const navigate = useNavigate();
   const location = useLocation();
-  const [formattedMenu, setFormattedMenu] = useState([]);
-  const sideMenuStore = useRecoilValue(useSideMenuStore);
-  const sideMenu = () => nestedMenu($h.toRaw(sideMenuStore.menu), location);
+  const menuId = localStorage.getItem('themid');
 
+  const [formattedMenu, setFormattedMenu] = useState<Menu | null>(null);
+ 
+  const fetchDataAndUpdateMenu = async () => {
+    try {
+      console.log(menuId)
+      const menuData = await apiService.get(ApiUrls.GETMENUBYID + menuId);
+      setFormattedMenu(menuData);
+    } catch (error) {
+      console.error("Error fetching menu data:", error);
+    }
+  };
+  
+ 
+
+  const Setrowtoyes = (menuu: MenuLabel) => {
+    
+ if(menuu.subMenus.length==0)
+ {console.log(menuu)
+navigate(menuu.pathname)
+ }
+else   if (formattedMenu) {
+  // Make a copy of the formattedMenu object
+  const updatedFormattedMenu: Menu = { ...formattedMenu };
+  // Find the index of the MenuLabel object to update
+  const menuLabelIndex = updatedFormattedMenu.menuLabels.findIndex(label => label.id === menuu.id);
+  if (menuLabelIndex !== -1) {
+    // Update the activeDropdown property with the new value
+    updatedFormattedMenu.menuLabels[menuLabelIndex].activeDropdown = !updatedFormattedMenu.menuLabels[menuLabelIndex].activeDropdown;
+    // Set the state with the updated object
+    setFormattedMenu(updatedFormattedMenu);
+  }
+}
+ 
+};
+  
   useEffect(() => {
-    dom("body").removeClass("error-page").removeClass("login").addClass("main");
-    setFormattedMenu(sideMenu());
-  }, [sideMenuStore, location.pathname]);
+    fetchDataAndUpdateMenu();
+    document.body.classList.remove("error-page", "login");
+    document.body.classList.add("main");
+  }, []);
 
   return (
     <div className="py-5 md:py-0">
       <DarkModeSwitcher />
-      <MainColorSwitcher />
-      <MobileMenu />
+       <MobileMenu />
       <TopBar />
       <div className="flex overflow-hidden">
         {/* BEGIN: Side Menu */}
         <nav className="side-nav">
+ 
           <ul>
             {/* BEGIN: First Child */}
-            {formattedMenu.map((menu, menuKey) =>
-              menu == "devider" ? (
+            {formattedMenu?.menuLabels.map((menu, menuKey) =>
+              menu.title == "devider" ? (
                 <li
                   className="side-nav__devider my-6"
-                  key={menu + menuKey}
+                  key={menu.id+ menuKey}
                 ></li>
               ) : (
-                <li key={menu + menuKey}>
+                <li key={menuKey}>
                   <SideMenuTooltip
                     tag="a"
                     content={menu.title}
-                    href={menu.subMenu ? "#" : menu.pathname}
+                    href={menu.subMenus ? "#" : menu.pathname}
                     className={classnames({
                       "side-menu": true,
                       "side-menu--active": menu.active,
                       "side-menu--open": menu.activeDropdown,
                     })}
-                    onClick={(event) => {
-                      event.preventDefault();
-                      linkTo(menu, navigate);
+                    onClick={(event:any) => {
+                      event.preventDefault();     
                       setFormattedMenu($h.toRaw(formattedMenu));
                     }}
                   >
                     <div className="side-menu__icon">
                       <Lucide icon={menu.icon} />
                     </div>
-                    <div className="side-menu__title">
+                    <div className="side-menu__title"  onClick={ () => Setrowtoyes(menu)}>
                       {menu.title}
-                      {menu.subMenu && (
+                     
+                      {menu.subMenus && (
                         <div
                           className={classnames({
                             "side-menu__sub-icon": true,
                             "transform rotate-180": menu.activeDropdown,
                           })}
                         >
-                          <Lucide icon="ChevronDown" />
+                          <Lucide icon="ChevronDown"  />
                         </div>
                       )}
                     </div>
                   </SideMenuTooltip>
                   {/* BEGIN: Second Child */}
-                  {menu.subMenu && (
+                  {menu.subMenus && (
                     <Transition
                       in={menu.activeDropdown}
                       onEnter={enter}
@@ -89,17 +126,17 @@ function Main() {
                           "side-menu__sub-open": menu.activeDropdown,
                         })}
                       >
-                        {menu.subMenu.map((subMenu, subMenuKey) => (
+                        {menu.subMenus.map((subMenu, subMenuKey) => (
                           <li key={subMenuKey}>
                             <SideMenuTooltip
                               tag="a"
                               content={subMenu.title}
-                              href={subMenu.subMenu ? "#" : subMenu.pathname}
+                              href={subMenu.pathname ? "#" : subMenu.pathname}
                               className={classnames({
                                 "side-menu": true,
-                                "side-menu--active": subMenu.active,
+                                "side-menu--active": menu.active,
                               })}
-                              onClick={(event) => {
+                              onClick={(event:any) => {
                                 event.preventDefault();
                                 linkTo(subMenu, navigate);
                                 setFormattedMenu($h.toRaw(formattedMenu));
@@ -110,7 +147,7 @@ function Main() {
                               </div>
                               <div className="side-menu__title">
                                 {subMenu.title}
-                                {subMenu.subMenu && (
+                                {subMenu && (
                                   <div
                                     className={classnames({
                                       "side-menu__sub-icon": true,
@@ -118,60 +155,12 @@ function Main() {
                                         subMenu.activeDropdown,
                                     })}
                                   >
-                                    <Lucide icon="ChevronDown" />
+                                     <Lucide icon={menu.icon} />
                                   </div>
                                 )}
                               </div>
                             </SideMenuTooltip>
-                            {/* BEGIN: Third Child */}
-                            {subMenu.subMenu && (
-                              <Transition
-                                in={subMenu.activeDropdown}
-                                onEnter={enter}
-                                onExit={leave}
-                                timeout={300}
-                              >
-                                <ul
-                                  className={classnames({
-                                    "side-menu__sub-open":
-                                      subMenu.activeDropdown,
-                                  })}
-                                >
-                                  {subMenu.subMenu.map(
-                                    (lastSubMenu, lastSubMenuKey) => (
-                                      <li key={lastSubMenuKey}>
-                                        <SideMenuTooltip
-                                          tag="a"
-                                          content={lastSubMenu.title}
-                                          href={
-                                            lastSubMenu.subMenu
-                                              ? "#"
-                                              : lastSubMenu.pathname
-                                          }
-                                          className={classnames({
-                                            "side-menu": true,
-                                            "side-menu--active":
-                                              lastSubMenu.active,
-                                          })}
-                                          onClick={(event) => {
-                                            event.preventDefault();
-                                            linkTo(lastSubMenu, navigate);
-                                          }}
-                                        >
-                                          <div className="side-menu__icon">
-                                            <Lucide icon="Zap" />
-                                          </div>
-                                          <div className="side-menu__title">
-                                            {lastSubMenu.title}
-                                          </div>
-                                        </SideMenuTooltip>
-                                      </li>
-                                    )
-                                  )}
-                                </ul>
-                              </Transition>
-                            )}
-                            {/* END: Third Child */}
+                          
                           </li>
                         ))}
                       </ul>

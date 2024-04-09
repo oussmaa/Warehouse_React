@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 function Lucide(props) {
   try {
     const { icon, className, ...computedProps } = props;
-    if (lucideIcons[props.icon] !== undefined) {
+     if (lucideIcons[props.icon] !== undefined) {
       return createElement(lucideIcons[props.icon], {
         ...computedProps,
         className: `lucide ${props.className}`,

@@ -22,12 +22,13 @@ import axios from 'axios';
         email,
         password
       });
-
-       localStorage.setItem('token', response.data.token);
-
       const themeid =  response.data.themeid ; 
-      console.log(themeid)
-      navigate('/dashbored', { state: { themeid } });
+       localStorage.setItem('token', response.data.token);
+       localStorage.setItem('themid', themeid);
+
+      
+      
+      navigate('/dashboard');
     } catch (error) {
       setError('Invalid username or password');
       console.error('Login error:', error);
@@ -81,7 +82,7 @@ import axios from 'axios';
                     type="text"
                     className="intro-x login__input form-control py-3 px-4 block"
                     placeholder="Email"
-                    value={email}
+                    value={email} 
                     onChange={(e) => setEmail(e.target.value)}
                   />
                   <input

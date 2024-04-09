@@ -1,33 +1,49 @@
 import { useRoutes } from "react-router-dom";
 import TopMenu from "../layouts/top-menu/Main";
- 
-import Page1 from "../views/page-1/Main";
-import Page2 from "../views/page-2/Main";
+import AddMenu from "../views/AddMenu/Main";
+import ListMenu from "@/views/ListMenu/Main";
+import ListMenuLabel from "@/views/ListMenuLabels/Main";
+import ListSubMenu from "@/views/ListSubMenu/Main";
+import SideMenu from "../layouts/side-menu/Main";
+import AddMenuLabel from "@/views/AddMenuLabel/Main";
 import Login from "../views/login/Main";
-
+import AddSubMenu from "@/views/AddSubMenu/Main";
 function Router() {
   const routes = [
     {
       path: "/",
-      element: <Login />
-
+      element: <Login />,
     },
     {
-      path: "/dashbored",
-      element: <TopMenu />,
+      path: "/dashboard",
+      element: <SideMenu />,
       children: [
         {
-          path: "page-1",
-          element: <Page1 />,
+          path: "addmenu",
+          element: <AddMenu />,
         },
         {
-          path: "page-2",
-          element: <Page2 />,
+          path: "addsubmenu",
+          element: <AddSubMenu />,
+        },
+        {
+          path: "listmenu",
+          element: <ListMenu />,
+        },
+        {
+          path: "listmenulabels",
+          element: <ListMenuLabel />,
+        },
+        {
+          path: "addmenulabels",
+          element: <AddMenuLabel />,
+        },
+        {
+          path: "listsubmenu",
+          element: <ListSubMenu />,
         },
       ],
     },
-      
-    
   ];
 
   return useRoutes(routes);

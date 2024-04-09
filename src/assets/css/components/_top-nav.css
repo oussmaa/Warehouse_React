@@ -2,12 +2,15 @@
     animation: 0.4s intro-top-menu-animation ease-in-out 0.33333s;
     animation-fill-mode: forwards;
     animation-delay: 0.2s;
+    
     @apply z-50 relative opacity-0 pt-32 -mt-4;
     @include media-breakpoint-down(md) {
         @apply hidden;
     }
     > ul {
+        
         @for $i from 1 through 50 {
+            
             > li:nth-child($i) {
                 & > a {
                     &:not(.top-menu--active) {
@@ -33,7 +36,7 @@
         padding: 0px 50px;
         @apply flex flex-wrap;
         @include media-breakpoint-down(xl) {
-            @apply px-6;
+            @apply px-7;
         }
         > li > .top-menu {
             @apply mt-[3px];

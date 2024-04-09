@@ -15,50 +15,81 @@ import { faker as $f } from "@/utils";
 import * as $_ from "lodash";
 import classnames from "classnames";
 import PropTypes from "prop-types";
+ import apiService from "@/Service/ApiService";
+import ApiUrls from "@/API/ApiUrls";
 
 function Main(props) {
   const [searchDropdown, setSearchDropdown] = useState(false);
+ 
+ 
+
   const showSearchDropdown = () => {
     setSearchDropdown(true);
   };
   const hideSearchDropdown = () => {
     setSearchDropdown(false);
   };
-
+ 
   return (
+
     <>
+              <style>
+        {`
+        .before {
+          content: "";
+          position: absolute;
+          height: 65px;
+          inset: 0;
+           
+          margin: 0 7px;
+          margin-top: 13px;
+          border-radius: 20px;
+          display: none;
+          background-color:#6C0345;
+        }
+
+ 
+
+        @media (min-width: 768px) {
+          .before {
+            display: block;
+          }
+
+     
+
+          .dark .before {
+            background-color: rgba(0, 555550, 66660, 0.3);
+          }
+
+       
+        
+        `}
+      </style>
       {/* BEGIN: Top Bar */}
       <div
-        className={`${props.className} top-bar-boxed h-[70px] md:h-[65px] z-[51] border-b border-white/[0.08] mt-12 md:mt-0 -mx-3 sm:-mx-8 md:-mx-0 px-3 md:border-b-0 relative md:fixed md:inset-x-0 md:top-0 sm:px-8 md:px-10 md:pt-10 md:bg-gradient-to-b md:from-slate-100 md:to-transparent dark:md:from-darkmode-700`}
+        className={`${props.className} before top-bar-boxed h-[70px] md:h-[65px] z-[51] border-b border-white/[0.08] mt-12 md:mt-0 -mx-3 sm:-mx-8 md:-mx-0 px-3 md:border-b-0 relative md:fixed md:inset-x-0 md:top-0 sm:px-8 md:px-10 md:pt-10 md:bg-gradient-to-b md:from-slate-100 md:to-transparent dark:md:from-darkmode-700`}
       >
         <div className="h-full flex items-center">
           {/* BEGIN: Logo */}
           <Link
-            to="/"
-            className="logo -intro-x hidden md:flex xl:w-[180px] block"
-          >
-            <img
-              alt="Enigma Tailwind HTML Admin Template"
-              className="logo__image w-6"
-              src={logoUrl}
-            />
-            <span className="logo__text text-white text-lg ml-3"> Enigma </span>
-          </Link>
-          {/* END: Logo */}
-          {/* BEGIN: Breadcrumb */}
+
+
+to="/"
+className="logo -intro-x hidden mb-8 md:flex xl:w-[180px] block"
+>
+<img
+  alt="Enigma Tailwind HTML Admin Template"
+  className="logo__image w-6"
+  src= "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/NewTux.svg/640px-NewTux.svg.png"
+/>
+<span className="logo__text text-white text-lg ml-3"> Warehouse System </span>
+</Link>
+ 
           <nav aria-label="breadcrumb" className="-intro-x h-[45px] mr-auto">
-            <ol className="breadcrumb breadcrumb-light">
-              <li className="breadcrumb-item">
-                <a href="#">Application</a>
-              </li>
-              <li className="breadcrumb-item active" aria-current="page">
-                Dashboard
-              </li>
-            </ol>
+ 
           </nav>
-          {/* END: Breadcrumb */}
-          {/* BEGIN: Search */}
-          <div className="intro-x relative mr-3 sm:mr-6">
+       
+          <div className="intro-x relative mb-8 mr-3 sm:mr-6">
             <div className="search hidden sm:block">
               <input
                 type="text"
@@ -149,7 +180,7 @@ function Main(props) {
           </div>
           {/* END: Search */}
           {/* BEGIN: Notifications */}
-          <Dropdown className="intro-x mr-4 sm:mr-6">
+          <Dropdown className="intro-x mr-4 mb-8 sm:mr-6">
             <DropdownToggle
               tag="div"
               role="button"
@@ -199,7 +230,7 @@ function Main(props) {
           </Dropdown>
           {/* END: Notifications */}
           {/* BEGIN: Account Menu */}
-          <Dropdown className="intro-x w-8 h-8">
+          <Dropdown className="intro-x w-8 h-8 mb-8">
             <DropdownToggle
               tag="div"
               role="button"
