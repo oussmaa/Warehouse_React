@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import AddMenuLabels from "@/views/ListMenuLabels/Main";
 import SubMenu from "@/views/SubMenu/Main";
 import apiService from "@/Service/ApiService";
-import ApiUrls from "@/API/ApiUrls";
+import ApiUrls from "@/API/apiUrls"
 import { useNavigate } from "react-router-dom";
 import Menu from "../../Entity/Menu";
 import { Lucide, Modal, ModalBody } from "@/base-components";

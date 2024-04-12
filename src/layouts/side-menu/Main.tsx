@@ -12,7 +12,7 @@ import MobileMenu from "@/components/mobile-menu/Main";
 import DarkModeSwitcher from "@/components/dark-mode-switcher/Main";
 import Menu from "../../Entity/Menu";
 import apiService from "@/Service/ApiService";
-import ApiUrls from "@/API/ApiUrls";
+import ApiUrls from "@/API/apiUrls"
 import React from "react";
 import MenuLabel from "../../Entity/MenuLabel";
 
@@ -90,10 +90,7 @@ else   if (formattedMenu) {
                       "side-menu--active": menu.active,
                       "side-menu--open": menu.activeDropdown,
                     })}
-                    onClick={(event:any) => {
-                      event.preventDefault();     
-                      setFormattedMenu($h.toRaw(formattedMenu));
-                    }}
+               
                   >
                     <div className="side-menu__icon">
                       <Lucide icon={menu.icon} />

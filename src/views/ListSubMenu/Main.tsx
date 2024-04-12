@@ -8,7 +8,7 @@ import {
   import { useEffect, useState } from "react";
   import React from "react";
   import apiService from '@/Service/ApiService';
-  import ApiUrls from '@/API/ApiUrls';
+  import ApiUrls from "@/API/apiUrls"
 import SubMenu from "../../Entity/SubMenu";
     
   

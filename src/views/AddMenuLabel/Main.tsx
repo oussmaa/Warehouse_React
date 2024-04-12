@@ -2,12 +2,11 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import * as lucideIcons from "lucide-react";
 import { Lucide, Modal, ModalBody } from "@/base-components";
-
 import staticData from "@/stores/staticData";
 import MenuLabel from "../../Entity/MenuLabel";
 import { useLocation, useNavigate } from "react-router-dom";
 import apiService from "@/Service/ApiService";
-import ApiUrls from "@/API/ApiUrls";
+import ApiUrls from "@/API/apiUrls"
 function Main() {
    const [iconNames, setIconNames] = useState<any[]>(["Search"]); // Added type annotation
   const [ValueIcon, setIconMenu] = useState("Disc");

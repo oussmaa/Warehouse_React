@@ -8,7 +8,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import React from "react";
 import apiService from '@/Service/ApiService';
-import ApiUrls from '@/API/ApiUrls';
+import ApiUrls from "@/API/apiUrls"
 import MenuLabel from "../../Entity/MenuLabel";
  
 

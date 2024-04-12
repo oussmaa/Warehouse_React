@@ -7,7 +7,7 @@ import staticData from "@/stores/staticData";
 import MenuLabel from "../../Entity/MenuLabel";
 import { useLocation, useNavigate } from "react-router-dom";
 import apiService from "@/Service/ApiService";
-import ApiUrls from "@/API/ApiUrls";
+import ApiUrls from "@/API/apiUrls"
 import SubMenu from "../../Entity/SubMenu";
 function Main() {
    const [iconNames, setIconNames] = useState<any[]>(["Search"]); // Added type annotation

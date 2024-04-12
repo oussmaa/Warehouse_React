@@ -6,7 +6,7 @@ import * as $_ from "lodash";
 import { useEffect, useState } from "react";
 import React from "react";
 import apiService from "@/Service/ApiService";
-import ApiUrls from "@/API/ApiUrls";
+import ApiUrls from "@/API/apiUrls";
 import Menu from "../../Entity/Menu";
  
 function Main() {
