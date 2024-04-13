@@ -6,8 +6,8 @@ interface ApiUrls {
   readonly POSTMENULABEL: string;
   readonly POSTMENU: string;
   readonly POSTSUBMENU: string;
-
-  
+  readonly GETIMAGEUSER: string;
+  readonly GETUSERWITHTOKEN: string;
 }
 
 const ApiUrls: ApiUrls = {
@@ -18,7 +18,8 @@ const ApiUrls: ApiUrls = {
   POSTMENU: "http://localhost:6060/MenuRequest/addmenu",
   POSTMENULABEL: "http://localhost:6060/MenuLabelRequest/addlabelsandMenu/",
   POSTSUBMENU: "http://localhost:6060/SubMenuRequest/addsunMenul/",
-
+  GETUSERWITHTOKEN: "http://localhost:6080/api/auth/GetUser",
+  GETIMAGEUSER: "http://localhost:6080/images/",
 };
 
 export default ApiUrls;

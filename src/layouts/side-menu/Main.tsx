@@ -18,14 +18,13 @@ import MenuLabel from "../../Entity/MenuLabel";
 
 function Main() {
   const navigate = useNavigate();
-  const location = useLocation();
   const menuId = localStorage.getItem('themid');
 
   const [formattedMenu, setFormattedMenu] = useState<Menu | null>(null);
  
   const fetchDataAndUpdateMenu = async () => {
     try {
-      console.log(menuId)
+ 
       const menuData = await apiService.get(ApiUrls.GETMENUBYID + menuId);
       setFormattedMenu(menuData);
     } catch (error) {
@@ -38,7 +37,7 @@ function Main() {
   const Setrowtoyes = (menuu: MenuLabel) => {
     
  if(menuu.subMenus.length==0)
- {console.log(menuu)
+ {
 navigate(menuu.pathname)
  }
 else   if (formattedMenu) {
@@ -66,7 +65,7 @@ else   if (formattedMenu) {
     <div className="py-5 md:py-0">
       <DarkModeSwitcher />
        <MobileMenu />
-      <TopBar />
+      <TopBar color={formattedMenu?.colorMenu} />
       <div className="flex overflow-hidden">
         {/* BEGIN: Side Menu */}
         <nav className="side-nav">

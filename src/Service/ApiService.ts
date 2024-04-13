@@ -3,7 +3,8 @@
 import Menu from "../Entity/Menu";
 import MenuLabel from "../Entity/MenuLabel";
 import SubMenu from "../Entity/SubMenu";
-import axios from 'axios';
+import axios from "axios";
+import User from "../Entity/Users";
 
 class ApiService {
   // Function to make a GET request
@@ -46,18 +47,39 @@ class ApiService {
       throw error;
     }
   }
-
+  async GetImageUser(endpoint: string): Promise<any> {
+    try {
+      const response = await axios.get<any>(endpoint);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      throw error;
+    }
+  }
+  async getUser(endpoint: string,body:any): Promise<User> {
+    try {
+      const response = await axios.post<User>(endpoint, body, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      throw error;
+    }
+  }
   // Function to make a POST request
   async AddMenu(endpoint: string, data: Menu): Promise<Menu> {
     try {
       const response = await axios.post<Menu>(endpoint, data, {
         headers: {
-          'Content-Type': 'application/json'
-        }
+          "Content-Type": "application/json",
+        },
       });
       return response.data;
     } catch (error) {
-      console.error('Error posting data:', error);
+      console.error("Error posting data:", error);
       throw error;
     }
   }
@@ -65,12 +87,12 @@ class ApiService {
     try {
       const response = await axios.post<MenuLabel>(endpoint, data, {
         headers: {
-          'Content-Type': 'application/json'
-        }
+          "Content-Type": "application/json",
+        },
       });
       return response.data;
     } catch (error) {
-      console.error('Error posting data:', error);
+      console.error("Error posting data:", error);
       throw error;
     }
   }
@@ -79,12 +101,12 @@ class ApiService {
     try {
       const response = await axios.post<SubMenu>(endpoint, data, {
         headers: {
-          'Content-Type': 'application/json'
-        }
+          "Content-Type": "application/json",
+        },
       });
       return response.data;
     } catch (error) {
-      console.error('Error posting data:', error);
+      console.error("Error posting data:", error);
       throw error;
     }
   }

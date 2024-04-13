@@ -7,6 +7,8 @@ import SideMenu from "../layouts/side-menu/Main";
 import AddMenuLabel from "@/views/AddMenuLabel/Main";
 import Login from "../views/login/Main";
 import AddSubMenu from "@/views/AddSubMenu/Main";
+import Profile from "@/views/Profile/Main"
+
 function Router() {
   const routes = [
     {
@@ -40,6 +42,10 @@ function Router() {
         {
           path: "listsubmenu",
           element: <ListSubMenu />,
+        },
+        {
+          path: "profile",
+          element: <Profile />,
         },
       ],
     },

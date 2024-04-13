@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Lucide,
   Dropdown,
@@ -10,30 +10,48 @@ import {
   DropdownHeader,
   DropdownDivider,
 } from "@/base-components";
-import logoUrl from "@/assets/images/logo.svg";
-import { faker as $f } from "@/utils";
+ import { faker as $f } from "@/utils";
 import * as $_ from "lodash";
 import classnames from "classnames";
-import PropTypes from "prop-types";
- import apiService from "@/Service/ApiService";
+import PropTypes, { any } from "prop-types";
+import apiService from "@/Service/ApiService";
+import ApiUrls from "@/API/apiUrls";
+import Users from "../../Entity/Users";
+import React from "react";
  
-
-function Main(props) {
+function Main(props:any) {
+  const [UserState, setUserSate] = useState < Users |null>(null);
+  const navigate = useNavigate();
   const [searchDropdown, setSearchDropdown] = useState(false);
- 
- 
-
+const navigateprofile = () =>{
+navigate("/dashboard/profile")
+}
   const showSearchDropdown = () => {
     setSearchDropdown(true);
   };
   const hideSearchDropdown = () => {
     setSearchDropdown(false);
   };
- 
-  return (
 
+  const GetUserWithToken = async () => {
+    try {
+      let token = localStorage.getItem('token');
+      const userdata = await apiService.getUser(ApiUrls.GETUSERWITHTOKEN,{'token':token});
+      setUserSate(userdata);
+    } catch (error) {
+      console.error("Error fetching menu data:", error);
+    }
+  };
+  
+ 
+  
+  useEffect(() => {
+    GetUserWithToken();
+   }, []);
+
+  return (
     <>
-              <style>
+      <style>
         {`
         .before {
           content: "";
@@ -45,7 +63,7 @@ function Main(props) {
           margin-top: 13px;
           border-radius: 20px;
           display: none;
-          background-color:#6C0345;
+          background-color:${props.color};
         }
 
  
@@ -72,23 +90,25 @@ function Main(props) {
         <div className="h-full flex items-center">
           {/* BEGIN: Logo */}
           <Link
+            to="/"
+            className="logo -intro-x hidden mb-8 md:flex xl:w-[180px] block"
+          >
+            <img
+              alt="Enigma Tailwind HTML Admin Template"
+              className="logo__image w-6"
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/NewTux.svg/640px-NewTux.svg.png"
+            />
+            <span className="logo__text text-white text-lg ml-3">
+              {" "}
+              Warehouse System{" "}
+            </span>
+          </Link>
 
+          <nav
+            aria-label="breadcrumb"
+            className="-intro-x h-[45px] mr-auto"
+          ></nav>
 
-to="/"
-className="logo -intro-x hidden mb-8 md:flex xl:w-[180px] block"
->
-<img
-  alt="Enigma Tailwind HTML Admin Template"
-  className="logo__image w-6"
-  src= "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/NewTux.svg/640px-NewTux.svg.png"
-/>
-<span className="logo__text text-white text-lg ml-3"> Warehouse System </span>
-</Link>
- 
-          <nav aria-label="breadcrumb" className="-intro-x h-[45px] mr-auto">
- 
-          </nav>
-       
           <div className="intro-x relative mb-8 mr-3 sm:mr-6">
             <div className="search hidden sm:block">
               <input
@@ -114,69 +134,7 @@ className="logo -intro-x hidden mb-8 md:flex xl:w-[180px] block"
                 "search-result": true,
                 show: searchDropdown,
               })}
-            >
-              <div className="search-result__content">
-                <div className="search-result__content__title">Pages</div>
-                <div className="mb-5">
-                  <a href="" className="flex items-center">
-                    <div className="w-8 h-8 bg-success/20 dark:bg-success/10 text-success flex items-center justify-center rounded-full">
-                      <Lucide icon="Inbox" className="w-4 h-4" />
-                    </div>
-                    <div className="ml-3">Mail Settings</div>
-                  </a>
-                  <a href="" className="flex items-center mt-2">
-                    <div className="w-8 h-8 bg-pending/10 text-pending flex items-center justify-center rounded-full">
-                      <Lucide icon="Users" className="w-4 h-4" />
-                    </div>
-                    <div className="ml-3">Users & Permissions</div>
-                  </a>
-                  <a href="" className="flex items-center mt-2">
-                    <div className="w-8 h-8 bg-primary/10 dark:bg-primary/20 text-primary/80 flex items-center justify-center rounded-full">
-                      <Lucide icon="CreditCard" className="w-4 h-4" />
-                    </div>
-                    <div className="ml-3">Transactions Report</div>
-                  </a>
-                </div>
-                <div className="search-result__content__title">Users</div>
-                <div className="mb-5">
-                  {$_.take($f(), 4).map((faker, fakerKey) => (
-                    <a
-                      key={fakerKey}
-                      href=""
-                      className="flex items-center mt-2"
-                    >
-                      <div className="w-8 h-8 image-fit">
-                        <img
-                          alt="Midone Tailwind HTML Admin Template"
-                          className="rounded-full"
-                          src={faker.photos[0]}
-                        />
-                      </div>
-                      <div className="ml-3">{faker.users[0].name}</div>
-                      <div className="ml-auto w-48 truncate text-slate-500 text-xs text-right">
-                        {faker.users[0].email}
-                      </div>
-                    </a>
-                  ))}
-                </div>
-                <div className="search-result__content__title">Products</div>
-                {$_.take($f(), 4).map((faker, fakerKey) => (
-                  <a key={fakerKey} href="" className="flex items-center mt-2">
-                    <div className="w-8 h-8 image-fit">
-                      <img
-                        alt="Midone Tailwind HTML Admin Template"
-                        className="rounded-full"
-                        src={faker.images[0]}
-                      />
-                    </div>
-                    <div className="ml-3">{faker.products[0].name}</div>
-                    <div className="ml-auto w-48 truncate text-slate-500 text-xs text-right">
-                      {faker.products[0].category}
-                    </div>
-                  </a>
-                ))}
-              </div>
-            </div>
+            ></div>
           </div>
           {/* END: Search */}
           {/* BEGIN: Notifications */}
@@ -206,21 +164,21 @@ className="logo -intro-x hidden mb-8 md:flex xl:w-[180px] block"
                       <img
                         alt="Midone Tailwind HTML Admin Template"
                         className="rounded-full"
-                        src={faker.photos[0]}
+                        src=""
                       />
                       <div className="w-3 h-3 bg-success absolute right-0 bottom-0 rounded-full border-2 border-white dark:border-darkmode-600"></div>
                     </div>
                     <div className="ml-2 overflow-hidden">
                       <div className="flex items-center">
                         <a href="" className="font-medium truncate mr-5">
-                          {faker.users[0].name}
+                          " "
                         </a>
                         <div className="text-xs text-slate-400 ml-auto whitespace-nowrap">
-                          {faker.times[0]}
+                           ""
                         </div>
                       </div>
                       <div className="w-full truncate text-slate-500 mt-0.5">
-                        {faker.news[0].shortContent}
+                        ""
                       </div>
                     </div>
                   </div>
@@ -236,32 +194,26 @@ className="logo -intro-x hidden mb-8 md:flex xl:w-[180px] block"
               role="button"
               className="w-8 h-8 rounded-full overflow-hidden shadow-lg image-fit zoom-in"
             >
-              <img
+                <img 
                 alt="Midone Tailwind HTML Admin Template"
-                src={$f()[9].photos[0]}
+                src={`http://localhost:6080/images/${UserState?.images}`}  
+                              className="logo__image w-6"
               />
             </DropdownToggle>
             <DropdownMenu className="w-56">
               <DropdownContent className="bg-primary/80 before:block before:absolute before:bg-black before:inset-0 before:rounded-md before:z-[-1] text-white">
                 <DropdownHeader tag="div" className="!font-normal">
-                  <div className="font-medium">{$f()[0].users[0].name}</div>
-                  <div className="text-xs text-white/70 mt-0.5 dark:text-slate-500">
-                    {$f()[0].jobs[0]}
-                  </div>
+                  <div className="font-medium">{UserState?.username}</div>
                 </DropdownHeader>
                 <DropdownDivider className="border-white/[0.08]" />
-                <DropdownItem className="hover:bg-white/5">
-                  <Lucide icon="User" className="w-4 h-4 mr-2" /> Profile
+                <DropdownItem onClick={navigateprofile} className="hover:bg-white/5">
+                  <Lucide icon="User" className="w-4 h-4 mr-2"  /> Profile
                 </DropdownItem>
-                <DropdownItem className="hover:bg-white/5">
-                  <Lucide icon="Edit" className="w-4 h-4 mr-2" /> Add Account
-                </DropdownItem>
+
                 <DropdownItem className="hover:bg-white/5">
                   <Lucide icon="Lock" className="w-4 h-4 mr-2" /> Reset Password
                 </DropdownItem>
-                <DropdownItem className="hover:bg-white/5">
-                  <Lucide icon="HelpCircle" className="w-4 h-4 mr-2" /> Help
-                </DropdownItem>
+
                 <DropdownDivider className="border-white/[0.08]" />
                 <DropdownItem className="hover:bg-white/5">
                   <Lucide icon="ToggleRight" className="w-4 h-4 mr-2" /> Logout
