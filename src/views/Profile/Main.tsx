@@ -11,11 +11,34 @@ import {
   TabPanels,
   TabPanel,
 } from "@/base-components";
- 
+import apiService from "@/Service/ApiService";
+import ApiUrls from "@/API/apiUrls";
+import Users from "../../Entity/Users";
 import { faker as $f } from "@/utils";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Main() {
+
+  const [UserState, setUserSate] = useState < Users |null>(null);
+  const navigate = useNavigate();
+
+  const GetUserWithToken = async () => {
+    try {
+      let token = localStorage.getItem('token');
+      const userdata = await apiService.getUser(ApiUrls.GETUSERWITHTOKEN,{'token':token});
+      setUserSate(userdata);
+    } catch (error) {
+      console.error("Error fetching menu data:", error);
+    }
+  };
+  
+ 
+  
+  useEffect(() => {
+    GetUserWithToken();
+   }, []);
+   
   return (
     <>
       <div className="intro-y flex items-center mt-8">
@@ -30,7 +53,8 @@ function Main() {
                 <img
                   alt="Midone Tailwind HTML Admin Template"
                   className="rounded-full"
-                  src={$f()[0].photos[0]}
+                  style={{width:'400px'}}
+                  src={`http://localhost:6080/images/${UserState?.images}`} 
                 />
                 <div className="absolute mb-1 mr-1 flex items-center justify-center bottom-0 right-0 bg-primary rounded-full p-2">
                   <Lucide icon="Camera" className="w-4 h-4 text-white" />
@@ -38,9 +62,9 @@ function Main() {
               </div>
               <div className="ml-5">
                 <div className="w-24 sm:w-40 truncate sm:whitespace-normal font-medium text-lg">
-                  {$f()[0].users[0].name}
+                  {UserState?.name}
                 </div>
-                <div className="text-slate-500">{$f()[0].jobs[0]}</div>
+                <div className="text-slate-500"> {UserState?.username}</div>
               </div>
             </div>
             <div className="mt-6 lg:mt-0 flex-1 px-5 border-l border-r border-slate-200/60 dark:border-darkmode-400 border-t lg:border-t-0 pt-5 lg:pt-0">
@@ -50,42 +74,18 @@ function Main() {
               <div className="flex flex-col justify-center items-center lg:items-start mt-4">
                 <div className="truncate sm:whitespace-normal flex items-center">
                   <Lucide icon="Mail" className="w-4 h-4 mr-2" />
-                  {$f()[0].users[0].email}
+                  {UserState?.email}
                 </div>
                 <div className="truncate sm:whitespace-normal flex items-center mt-3">
-                  <Lucide icon="Instagram" className="w-4 h-4 mr-2" /> Instagram
-                  {$f()[0].users[0].name}
+                  <Lucide icon="Instagram" className="w-4 h-4 mr-2" />  
+                  {UserState?.phone}
                 </div>
-                <div className="truncate sm:whitespace-normal flex items-center mt-3">
-                  <Lucide icon="Twitter" className="w-4 h-4 mr-2" /> Twitter
-                  {$f()[0].users[0].name}
-                </div>
+ 
               </div>
             </div>
-            <div className="mt-6 lg:mt-0 flex-1 px-5 border-t lg:border-0 border-slate-200/60 dark:border-darkmode-400 pt-5 lg:pt-0">
-              <div className="font-medium text-center lg:text-left lg:mt-5">
-                Sales Growth
-              </div>
-              <div className="flex items-center justify-center lg:justify-start mt-2">
-                <div className="mr-2 w-20 flex">
-                  USP:{" "}
-                  <span className="ml-3 font-medium text-success">+23%</span>
-                </div>
-                <div className="w-3/4">
-                 </div>
-              </div>
-              <div className="flex items-center justify-center lg:justify-start">
-                <div className="mr-2 w-20 flex">
-                  STP: <span className="ml-3 font-medium text-danger">-2%</span>
-                </div>
-     
-              </div>
-            </div>
+ 
           </div>
           <TabList className="nav-link-tabs flex-col sm:flex-row justify-center lg:justify-start text-center">
-            <Tab fullWidth={false} className="py-4 cursor-pointer">
-              Dashboard
-            </Tab>
             <Tab fullWidth={false} className="py-4 cursor-pointer">
               Account & Profile
             </Tab>

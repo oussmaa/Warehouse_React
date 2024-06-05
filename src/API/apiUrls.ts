@@ -8,6 +8,10 @@ interface ApiUrls {
   readonly POSTSUBMENU: string;
   readonly GETIMAGEUSER: string;
   readonly GETUSERWITHTOKEN: string;
+  readonly GETALLUSERS: string;
+  readonly ADDUSER: string;
+
+
 }
 
 const ApiUrls: ApiUrls = {
@@ -20,6 +24,8 @@ const ApiUrls: ApiUrls = {
   POSTSUBMENU: "http://localhost:6060/SubMenuRequest/addsunMenul/",
   GETUSERWITHTOKEN: "http://localhost:6080/api/auth/GetUser",
   GETIMAGEUSER: "http://localhost:6080/images/",
+  GETALLUSERS :"http://localhost:6080/api/Users/GetAllUsers",
+  ADDUSER:"http://localhost:6080/api/auth/register"
 };
 
 export default ApiUrls;

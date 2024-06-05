@@ -1,4 +1,7 @@
+import RolesRequest from "./rolesRequest";
+
 interface Users {
+  id:any;
   token: string;
   type: string;
   username: string;
@@ -9,5 +12,9 @@ interface Users {
   themeid: number;
   userrole: number;
   images:string;
+  adress:string;
+  password:string;
+  rolesRequest:RolesRequest;
+
 }
 export default Users;

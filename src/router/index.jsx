@@ -8,6 +8,8 @@ import AddMenuLabel from "@/views/AddMenuLabel/Main";
 import Login from "../views/login/Main";
 import AddSubMenu from "@/views/AddSubMenu/Main";
 import Profile from "@/views/Profile/Main"
+import ListUsers from "@/views/ListUsers/Main"
+import AddUsers from "@/views/AddUsers/Main"
 
 function Router() {
   const routes = [
@@ -47,6 +49,14 @@ function Router() {
           path: "profile",
           element: <Profile />,
         },
+        {
+          path: "listusers",
+          element: <ListUsers />,
+        },
+        {
+          path: "addusers",
+          element: <AddUsers />,
+        },       
       ],
     },
   ];

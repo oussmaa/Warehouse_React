@@ -8,23 +8,19 @@ import React from "react";
 import apiService from "@/Service/ApiService";
 import ApiUrls from "@/API/apiUrls";
 import Menu from "../../Entity/Menu";
+import Users from "../../Entity/Users";
  
 function Main() {
   const [deleteConfirmationModal, setDeleteConfirmationModal] = useState(false);
-  const [formattedMenu, setFormattedMenu] = useState<Menu[]>([]);
+  const [formattedUser, setFormattedUser] = useState<Users[]>([]);
   const navigate = useNavigate();
  
-  const navigatetoaddmenu = () => {
-    navigate("/dashboard/addmenu");
-  };
-  const navigatetoaddmenulabel = (idmenu:any) => {
-    navigate("/dashboard/listmenulabels",{ state: { idmenu } });
-  };
+ 
 
   const fetchDataAndUpdateMenu = async () => {
     try {
-       const menuData = await apiService.GetListMenu(ApiUrls.GETALLMENU);
-      setFormattedMenu(menuData);
+       const userData = await apiService.GetListUsers(ApiUrls.GETALLUSERS);
+       setFormattedUser(userData);
     } catch (error) {
       console.error("Error fetching menu data:", error);
     }
@@ -39,14 +35,9 @@ function Main() {
     <>
        <div className="grid grid-cols-12 gap-6 mt-5">
         <div className="intro-y col-span-12 flex flex-wrap sm:flex-nowrap items-center mt-2">
-          <button
-            onClick={navigatetoaddmenu}
-            className="btn btn-primary shadow-md mr-2"
-          >
-            Add New Menu
-          </button>
+ 
           <div className="hidden md:block mx-auto text-slate-500">
-            List Of Menu
+            List Of Users
           </div>
           <div className="w-full sm:w-auto mt-3 sm:mt-0 sm:ml-auto md:ml-0">
             <div className="w-56 relative text-slate-500">
@@ -68,44 +59,91 @@ function Main() {
             <thead>
               <tr>
               <th className="whitespace-nowrap"> Id</th>
-                <th className="whitespace-nowrap"> NAME Menu</th>
-                <th className="whitespace-nowrap"> DATE</th>
-                <th className="text-center whitespace-nowrap">Color</th>
+                <th className="whitespace-nowrap"> Type</th>
+                <th className="whitespace-nowrap"> Username</th>
+                <th className="text-center whitespace-nowrap">Email</th>
+                <th className="text-center whitespace-nowrap">Name User</th>
+                <th className="whitespace-nowrap"> Locked</th>
+                <th className="whitespace-nowrap"> Phone</th>
+                <th className="text-center whitespace-nowrap">Theme Id</th>
+                <th className="whitespace-nowrap"> Role</th>
+                <th className="whitespace-nowrap"> Images</th>
+                <th className="whitespace-nowrap"> Adress</th>
 
                 <th className="text-center whitespace-nowrap">ACTIONS</th>
               </tr>
             </thead>
             <tbody>
-              {formattedMenu && Array.isArray(formattedMenu) && formattedMenu.map((menu, keyy) => (
+              {formattedUser && Array.isArray(formattedUser) && formattedUser.map((user, keyy) => (
                 <tr key={keyy} className="intro-x">
                                       <td>
                     <div className="text-slate-500 text-xs whitespace-nowrap mt-0.5">
-                      {menu.id}
+                      {user.id}
                     </div>
                   </td>
                   <td>
                     <div className="text-slate-500 text-xs whitespace-nowrap mt-0.5">
-                      {menu.nameMenu}
+                      {user.type}
                     </div>
                   </td>
                   <td>
                     <div className="text-slate-500 text-xs whitespace-nowrap mt-0.5">
-                      {menu.defaultDate}
+                      {user.username}
                     </div>
                   </td>
                   <td>
-                    <div
-                      style={{ backgroundColor: menu.colorMenu }}
-                      className="text-slate-500 text-xs whitespace-nowrap mt-0.5"
-                    >
-                      {menu.colorMenu}
+                  <div className="text-slate-500 text-xs whitespace-nowrap mt-0.5">
+                      {user.email}
                     </div>
-                  </td>
+                    </td>
+                    <td>
+                  <div className="text-slate-500 text-xs whitespace-nowrap mt-0.5">
+                      {user.name}
+                    </div>
+                    </td>    
+                    <td>
+                  <div className="text-slate-500 text-xs whitespace-nowrap mt-0.5">
+                      {user.locked} 
+                    </div>
+                    </td>        
+                    <td>
+                  <div className="text-slate-500 text-xs whitespace-nowrap mt-0.5">
+                      {user.phone}
+                    </div>
+                    </td>   
+                    <td>
+                  <div className="text-slate-500 text-xs whitespace-nowrap mt-0.5">
+                      {user.themeid}
+                    </div>
+                    </td>   
+
+                    <td>
+                  <div className="text-slate-500 text-xs whitespace-nowrap mt-0.5">
+                      {user.userrole}
+                    </div>
+                    </td>                      
+                    <td>
+                  <div className="text-slate-500 text-xs whitespace-nowrap mt-0.5">
+                  <img
+                  alt="Midone Tailwind HTML Admin Template"
+                  className="logo__image w-6"
+                
+                  src={`http://localhost:6080/images/${user?.images}`} 
+                />
+                    </div>
+                    </td>    
+
+                    <td>
+                  <div className="text-slate-500 text-xs whitespace-nowrap mt-0.5">
+                      {user.adress}
+                    </div>
+                    </td>             
+
                   <td className="table-report__action w-56">
                     <div className="flex justify-center items-center">
-                      <a className="flex items-center mr-3"  onClick={() => navigatetoaddmenulabel(menu.id)} >
+                      <a className="flex items-center mr-3"    >
                         <Lucide
-                          onClick={() => navigatetoaddmenulabel(menu.id)}
+                           
                           icon="CheckSquare"
                           className="w-4 h-4 mr-1"
                         />{" "}
@@ -230,3 +268,4 @@ function Main() {
 }
 
 export default Main;
+   

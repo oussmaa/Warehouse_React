@@ -26,6 +26,10 @@ function Main(props:any) {
 const navigateprofile = () =>{
 navigate("/dashboard/profile")
 }
+const logout = () =>{
+  navigate("/")
+  }
+
   const showSearchDropdown = () => {
     setSearchDropdown(true);
   };
@@ -215,8 +219,8 @@ navigate("/dashboard/profile")
                 </DropdownItem>
 
                 <DropdownDivider className="border-white/[0.08]" />
-                <DropdownItem className="hover:bg-white/5">
-                  <Lucide icon="ToggleRight" className="w-4 h-4 mr-2" /> Logout
+                <DropdownItem className="hover:bg-white/5" onClick={logout}>
+                  <Lucide icon="ToggleRight" className="w-4 h-4 mr-2"   /> Logout
                 </DropdownItem>
               </DropdownContent>
             </DropdownMenu>

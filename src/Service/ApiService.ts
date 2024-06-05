@@ -37,7 +37,15 @@ class ApiService {
       throw error;
     }
   }
-
+  async GetListUsers(endpoint: string): Promise<User[]> {
+    try {
+      const response = await axios.get<User[]>(endpoint);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      throw error;
+    }
+  }
   async GetListMenuLabel(endpoint: string): Promise<MenuLabel[]> {
     try {
       const response = await axios.get<MenuLabel[]>(endpoint);
@@ -73,6 +81,19 @@ class ApiService {
   async AddMenu(endpoint: string, data: Menu): Promise<Menu> {
     try {
       const response = await axios.post<Menu>(endpoint, data, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.error("Error posting data:", error);
+      throw error;
+    }
+  }
+  async AddUser(endpoint: string, data: User): Promise<User> {
+    try {
+      const response = await axios.post<User>(endpoint, data, {
         headers: {
           "Content-Type": "application/json",
         },
