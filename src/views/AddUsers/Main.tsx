@@ -7,6 +7,7 @@ import Menu from "../../Entity/Menu";
 import { useNavigate } from "react-router-dom";
 import Users from "../../Entity/Users";
 import RolesRequest from "../../Entity/RolesRequest";
+import { Alert } from "@/base-components";
 
 function Main() {
   const [formattedMenu, setFormattedMenu] = useState<Menu[]>([]);
@@ -21,7 +22,8 @@ function Main() {
   const [Adress, setAdress] = useState("");
   const [Password, setPassword] = useState("");
   const navigate = useNavigate();
-
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
   const [checkboxes, setCheckboxes] = useState({
     Insert: false,
     Delete: false,
@@ -31,65 +33,104 @@ function Main() {
   const handleCheckboxChange = (event: any) => {
     const { name, checked } = event.target;
     setCheckboxes({ ...checkboxes, [name]: checked });
-    //console.log(checkboxes)
-    console.log(name);
-    console.log(checked);
   };
- let Permissionsdelete  :any ;
- let PermissionsUpdate  :any ;
- let PermissionsInsert  :any ;
+
+  let Permissionsdelete: any;
+  let PermissionsUpdate: any;
+  let PermissionsInsert: any;
 
   const ValidateInput = async () => {
+    if (checkboxes.Delete) {
+      Permissionsdelete = "DELETE";
+    }
 
-    if (checkboxes.Delete)
-      {
-        Permissionsdelete = "DELETE"
+    if (checkboxes.Update) {
+      PermissionsUpdate = "UPDTAE";
+    }
 
-      }
+    if (checkboxes.Insert) {
+      PermissionsInsert = "INSERT";
+    }
 
-      if (checkboxes.Update)   
-      {
-        PermissionsUpdate= "UPDTAE"
-
-     } 
-
-     if (checkboxes.Insert)
-     {
-      PermissionsInsert = "INSERT"
-
-      }
-
-  const rolesandpermissions : RolesRequest = {
-    roles:Userrole,
-    descrption:"roles",
-    permissions:[PermissionsInsert,PermissionsUpdate,Permissionsdelete]
-  }
-    
-    const user: Users = {
-        id: 0,
-        token: "",
-        type: Type,
-        username: Username,
-        email: Email,
-        name: Name,
-        locked: true,
-        phone: Phone,
-        themeid: Number(Themeid),
-        images: 'test.png',
-        adress: Adress,
-        userrole:0,
-        password:Password,
-        rolesRequest :rolesandpermissions,
+    const rolesandpermissions: RolesRequest = {
+      roles: Userrole,
+      descrption: "roles",
+      permissions: [PermissionsInsert, PermissionsUpdate, Permissionsdelete],
     };
- 
-  try {
-     
-    await apiService.AddUser(ApiUrls.ADDUSER, user);
-   navigate("/dashboard/listusers")
-  } catch (error) {
-    console.error("Error fetching menu data:", error);
-  }
- 
+
+    const user: Users = {
+      id: 0,
+      token: "",
+      type: Type,
+      username: Username,
+      email: Email,
+      name: Name,
+      locked: false,
+      phone: Phone,
+      themeid: Number(Themeid),
+      images: "test.png",
+      adress: Adress,
+      userrole: 0,
+      password: Password,
+      rolesRequest: rolesandpermissions,
+    };
+    function validateUser(user: Users): string | null {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const phoneRegex = /^\+218\d{8,14}$/; // Modified regex to check for +218 country code
+
+      if (typeof user.username !== "string" || user.username.trim() === "") {
+        return "Invalid username";
+      }
+
+      if (!emailRegex.test(user.email)) {
+        return "Invalid email";
+      }
+
+      if (typeof user.name !== "string" || user.name.trim() === "") {
+        return "Invalid name";
+      }
+
+      if (typeof user.locked !== "boolean") {
+        return "Locked must be a boolean";
+      }
+
+      if (!phoneRegex.test(user.phone)) {
+        return "Invalid phone number";
+      }
+
+      if (typeof user.adress !== "string" || user.adress.trim() === "") {
+        return "Invalid address";
+      }
+
+      if (user.password.length < 8) {
+        return "Password must be at least 8 characters long";
+      }
+
+      return null;
+    }
+
+    const validationError = validateUser(user);
+    var isValid = false; // Example result
+
+    try {
+      if (validationError != null) {
+        setAlertMessage(validationError + "");
+
+        setShowAlert(!isValid);
+        setTimeout(() => {
+         
+
+          setShowAlert(false);
+        }, 3000); // 3-second delay
+      }
+
+       else {
+        await apiService.AddUser(ApiUrls.ADDUSER, user);
+        navigate("/dashboard/listusers");
+      }
+    } catch (error) {
+      console.error("Error fetching menu data:", error);
+    }
   };
 
   const fetchDataAndUpdateMenu = async () => {
@@ -110,6 +151,13 @@ function Main() {
       <div>
         <DarkModeSwitcher />
         <form>
+          <Alert
+            show={showAlert}
+            className="alert-danger"
+            onHidden={() => setShowAlert(false)}
+          >
+            {alertMessage}
+          </Alert>
           <div className="space-y-12">
             <div className="border-b border-gray-900/10 pb-12">
               <h2 className="text-base font-semibold leading-7 text-gray-900">

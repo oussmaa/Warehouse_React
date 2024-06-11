@@ -10,9 +10,10 @@ import AddSubMenu from "@/views/AddSubMenu/Main";
 import Profile from "@/views/Profile/Main"
 import ListUsers from "@/views/ListUsers/Main"
 import AddUsers from "@/views/AddUsers/Main"
+import GestionArticles from "@/views/GestionArticles/Main"
 
 function Router() {
-  
+
   var isAuthenticated = false;
   const token = localStorage.getItem('token');
  if  (token !== null)
@@ -32,6 +33,10 @@ function Router() {
       path: "/dashboard",
       element: isAuthenticated ? <SideMenu /> : <Navigate to="/" />,
       children: [
+        {
+          path: "addarticle",
+          element: <GestionArticles />,
+        },
         {
           path: "addmenu",
           element: <AddMenu />,
