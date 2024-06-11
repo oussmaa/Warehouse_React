@@ -5,7 +5,6 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
-    
   },
   "dependencies": {
     "@ckeditor/ckeditor5-build-balloon": "^29.1.0",
@@ -30,6 +29,7 @@
     "classnames": "^2.3.1",
     "dayjs": "^1.10.4",
     "dropzone": "^5.7.6",
+    "formik": "^2.4.6",
     "highlight.js": "^10.6.0",
     "js-beautify": "^1.13.5",
     "litepicker": "^2.0.11",
@@ -49,11 +49,12 @@
     "toastify-js": "^1.9.3",
     "tom-select": "^1.7.5",
     "xlsx": "^0.16.9",
-    "yup": "^0.32.11",
+    "yup": "^1.4.0",
     "zoom-vanilla.js": "^2.0.6"
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.1",
+    "@types/lodash": "^4.17.5",
     "@types/node": "^20.12.2",
     "@types/react": "^18.2.73",
     "@types/react-dom": "^18.2.23",

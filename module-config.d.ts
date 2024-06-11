@@ -13,6 +13,7 @@ declare module "@/views/AddMenuLabel/Main"
 declare module "@/views/AddSubMenu/Main"
 declare module "@/views/ListUsers/Main"
 declare module "@/views/AddUsers/Main"
+declare module "@/views/GestionArticles/Main"
 
 declare module "@/utils"
 declare module "@/views/ListSubMenu/Main"
