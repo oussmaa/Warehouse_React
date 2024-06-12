@@ -14,6 +14,7 @@ import GestionArticles from "@/views/GestionArticles/Main"
 import AddGlobalestock from "@/views/AddGlobalestock/Main"
 import AddGoodsReceipt from "@/views/AddGoodsReceipt/Main"
 import AddGoodsReceiptPos from "@/views/AddGoodsReceiptPos/Main"
+import OrderStock from "@/views/OrderStock/Main"
 
 function Router() {
 
@@ -36,6 +37,10 @@ function Router() {
       path: "/dashboard",
       element: isAuthenticated ? <SideMenu /> : <Navigate to="/" />,
       children: [
+        {
+          path: "addorderstock",
+          element: <OrderStock />,
+        },
         {
           path: "addstock",
           element: <AddGlobalestock />,
