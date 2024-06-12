@@ -11,6 +11,9 @@ import Profile from "@/views/Profile/Main"
 import ListUsers from "@/views/ListUsers/Main"
 import AddUsers from "@/views/AddUsers/Main"
 import GestionArticles from "@/views/GestionArticles/Main"
+import AddGlobalestock from "@/views/AddGlobalestock/Main"
+import AddGoodsReceipt from "@/views/AddGoodsReceipt/Main"
+import AddGoodsReceiptPos from "@/views/AddGoodsReceiptPos/Main"
 
 function Router() {
 
@@ -33,6 +36,18 @@ function Router() {
       path: "/dashboard",
       element: isAuthenticated ? <SideMenu /> : <Navigate to="/" />,
       children: [
+        {
+          path: "addstock",
+          element: <AddGlobalestock />,
+        },
+        {
+          path: "addgoodsreceipt",
+          element: <AddGoodsReceipt />,
+        },
+        {
+          path: "addgoodsreceiptpos",
+          element: <AddGoodsReceiptPos />,
+        },
         {
           path: "addarticle",
           element: <GestionArticles />,

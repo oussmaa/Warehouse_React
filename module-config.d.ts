@@ -14,6 +14,11 @@ declare module "@/views/AddSubMenu/Main"
 declare module "@/views/ListUsers/Main"
 declare module "@/views/AddUsers/Main"
 declare module "@/views/GestionArticles/Main"
+declare module "@/views/AddGlobalestock/Main"
+declare module "@/views/AddGoodsReceipt/Main"
+declare module "@/views/AddGoodsReceiptPos/Main"
+declare module "@/views/OrderStock/Main"
+
 
 declare module "@/utils"
 declare module "@/views/ListSubMenu/Main"
