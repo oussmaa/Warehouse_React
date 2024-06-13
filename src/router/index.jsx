@@ -1,4 +1,4 @@
-import { useRoutes,Navigate  } from "react-router-dom";
+import { useRoutes, Navigate } from "react-router-dom";
 import AddMenu from "../views/AddMenu/Main";
 import ListMenu from "@/views/ListMenu/Main";
 import ListMenuLabel from "@/views/ListMenuLabels/Main";
@@ -7,27 +7,24 @@ import SideMenu from "../layouts/side-menu/Main";
 import AddMenuLabel from "@/views/AddMenuLabel/Main";
 import Login from "../views/login/Main";
 import AddSubMenu from "@/views/AddSubMenu/Main";
-import Profile from "@/views/Profile/Main"
-import ListUsers from "@/views/ListUsers/Main"
-import AddUsers from "@/views/AddUsers/Main"
-import GestionArticles from "@/views/GestionArticles/Main"
-import AddGlobalestock from "@/views/AddGlobalestock/Main"
-import AddGoodsReceipt from "@/views/AddGoodsReceipt/Main"
-import AddGoodsReceiptPos from "@/views/AddGoodsReceiptPos/Main"
-import OrderStock from "@/views/OrderStock/Main"
-
+import Profile from "@/views/Profile/Main";
+import ListUsers from "@/views/ListUsers/Main";
+import AddUsers from "@/views/AddUsers/Main";
+import GestionArticles from "@/views/GestionArticles/Main";
+import AddGlobalestock from "@/views/AddGlobalestock/Main";
+import AddGoodsReceipt from "@/views/AddGoodsReceipt/Main";
+import AddGoodsReceiptPos from "@/views/AddGoodsReceiptPos/Main";
+import OrderStock from "@/views/OrderStock/Main";
+import AddSupplier from "@/views/AddSupplier/Main";
+import ListSupplier from "@/views/ListSupplier/Main";
 function Router() {
-
   var isAuthenticated = false;
-  const token = localStorage.getItem('token');
- if  (token !== null)
-  {
+  const token = localStorage.getItem("token");
+  if (token !== null) {
     isAuthenticated = true;
   }
-  
 
   const routes = [
-
     {
       path: "/",
       element: <Login />,
@@ -37,6 +34,14 @@ function Router() {
       path: "/dashboard",
       element: isAuthenticated ? <SideMenu /> : <Navigate to="/" />,
       children: [
+        {
+          path: "listsupplier",
+          element: <ListSupplier />,
+        },
+        {
+          path: "addsupplier",
+          element: <AddSupplier />,
+        },
         {
           path: "addorderstock",
           element: <OrderStock />,
@@ -92,7 +97,7 @@ function Router() {
         {
           path: "addusers",
           element: <AddUsers />,
-        },       
+        },
       ],
     },
   ];

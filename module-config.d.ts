@@ -18,6 +18,9 @@ declare module "@/views/AddGlobalestock/Main"
 declare module "@/views/AddGoodsReceipt/Main"
 declare module "@/views/AddGoodsReceiptPos/Main"
 declare module "@/views/OrderStock/Main"
+declare module "@/views/AddSupplier/Main"
+declare module "@/views/ListSupplier/Main"
+
 
 
 declare module "@/utils"

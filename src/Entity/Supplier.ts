@@ -1,6 +1,13 @@
-export interface Supplier {
+export  interface Supplier {
     id: number;
-    name: string; // Assuming there's a name or some identifier
+    name: string;
+    address: string;
+    phone: string;
+    email: string;
+    city: string;
+    state: string;
+    zip: string;
+    country: string;
   }
 
   export default Supplier;
