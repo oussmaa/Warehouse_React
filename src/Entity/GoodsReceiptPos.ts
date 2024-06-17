@@ -1,5 +1,5 @@
 export interface GoodsReceiptPos {
-    id?: number; // Optional because it may not exist until saved
+    id: number; // Optional because it may not exist until saved
     quantityBooket: number;
     description: string;
     articleid: string;

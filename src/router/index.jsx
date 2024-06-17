@@ -1,25 +1,46 @@
 import { useRoutes, Navigate } from "react-router-dom";
-import AddMenu from "../views/AddMenu/Main";
-import ListMenu from "@/views/ListMenu/Main";
-import ListMenuLabel from "@/views/ListMenuLabels/Main";
-import ListSubMenu from "@/views/ListSubMenu/Main";
+import AddMenu from "@/views/ManagementMenu/AddMenu/Main";
+import ListMenu from "@/views/ManagementMenu/ListMenu/Main";
+
+import ListMenuLabel from "@/views/ManagementMenuLabel/ListMenuLabels/Main";
+import ListSubMenu from "@/views/ManagementSubMenu/ListSubMenu/Main";
+
 import SideMenu from "../layouts/side-menu/Main";
-import AddMenuLabel from "@/views/AddMenuLabel/Main";
+
+import AddMenuLabel from "@/views/ManagementMenuLabel/AddMenuLabel/Main";
+
 import Login from "../views/login/Main";
-import AddSubMenu from "@/views/AddSubMenu/Main";
+
+import AddSubMenu from "@/views/ManagementSubMenu/AddSubMenu/Main";
+
 import Profile from "@/views/Profile/Main";
-import ListUsers from "@/views/ListUsers/Main";
-import AddUsers from "@/views/AddUsers/Main";
-import GestionArticles from "@/views/GestionArticles/Main";
-import AddGlobalestock from "@/views/AddGlobalestock/Main";
-import AddGoodsReceipt from "@/views/AddGoodsReceipt/Main";
-import AddGoodsReceiptPos from "@/views/AddGoodsReceiptPos/Main";
-import OrderStock from "@/views/OrderStock/Main";
-import AddSupplier from "@/views/AddSupplier/Main";
-import ListSupplier from "@/views/ListSupplier/Main";
+
+import ListUsers from "@/views/ManagementUser/ListUsers/Main";
+import AddUsers from "@/views/ManagementUser/AddUsers/Main";
+
+import AddArticles from "@/views/ManagementArticle/AddArticles/Main";
+import ListArticles from "@/views/ManagementArticle/ListArticles/Main";
+
+import AddGlobalestock from "@/views/ManagementGlobalStock/AddGlobalestock/Main";
+import ListGlobalestock from "@/views/ManagementGlobalStock/ListGlobalStock/Main";
+
+import AddGoodsReceipt from "@/views/ManagementGoodsReceipt/AddGoodsReceipt/Main";
+import ListGoodsReceipt from "@/views/ManagementGoodsReceipt/ListGoodsReceipt/Main";
+
+import AddGoodsReceiptPos from "@/views/ManagementGoodsReceipt/AddGoodsReceipt/Main";
+import ListGoodsReceiptPos from "@/views/ManagementGoodsReceiptPos/ListGoodsReceiptPos/Main";
+
+import OrderStock from "@/views/ManagementOrderStock/OrderStock/Main";
+import ListOrderStock from "@/views/ManagementOrderStock/ListOrderStock/Main";
+
+import AddSupplier from "@/views/ManagementSupplier/AddSupplier/Main";
+import ListSupplier from "@/views/ManagementSupplier/ListSupplier/Main";
+
 function Router() {
   var isAuthenticated = false;
+
   const token = localStorage.getItem("token");
+
   if (token !== null) {
     isAuthenticated = true;
   }
@@ -51,16 +72,36 @@ function Router() {
           element: <AddGlobalestock />,
         },
         {
+          path: "liststock",
+          element: <ListGlobalestock />,
+        },
+        {
+          path: "listorderstock",
+          element: <ListOrderStock />,
+        },
+        {
           path: "addgoodsreceipt",
           element: <AddGoodsReceipt />,
         },
+        {
+          path: "listgoodsreceipt",
+          element: <ListGoodsReceipt />,
+        },        
         {
           path: "addgoodsreceiptpos",
           element: <AddGoodsReceiptPos />,
         },
         {
+          path: "listgoodsreceiptpos",
+          element: <ListGoodsReceiptPos />,
+        },        
+        {
           path: "addarticle",
-          element: <GestionArticles />,
+          element: <AddArticles />,
+        },
+        {
+          path: "listarticle",
+          element: <ListArticles />,
         },
         {
           path: "addmenu",
