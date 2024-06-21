@@ -19,6 +19,9 @@ declare module "@/views/ManagementSubMenu/AddSubMenu/Main"
 
 declare module "@/views/ManagementUser/ListUsers/Main"
 declare module "@/views/ManagementUser/AddUsers/Main"
+declare module "@/views/ManagementUser/UpdateUsers/Main"
+
+
 
 declare module "@/views/ManagementArticle/AddArticles/Main"
 declare module "@/views/ManagementArticle/ListArticles/Main"
@@ -39,6 +42,10 @@ declare module "@/views/ManagementSupplier/AddSupplier/Main"
 declare module "@/views/ManagementSupplier/ListSupplier/Main"
 
 declare module "@/base-components/Table/Table"
+declare module "@/base-components/Table/TableUser"
+declare module "@/base-components/Table/TableUpdateMenu"
+
+
 
 
 declare module "@/utils"

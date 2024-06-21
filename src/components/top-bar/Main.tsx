@@ -27,6 +27,7 @@ const navigateprofile = () =>{
 navigate("/dashboard/profile")
 }
 const logout = () =>{
+  localStorage.removeItem('token');
   navigate("/")
   }
 
@@ -200,7 +201,7 @@ const logout = () =>{
             >
                 <img 
                 alt="Midone Tailwind HTML Admin Template"
-                src={`http://localhost:6080/images/${UserState?.images}`}  
+                src={`http://localhost:7070/login/images/${UserState?.images}`}  
                               className="logo__image w-6"
               />
             </DropdownToggle>

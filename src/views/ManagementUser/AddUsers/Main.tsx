@@ -72,13 +72,13 @@ function Main() {
       themeid: Number(Themeid),
       images: "test.png",
       adress: Adress,
-      userrole: 0,
+      userrole: Userrole,
       password: Password,
       rolesRequest: rolesandpermissions,
     };
     function validateUser(user: Users): string | null {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      const phoneRegex = /^\+218\d{8,14}$/; // Modified regex to check for +218 country code
+      const phoneRegex = /^\+216\d{8,14}$/; // Modified regex to check for +218 country code
 
       if (typeof user.username !== "string" || user.username.trim() === "") {
         return "Invalid username";
@@ -125,13 +125,23 @@ function Main() {
           setShowAlert(false);
         }, 3000); // 3-second delay
       }
-
        else {
-        await apiService.AddUser(ApiUrls.ADDUSER, user);
+
+      const response=  await apiService.AddUser(ApiUrls.ADDUSER, user);
+ 
         navigate("/dashboard/listusers");
       }
-    } catch (error) {
+    } catch (error:any) {
+     
+      setAlertMessage(error.response.data.message);
+      setShowAlert(!isValid);
+      setTimeout(() => {
+       
+
+        setShowAlert(false);
+      }, 3000); // 3-second delay
       console.error("Error fetching menu data:", error);
+      
     }
   };
 
@@ -151,7 +161,7 @@ function Main() {
   return (
     <>
       <div>
-        <DarkModeSwitcher />
+      
         <form>
           <Alert
             show={showAlert}

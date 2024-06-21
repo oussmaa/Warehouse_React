@@ -3,22 +3,25 @@ import { Table as AntdTable, Space, Button, Modal, Form, Input } from "antd";
 import { ColumnsType } from "antd/es/table";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import TableColumn from "../../Entity/TableColumn";
+import { useLocation, useNavigate } from "react-router-dom";
+import path from "path";
 
 interface TableProps<T> {
   columns: TableColumn<T>[];
   fetchData: () => Promise<T[]>;
   deleteData: (id: number) => Promise<void>;
   editData: (data: T) => Promise<void>;
- 
+  navigateTo?: (path: string, state?: any) => void;
 }
 
 const { confirm } = Modal;
 
-function Table<T extends { id: number }>({
+function TableUpdateMenu<T extends { id: number }>({
   columns,
   fetchData,
   deleteData,
   editData,
+  navigateTo
 }: TableProps<T>) {
   const [data, setData] = useState<T[]>([]);
   const [filteredData, setFilteredData] = useState<T[]>([]);
@@ -26,8 +29,8 @@ function Table<T extends { id: number }>({
   const [loading, setLoading] = useState<boolean>(true);
   const [editModalVisible, setEditModalVisible] = useState<boolean>(false);
   const [editItem, setEditItem] = useState<T | null>(null);
-
   const [form] = Form.useForm();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getData = async () => {
@@ -65,7 +68,7 @@ function Table<T extends { id: number }>({
   const handleDelete = (id: number) => {
     confirm({
       title: "Confirm Delete",
-      okType: 'danger', // This sets the button type to be red
+      okType: "danger",
       icon: <ExclamationCircleOutlined />,
       content: "Are you sure you want to delete this item?",
       onOk() {
@@ -80,7 +83,6 @@ function Table<T extends { id: number }>({
   };
 
   const handleEdit = (item: T) => {
-    console.log(item.id)
     setEditItem(item);
     setEditModalVisible(true);
   };
@@ -107,6 +109,13 @@ function Table<T extends { id: number }>({
     setSearchTerm(event.target.value);
   };
 
+  const handleRowClick = (record: T) => {
+    const menuId = record.id; // Assuming record.id is the menuId you want to pass
+     if (navigateTo) {
+     navigateTo('',{ menuId }); // Replace '/your-path' with your actual route
+    }
+  };
+
   const columnsWithActions = [
     ...columns,
     {
@@ -114,7 +123,9 @@ function Table<T extends { id: number }>({
       key: "actions",
       render: (_: any, record: T) => (
         <Space size="middle">
-     
+           <Button type="default" onClick={() => handleRowClick(record)}>
+            Display Sub Menu
+          </Button>   
           <Button type="default" onClick={() => handleEdit(record)}>
             Edit
           </Button>
@@ -150,6 +161,7 @@ function Table<T extends { id: number }>({
         columns={columnsWithActions}
         dataSource={filteredData}
         rowKey="id"
+    
       />
       <Modal
         title="Edit Item"
@@ -182,13 +194,14 @@ function Table<T extends { id: number }>({
               key={col.dataIndex as string}
               label={col.title}
               name={col.dataIndex as string}
-              rules={[{ required: true, message: `Please input ${col.title}!` }]}
+              rules={[
+                {
+                  required: true,
+                  message: `Please input ${col.title}!`,
+                },
+              ]}
             >
-              {col.dataIndex === 'id' ? (
-                <Input disabled />
-              ) : (
-                <Input />
-              )}
+              {col.dataIndex === "id" ? <Input disabled /> : <Input />}
             </Form.Item>
           ))}
         </Form>
@@ -197,4 +210,4 @@ function Table<T extends { id: number }>({
   );
 }
 
-export default Table;
+export default TableUpdateMenu;

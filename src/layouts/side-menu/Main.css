@@ -1,0 +1,18 @@
+/* Main.css */
+.main-container {
+    padding-top: 80px; /* Adjust the value as needed to ensure the content is displayed below the navbar */
+  }
+  
+  .flex {
+    display: flex;
+  }
+  
+  .overflow-hidden {
+    overflow: hidden;
+  }
+  
+  .content {
+    padding: 20px; /* Add padding around the content */
+    flex-grow: 1; /* Ensure content takes up remaining space */
+  }
+  

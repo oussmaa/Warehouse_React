@@ -16,7 +16,9 @@ import AddSubMenu from "@/views/ManagementSubMenu/AddSubMenu/Main";
 import Profile from "@/views/Profile/Main";
 
 import ListUsers from "@/views/ManagementUser/ListUsers/Main";
-import AddUsers from "@/views/ManagementUser/AddUsers/Main";
+import AddUsers from "@/views/ManagementUser/AddUsers/Main"; 
+import UpdateUsers from "@/views/ManagementUser/UpdateUsers/Main";
+
 
 import AddArticles from "@/views/ManagementArticle/AddArticles/Main";
 import ListArticles from "@/views/ManagementArticle/ListArticles/Main";
@@ -55,6 +57,10 @@ function Router() {
       path: "/dashboard",
       element: isAuthenticated ? <SideMenu /> : <Navigate to="/" />,
       children: [
+        {
+          path: "updateusers",
+          element: <UpdateUsers />,
+        },
         {
           path: "listsupplier",
           element: <ListSupplier />,

@@ -54,7 +54,7 @@ function Main() {
                   alt="Midone Tailwind HTML Admin Template"
                   className="rounded-full"
                   style={{width:'400px'}}
-                  src={`http://localhost:6080/images/${UserState?.images}`} 
+                  src={`http://localhost:7070/login/images/${UserState?.images}`} 
                 />
                 <div className="absolute mb-1 mr-1 flex items-center justify-center bottom-0 right-0 bg-primary rounded-full p-2">
                   <Lucide icon="Camera" className="w-4 h-4 text-white" />

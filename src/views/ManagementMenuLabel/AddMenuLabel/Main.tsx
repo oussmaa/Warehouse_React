@@ -1,15 +1,16 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
-import * as lucideIcons from "lucide-react";
-import { Lucide, Modal, ModalBody } from "@/base-components";
-import staticData from "@/stores/staticData";
-import MenuLabel from "../../Entity/MenuLabel";
+import React, { useEffect, useState } from "react";
+import { Modal, ModalBody } from "@/base-components"; // Importing Ant Design components
+import { Select, Input, Button } from "antd";
 import { useLocation, useNavigate } from "react-router-dom";
+import * as lucideIcons from "lucide-react"; // Import any necessary icons
+import staticData from "@/stores/staticData";
 import apiService from "@/Service/ApiService";
-import ApiUrls from "@/API/apiUrls"
+import ApiUrls from "@/API/apiUrls";
+import MenuLabel from "../../../Entity/MenuLabel";
+
+const { Option } = Select;
+
 function Main() {
-   const [iconNames, setIconNames] = useState<any[]>(["Search"]); // Added type annotation
-  const [ValueIcon, setIconMenu] = useState("Disc");
   const [ValueName, setValueName] = useState("");
   const [NameMenulabel, setNameMenulabel] = useState("");
   const [deleteConfirmationModal, setDeleteConfirmationModal] = useState(false);
@@ -17,135 +18,111 @@ function Main() {
   const location = useLocation();
   const menuId = location.state?.menuId;
 
+  useEffect(() => {
+    // Fetch initial data if needed
+  }, []);
+
   const ValidateInput = async () => {
-    if (NameMenulabel != "") {
-      const menu: MenuLabel = {
-          id: "",
-          defaultDate: "",
-          subMenus: [],
-          title: NameMenulabel,
-          icon: ValueIcon,
-          activeDropdown: undefined,
-          active: undefined,
-          pathname: ValueName
+    if (NameMenulabel !== "" && ValueName !== "") {
+      const menu = {
+        id: "",
+        defaultDate: "",
+        subMenus: [],
+        title: NameMenulabel,
+        icon: "ValueIcon", // Replace with appropriate icon logic
+        activeDropdown: undefined,
+        active: undefined,
+        pathname: ValueName,
       };
 
       try {
-         await apiService.AddMenuLabel(ApiUrls.POSTMENULABEL+menuId, menu);
-         navigate("/dashboard/listmenu")
+        await apiService.AddMenuLabel(ApiUrls.POSTMENULABEL + menuId, menu);
+        navigate("/dashboard/listmenu");
       } catch (error) {
-        console.error("Error fetching menu data:", error);
+        console.error("Error adding menu label:", error);
+        // Handle error gracefully
       }
-    }
-    else{
-         setDeleteConfirmationModal(true);
-  
+    } else {
+      setDeleteConfirmationModal(true);
     }
   };
 
+  const handleNameMenuLabelChange = (value:any) => {
+    const selectedPage = staticData.Pages.find((page:any) => page.value === value);
 
-
-    
-  useEffect(() => {
-    const iconNames = Object.keys(lucideIcons) as string[]; // Added type assertion
-    setIconNames(iconNames);
-    
-  }, []);
+    if (selectedPage) {
+      setNameMenulabel(selectedPage.name);
+      setValueName(selectedPage.value);
+    } else {
+      setNameMenulabel("");
+      setValueName("");
+    }
+  };
 
   return (
     <>
-          <Modal
+      <Modal
         show={deleteConfirmationModal}
-        onHidden={() => {
-          setDeleteConfirmationModal(false);
-        }}
+        onHidden={() => setDeleteConfirmationModal(false)}
       >
         <ModalBody className="p-0">
           <div className="p-5 text-center">
-          
-            <div className="text-2xl mt-5"> Please fill the data</div>
-   
+            <div className="text-2xl mt-5">Please fill all fields</div>
           </div>
-        
-   
         </ModalBody>
       </Modal>
 
       <div className="intro-y flex items-center mt-8">
-        <h2 className="text-lg font-medium mr-auto">Add MenuLabel</h2>
+        <h2 className="text-lg font-medium mr-auto">Add Menu Label</h2>
       </div>
-      {/* BEGIN: Page Layout */}
-      <div className="intro-y box p-5 mt-5">Hello Here You can Add a Menulabel</div>
 
-      <div className="grid grid-cols-12 gap-6 mt-8" style={{ width: "2380px" }}>
-        <div className="intro-y col-span-1 lg:col-span-6">
-          {/* BEGIN: Form Layout */}
+      <div className="intro-y box p-5 mt-5">
+        Hello! Here you can add a Menu Label.
+      </div>
+
+      <div className="grid grid-cols-12 gap-6 mt-8">
+        <div className="intro-y col-span-12 lg:col-span-6">
           <div className="intro-y box p-5">
-            <div>
-              <div className="mt-3">
-                <label htmlFor="regular-form-1" className="form-label">
-                  Name of Menu Label
-                </label>
-                <input
-                  id="regular-form-1"
-                  type="text"
-                  className="form-control form-control-rounded"
-                  placeholder="Name of Menu Label"
-                  value={NameMenulabel}
-                  onChange={(e) => setNameMenulabel(e.target.value)}
-                />
-              </div>
-            </div>
-
-            <div>
-              <div className="mt-3">
-                <label htmlFor="regular-form-1" className="form-label">
-                  Page Of Menu Label
-                </label>
-                <div></div>
-                <select
-                    value={ValueName}
-                    onChange={(e) => setValueName(e.target.value)} 
-                style={{  width:'500px',whiteSpace:'pre-line'}} className="w-20 form-select box mt-3 sm:mt-0">
-                
-                {staticData.Pages?.map((pages:any, index:any) => (
-                  <option key={index} value={pages.value}>
- 
-                    {pages.value}  
-  
-                  </option>
+            <div className="mt-3">
+              <label htmlFor="select-menu-label" className="form-label">
+                Name of Menu Label
+              </label>
+              <Select
+                id="select-menu-label"
+                placeholder="Select a menu label"
+                style={{ width: "100%" }}
+                onChange={handleNameMenuLabelChange}
+                value={NameMenulabel}
+              >
+                {staticData.Pages?.map((page:any) => (
+                  <Option key={page.value} value={page.value}>
+                    {page.name}
+                  </Option>
                 ))}
-
-                </select>
-              </div>
+              </Select>
             </div>
 
             <div className="mt-3">
-              <label htmlFor="regular-form-1" className="form-label">
-                Icon
+              <label htmlFor="input-page-label" className="form-label">
+                Page Of Menu Label
               </label>
-              <div></div>
-              <select style={{ marginLeft: "20px",width:'500px' }}                 value={ValueIcon}
-                onChange={(e) => setIconMenu(e.target.value)} className="w-20 form-select box mt-3 sm:mt-0">
-              
-                {iconNames?.map((iconName, index) => (
-                  <option key={index} value={iconName}>
-                    {iconName}
-  
-                  </option>
-                ))}
-              </select>
-              
-            </div>
-            <div>
-            <Lucide icon={ValueIcon}></Lucide>
-
+              <Input
+                id="input-page-label"
+                type="text"
+                className="form-control form-control-rounded"
+                placeholder="Page Of Menu Label"
+                value={ValueName}
+                disabled
+              />
             </div>
           </div>
         </div>
-        <button onClick={ValidateInput} className="btn btn-outline-success w-24 inline-block mr-1 mb-2">
-    Add
-</button>
+
+        <div className="intro-y col-span-12 lg:col-span-6 flex justify-end items-end">
+          <Button onClick={ValidateInput} className="w-24">
+            Add
+          </Button>
+        </div>
       </div>
     </>
   );

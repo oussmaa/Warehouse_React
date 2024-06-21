@@ -11,7 +11,7 @@ interface Users {
   locked: boolean;
   phone: string;
   themeid: number;
-  userrole: number;
+  userrole: string
   images:string;
   adress:string;
   password:string;

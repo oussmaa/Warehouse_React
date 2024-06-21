@@ -8,23 +8,21 @@ interface TableProps<T> {
   columns: TableColumn<T>[];
   fetchData: () => Promise<T[]>;
   deleteData: (id: number) => Promise<void>;
-  editData: (data: T) => Promise<void>;
+ 
  
 }
 
 const { confirm } = Modal;
 
-function Table<T extends { id: number }>({
+function TableUser<T extends { id: number }>({
   columns,
   fetchData,
-  deleteData,
-  editData,
+  deleteData
 }: TableProps<T>) {
   const [data, setData] = useState<T[]>([]);
   const [filteredData, setFilteredData] = useState<T[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true);
-  const [editModalVisible, setEditModalVisible] = useState<boolean>(false);
   const [editItem, setEditItem] = useState<T | null>(null);
 
   const [form] = Form.useForm();
@@ -80,28 +78,9 @@ function Table<T extends { id: number }>({
   };
 
   const handleEdit = (item: T) => {
-    console.log(item.id)
-    setEditItem(item);
-    setEditModalVisible(true);
+console.log(item.id)
   };
 
-  const handleEditOk = () => {
-    form.validateFields().then((values) => {
-      const updatedItem = { ...editItem!, ...values };
-      editData(updatedItem).then(() => {
-        setEditModalVisible(false);
-        setEditItem(null);
-        setData(
-          data.map((item) => (item.id === updatedItem.id ? updatedItem : item))
-        );
-      });
-    });
-  };
-
-  const handleEditCancel = () => {
-    setEditModalVisible(false);
-    setEditItem(null);
-  };
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
@@ -151,50 +130,8 @@ function Table<T extends { id: number }>({
         dataSource={filteredData}
         rowKey="id"
       />
-      <Modal
-        title="Edit Item"
-        visible={editModalVisible}
-        onOk={handleEditOk}
-        onCancel={handleEditCancel}
-        footer={[
-          <Button key="cancel" onClick={handleEditCancel}>
-            Cancel
-          </Button>,
-          <Button
-            key="submit"
-            type="primary"
-            style={{ backgroundColor: "green" }}
-            onClick={handleEditOk}
-          >
-            OK
-          </Button>,
-        ]}
-      >
-        <Form
-          form={form}
-          initialValues={editItem || undefined}
-          onFinish={(values) => {
-            setEditItem({ ...editItem!, ...values });
-          }}
-        >
-          {columns.map((col) => (
-            <Form.Item
-              key={col.dataIndex as string}
-              label={col.title}
-              name={col.dataIndex as string}
-              rules={[{ required: true, message: `Please input ${col.title}!` }]}
-            >
-              {col.dataIndex === 'id' ? (
-                <Input disabled />
-              ) : (
-                <Input />
-              )}
-            </Form.Item>
-          ))}
-        </Form>
-      </Modal>
     </div>
   );
 }
 
-export default Table;
+export default TableUser;

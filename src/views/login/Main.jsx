@@ -6,7 +6,7 @@ import dom from "@left4code/tw-starter/dist/js/dom";
 import logoUrl from "@/assets/images/logo.svg";
 import illustrationUrl from "@/assets/images/illustration.svg";
 import axios from 'axios';
-
+import ApiUrls from "@/API/apiUrls"
  function Main() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -18,19 +18,16 @@ import axios from 'axios';
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post('http://localhost:6080/api/auth/login', {
+      const response = await axios.post("http://127.0.0.1:7070/login/loginuser", {
         email,
         password
       });
       const themeid =  response.data.themeid ; 
        localStorage.setItem('token', response.data.token);
        localStorage.setItem('themid', themeid);
-
-      
-      
-      navigate('/dashboard');
+    navigate('/dashboard');
     } catch (error) {
-      setError('Invalid username or password');
+      setError(error.response.data.message);
       console.error('Login error:', error);
     }
   };
