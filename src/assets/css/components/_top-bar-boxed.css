@@ -1,0 +1,25 @@
+.top-bar-boxed {
+    &.top-bar-boxed--simple-menu {
+        .logo {
+            @apply w-auto;
+            .logo__text {
+                @apply hidden;
+            }
+        }
+    }
+    &.top-bar-boxed {
+        @apply dark:md:from-darkmode-800;
+        .logo {
+            @apply w-auto;
+        }
+        .breadcrumb {
+            @apply md:ml-10 md:pl-10;
+        }
+    }
+    &:not(.top-bar-boxed) {
+        .logo__text {
+            @apply hidden xl:block;
+        }
+    }
+ 
+}
