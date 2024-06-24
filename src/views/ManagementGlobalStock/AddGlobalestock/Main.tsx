@@ -19,12 +19,12 @@ function Main() {
 
     useEffect(() => {
         const fetchArticles = async () => {
-            try {
-                const fetchedArticles: Article[] = await apiService.GetListArticel(ApiUrls.ARTICLEAPI);
-                setArticles(fetchedArticles);
-            } catch (error) {
-                console.error("Error fetching articles:", error);
-            }
+            // try {
+            //     const fetchedArticles: Article[] = await apiService.GetListArticel(ApiUrls.ARTICLEAPI);
+            //     setArticles(fetchedArticles);
+            // } catch (error) {
+            //     console.error("Error fetching articles:", error);
+            // }
         };
         fetchArticles();
     }, []);

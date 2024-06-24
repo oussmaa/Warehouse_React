@@ -9,6 +9,7 @@ import GoodsReceipt from "../Entity/GoodsReceipt";
 import OrderStock from "../Entity/OrderStock";
 import Globalestock from "../Entity/Globalestock";
 import Supplier from "../Entity/Supplier";
+import RolesRequest from "../Entity/RolesRequest";
 
 class ApiService {
   // Function to get the token from local storage
@@ -707,6 +708,42 @@ try {
 }
 //------------------------
 //---End : Supplier
+//------------------------
+
+
+//------------------------
+//---Begin : Role
+//------------------------
+async GetListRole(endpoint: string): Promise<RolesRequest[]> {
+  try {
+    const token = this.getToken();
+    const response = await axios.get<RolesRequest[]>(endpoint, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error;
+  }
+}
+async GetRoleById(endpoint: string, id : number): Promise<RolesRequest[]> {
+  try {
+    const token = this.getToken();
+    const response = await axios.get<RolesRequest[]>(`${endpoint}/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error;
+  }
+}
+//------------------------
+//---End : Role
 //------------------------
 
 }

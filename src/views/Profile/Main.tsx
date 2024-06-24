@@ -17,16 +17,21 @@ import Users from "../../Entity/Users";
 import { faker as $f } from "@/utils";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import RolesRequest from "../../Entity/RolesRequest";
 
 function Main() {
 
   const [UserState, setUserSate] = useState < Users |null>(null);
+  const [userRole, setUserRole] = useState<RolesRequest | null>(null);
   const navigate = useNavigate();
 
   const GetUserWithToken = async () => {
     try {
       let token = localStorage.getItem('token');
       const userdata = await apiService.getUser(ApiUrls.GETUSERWITHTOKEN,{'token':token});
+      console.log("user data : " + JSON.stringify(userdata))
+      const role = await apiService.GetRoleById(ApiUrls.GETROLEBYID, userdata.userrole);
+      setUserRole(role);
       setUserSate(userdata);
     } catch (error) {
       console.error("Error fetching menu data:", error);
@@ -66,6 +71,12 @@ function Main() {
                 </div>
                 <div className="text-slate-500"> {UserState?.username}</div>
               </div>
+              <div className="ml-5">
+                <div className="w-24 sm:w-40 truncate sm:whitespace-normal font-medium text-lg">
+                   role  
+               </div>
+                <div className="text-slate-500"> {userRole?.roles}</div>
+              </div>
             </div>
             <div className="mt-6 lg:mt-0 flex-1 px-5 border-l border-r border-slate-200/60 dark:border-darkmode-400 border-t lg:border-t-0 pt-5 lg:pt-0">
               <div className="font-medium text-center lg:text-left lg:mt-3">
@@ -80,7 +91,6 @@ function Main() {
                   <Lucide icon="Instagram" className="w-4 h-4 mr-2" />  
                   {UserState?.phone}
                 </div>
- 
               </div>
             </div>
  

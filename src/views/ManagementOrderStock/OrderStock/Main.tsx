@@ -22,7 +22,7 @@ import Article from "../../../Entity/Article";
   useEffect(() => {
          const fetchSuppliers = async () => {
             try {
-                const suppliersData = await apiService.getSuppliers(ApiUrls.GET_SUPPLIERS);
+                const suppliersData = await apiService.GetListSupplier(ApiUrls.SUPPLIER);
                 setSuppliers(suppliersData);
             } catch (error) {
                 console.error("Error fetching suppliers:", error);
@@ -34,7 +34,9 @@ import Article from "../../../Entity/Article";
         const fetchArticles = async () => {
             try {
                 const articlesData = await apiService.GetListArticel(ApiUrls.ARTICLEAPI);
+                console.log("aertc data : " + articlesData);
                 setArticles(articlesData);
+                console.log("articels ! " + articles);
             } catch (error) {
                 console.error("Error fetching articles:", error);
                 setAlertMessage("Error fetching articles");

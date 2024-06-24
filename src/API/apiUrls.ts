@@ -25,6 +25,15 @@ interface ApiUrls {
 
   readonly LOGINUSER: string;
 
+  //---Role
+  readonly ROLEAPI : string; 
+  readonly ALLROLES : string; 
+  readonly GETROLEBYID : string; 
+  readonly ADDROLE : string; 
+  readonly UPDATEROLLE : string; 
+  readonly DELETEROLE : string; 
+
+
   //---Articel
   readonly ARTICLEAPI : string;
 
@@ -43,6 +52,7 @@ interface ApiUrls {
   //---Supplier
   readonly SUPPLIER : string;
   
+
 
 }
 
@@ -71,7 +81,14 @@ const ApiUrls: ApiUrls = {
   GETALLUSERS :"http://127.0.0.1:6090/login/GetAllUsers",
   ADDUSER:"http://127.0.0.1:6090/register/adduser",
   LOGINUSER:"http://127.0.0.1:6090/login/loginuser",
-  
+
+  //---Rolle
+  ROLEAPI : "http://127.0.0.1:6090/RolesRequest",
+  ALLROLES : "http://127.0.0.1:6090/RolesRequest/getallroles",
+  GETROLEBYID : "http://127.0.0.1:6090/RolesRequest/getrolesbyid",
+  ADDROLE : "http://127.0.0.1:6090/RolesRequest/addroles",
+  UPDATEROLLE : "http://127.0.0.1:6090/RolesRequest/updateroles",
+  DELETEROLE : "http://127.0.0.1:6090/RolesRequest/delete",
 
   //---Articel
   ARTICLEAPI : "http://127.0.0.1:8090/articles",
