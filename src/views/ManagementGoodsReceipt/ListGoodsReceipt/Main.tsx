@@ -4,6 +4,8 @@ import { ExclamationCircleOutlined } from "@ant-design/icons";
 import Table from "../../../base-components/Table/Table"; // Ensure this path is correct
 import { GoodsReceipt } from "../../../Entity/GoodsReceipt"; // Adjust path as necessary
 import TableColumn from "../../../Entity/TableColumn"; // Adjust path as necessary
+import ApiService from "../../../Service/ApiService";
+import ApiUrls from "../../../API/apiUrls";
 
 // Define table columns for the new entity
 const goodsReceiptColumns: TableColumn<GoodsReceipt>[] = [
@@ -15,28 +17,33 @@ const goodsReceiptColumns: TableColumn<GoodsReceipt>[] = [
 
 // Fetch function to get goods receipts
 const fetchGoodsReceipts = async (): Promise<GoodsReceipt[]> => {
-  // Mock data for demonstration
-  return [
-    {
-      id: 1,
-      description: "Goods Receipt 1",
-      goodsReceiptPosid: 123,
-      orderStockid: 456,
-    },
-    // Add more goods receipt objects as needed
-  ];
+  try {
+    const response  = await ApiService.GetListGoodsReceipt(ApiUrls.GOODSRECEIPT);
+    return response;
+  }catch(err){
+    console.log("Error fetching data" + err);
+    throw err;
+  }
 };
 
 // Function to delete a goods receipt
 const deleteGoodsReceipt = async (id: number): Promise<void> => {
-  console.log("Delete goods receipt with ID:", id);
-  // Implement your deletion logic here
+  try {
+    const response = await ApiService.DeletetGoodsReceipt(ApiUrls.GOODSRECEIPT, id);
+    console.log('GoodsReceipt deleted:', response);
+  } catch (error) {
+    console.error('Error deleting GoodsReceipt:', error);
+  }
 };
 
 // Function to edit a goods receipt
 const editGoodsReceipt = async (goodsReceipt: GoodsReceipt): Promise<void> => {
-  console.log("Edit goods receipt:", goodsReceipt);
-  // Implement your edit logic here
+  try {
+    const response = await ApiService.EditGoodsReceipt(ApiUrls.GOODSRECEIPT, goodsReceipt.id, goodsReceipt);
+  } catch (error) {
+    console.error('Error update goodsReceipt:', error);
+  }
+  console.log("Edit goodsReceipt:", goodsReceipt);
 };
 
 // Main component

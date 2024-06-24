@@ -4,6 +4,8 @@ import { ExclamationCircleOutlined } from "@ant-design/icons";
 import Table from "../../../base-components/Table/Table";
 import GoodsReceiptPos from "../../../Entity/GoodsReceiptPos"; // Adjust import
 import TableColumn from "../../../Entity/TableColumn"; // Adjust import
+import ApiService from "../../../Service/ApiService";
+import ApiUrls from "../../../API/apiUrls";
 
 const goodsReceiptColumns: TableColumn<GoodsReceiptPos>[] = [
   { title: "ID", dataIndex: "id" },
@@ -14,34 +16,31 @@ const goodsReceiptColumns: TableColumn<GoodsReceiptPos>[] = [
 ];
 
 const fetchGoodsReceiptPos = async (): Promise<GoodsReceiptPos[]> => {
-  // Replace with your actual fetch logic for GoodsReceiptPos
-  return [
-    {
-      id: 1,
-      quantityBooket: 10,
-      description: "Item 1",
-      articleid: "ART001",
-      goodsReceiptid: 1001,
-    },
-    {
-      id: 2,
-      quantityBooket: 5,
-      description: "Item 2",
-      articleid: "ART002",
-      goodsReceiptid: 1002,
-    },
-    // Add more data as needed
-  ];
+  try {
+    const response  = await ApiService.GetListGoodsReceiptPos(ApiUrls.GOODSRECEIPTPOS);
+    return response;
+  }catch(err){
+    console.log("Error fetching data" + err);
+    throw err;
+  }
 };
 
 const deleteGoodsReceiptPos = async (id: number): Promise<void> => {
-  console.log("Delete GoodsReceiptPos with ID:", id);
-  // Implement delete logic for GoodsReceiptPos
+  try {
+    const response = await ApiService.DeletetGoodsReceiptPos(ApiUrls.GOODSRECEIPTPOS, id);
+    console.log('GoodsReceiptPos deleted:', response);
+  } catch (error) {
+    console.error('Error deleting GoodsReceiptPos:', error);
+  }
 };
 
 const editGoodsReceiptPos = async (goodsReceiptPos: GoodsReceiptPos): Promise<void> => {
-  console.log("Edit GoodsReceiptPos:", goodsReceiptPos);
-  // Implement edit logic for GoodsReceiptPos
+  try {
+    const response = await ApiService.EditGoodsReceiptPos(ApiUrls.GOODSRECEIPTPOS, goodsReceiptPos.id, goodsReceiptPos);
+  } catch (error) {
+    console.error('Error update goodsReceiptPos:', error);
+  }
+  console.log("Edit goodsReceiptPos:", goodsReceiptPos);
 };
 
 const Main = () => {

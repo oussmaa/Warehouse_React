@@ -5,6 +5,10 @@ import axios from "axios";
 import User from "../Entity/Users";
 import Article from "../Entity/Article";
 import GoodsReceiptPos from "../Entity/GoodsReceiptPos";
+import GoodsReceipt from "../Entity/GoodsReceipt";
+import OrderStock from "../Entity/OrderStock";
+import Globalestock from "../Entity/Globalestock";
+import Supplier from "../Entity/Supplier";
 
 class ApiService {
   // Function to get the token from local storage
@@ -305,7 +309,6 @@ class ApiService {
       throw error;
     }
   }
-
 //-----------------------
 //--- END : user requests
 //-----------------------
@@ -449,6 +452,261 @@ async DeletetGoodsReceiptPos(endpoint: string, id : number): Promise<GoodsReceip
 }
 //------------------------
 //---End : GoodsReceiptPos
+//------------------------
+
+
+
+
+//--------------------------
+//---Begin : GoodsReceipt
+//--------------------------
+async AddGoodsReceipt(endpoint: string, data: GoodsReceipt): Promise<GoodsReceipt> {
+            try {
+              const token = this.getToken();
+              const response = await axios.post<GoodsReceipt>(endpoint, data, {
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${token}`,
+                },
+              });
+              return response.data;
+            } catch (error) {
+               console.error("Error posting data:", error);
+              throw error;
+            }
+}
+
+
+async GetListGoodsReceipt(endpoint: string): Promise<GoodsReceipt[]> {
+            try {
+              const token = this.getToken();
+              const response = await axios.get<GoodsReceipt[]>(endpoint, {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              });
+              return response.data;
+            } catch (error) {
+              console.error("Error fetching data:", error);
+              throw error;
+            }
+}
+
+async EditGoodsReceipt(endpoint: string, id:number, data: GoodsReceipt): Promise<GoodsReceipt> {
+            try {
+              const token = this.getToken();
+              const response = await axios.put<GoodsReceipt>(`${endpoint}/${id}`, data, {
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${token}`,
+                },
+              });
+              return response.data;
+            } catch (error) {
+               console.error("Error posting data:", error);
+              throw error;
+            }
+}
+
+async DeletetGoodsReceipt(endpoint: string, id : number): Promise<GoodsReceipt[]> {
+          try {
+            const token = this.getToken();
+            const response = await axios.delete<GoodsReceipt[]>(`${endpoint}/${id}`, {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            });
+            return response.data;
+          } catch (error) {
+            console.error("Error fetching data:", error);
+            throw error;
+          }
+}
+//------------------------
+//---End : GoodsReceipt
+//------------------------
+
+
+
+
+//------------------------
+//---Begin : OrderStock
+//------------------------
+async AddOrderStock(endpoint: string, data: OrderStock): Promise<OrderStock> {
+  try {
+    const token = this.getToken();
+    const response = await axios.post<OrderStock>(endpoint, data, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+     console.error("Error posting data:", error);
+    throw error;
+  }
+}
+
+
+async GetListOrderStock(endpoint: string): Promise<OrderStock[]> {
+  try {
+    const token = this.getToken();
+    const response = await axios.get<OrderStock[]>(endpoint, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error;
+  }
+}
+//------------------------
+//---End : OrderStock
+//------------------------
+
+
+
+//--------------------------
+//---Begin : GlobalStock
+//--------------------------
+async AddGlobalStock(endpoint: string, data: Globalestock): Promise<Globalestock> {
+  try {
+    const token = this.getToken();
+    const response = await axios.post<Globalestock>(endpoint, data, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+     console.error("Error posting data:", error);
+    throw error;
+  }
+}
+
+
+async GetListGlobalStock(endpoint: string): Promise<Globalestock[]> {
+  try {
+    const token = this.getToken();
+    const response = await axios.get<Globalestock[]>(endpoint, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error;
+  }
+}
+
+async EditGlobalStock(endpoint: string, id:number, data: Globalestock): Promise<Globalestock> {
+  try {
+    const token = this.getToken();
+    const response = await axios.put<Globalestock>(`${endpoint}/${id}`, data, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+     console.error("Error posting data:", error);
+    throw error;
+  }
+}
+
+async DeletetGlobalStock(endpoint: string, id : number): Promise<Globalestock[]> {
+try {
+  const token = this.getToken();
+  const response = await axios.delete<Globalestock[]>(`${endpoint}/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+} catch (error) {
+  console.error("Error fetching data:", error);
+  throw error;
+}
+}
+//------------------------
+//---End : GlobalStock
+//------------------------
+
+
+
+//--------------------------
+//---Begin : Supplier
+//--------------------------
+async AddSupplier(endpoint: string, data: Globalestock): Promise<Globalestock> {
+  try {
+    const token = this.getToken();
+    const response = await axios.post<Globalestock>(endpoint, data, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+     console.error("Error posting data:", error);
+    throw error;
+  }
+}
+
+
+async GetListSupplier(endpoint: string): Promise<Supplier[]> {
+  try {
+    const token = this.getToken();
+    const response = await axios.get<Supplier[]>(endpoint, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error;
+  }
+}
+
+async EditSupplier(endpoint: string, id:number, data: Supplier): Promise<Supplier> {
+  try {
+    const token = this.getToken();
+    const response = await axios.put<Supplier>(`${endpoint}/${id}`, data, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+     console.error("Error posting data:", error);
+    throw error;
+  }
+}
+
+async DeletetSupplier(endpoint: string, id : number): Promise<Supplier[]> {
+try {
+  const token = this.getToken();
+  const response = await axios.delete<Supplier[]>(`${endpoint}/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+} catch (error) {
+  console.error("Error fetching data:", error);
+  throw error;
+}
+}
+//------------------------
+//---End : Supplier
 //------------------------
 
 }

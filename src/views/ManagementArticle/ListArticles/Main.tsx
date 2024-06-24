@@ -23,9 +23,13 @@ const articleColumns: TableColumn<Article>[] = [
 
 const fetchArticles = async (): Promise<Article[]> => {
   // Mock data, replace with actual API call logic
-  const response  = await ApiService.GetListArticel(ApiUrls.ARTICLEAPI);
-  console.log("clg article data " + JSON.stringify(response));
-  return response;
+  try {
+    const response  = await ApiService.GetListArticel(ApiUrls.ARTICLEAPI);
+    return response;
+  }catch(err){
+    console.log("Error fetching data" + err);
+    throw err;
+  }
 };
 
 const deleteArticle = async (id: number): Promise<void> => {

@@ -70,8 +70,8 @@ function Main() {
     if (validateForm()) {
       try {
         const newSupplier = { name, address, phone, email, city, state, zip, country };
-        await apiService.AddSupplier(ApiUrls.ADD_SUPPLIER, newSupplier);
-        navigate("/dashboard/listsuppliers");
+        await apiService.AddSupplier(ApiUrls.SUPPLIER, newSupplier);
+        navigate("/dashboard/listsupplier");
       } catch (error) {
         console.error("Error adding supplier:", error);
       }

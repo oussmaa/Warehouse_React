@@ -28,9 +28,20 @@ interface ApiUrls {
   //---Articel
   readonly ARTICLEAPI : string;
 
-
   //--GoodsReceiptPos
   readonly GOODSRECEIPTPOS : string;
+  
+  //--GoodsReceiptPos
+  readonly GOODSRECEIPT : string;
+
+  //--OrderStock
+  readonly ORDERSTOCK : string;
+
+  //--GlobalStock 
+  readonly GLOBALSTOCK : string;
+
+  //---Supplier
+  readonly SUPPLIER : string;
   
 
 }
@@ -67,7 +78,20 @@ const ApiUrls: ApiUrls = {
 
 
   //---GoodsReceiptPos
-  GOODSRECEIPTPOS : ""
+  GOODSRECEIPTPOS : "http://127.0.0.1:8090/goodsReceiptPos",
+
+  //---GoodsReceipt
+  GOODSRECEIPT : "http://127.0.0.1:8090/goodsReceipts",
+
+  //---OrderStock 
+  ORDERSTOCK :"http://127.0.0.1:8090/orderstocks",
+
+  //--GlobalStock
+  GLOBALSTOCK : "http://127.0.0.1:8090/globalestocks",
+
+  //---Supplier
+  SUPPLIER : "http://127.0.0.1:8090/api/suppliers"
+
 
 };
 

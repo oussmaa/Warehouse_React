@@ -20,7 +20,7 @@ function Main() {
     useEffect(() => {
         const fetchArticles = async () => {
             try {
-                const fetchedArticles: Article[] = await apiService.GetArticles(ApiUrls.GET_ALL_ARTICLES);
+                const fetchedArticles: Article[] = await apiService.GetListArticel(ApiUrls.ARTICLEAPI);
                 setArticles(fetchedArticles);
             } catch (error) {
                 console.error("Error fetching articles:", error);
@@ -68,7 +68,7 @@ function Main() {
                     id: 0
                 };
 
-                await apiService.AddGlobalestock(ApiUrls.ADD_GLOBALESTOCK, newGlobalestock);
+                await apiService.AddGlobalStock(ApiUrls.GLOBALSTOCK, newGlobalestock);
                 navigate("/dashboard/listglobalestocks");
             } catch (error) {
                 console.error("Error adding globalestock:", error);
@@ -111,7 +111,7 @@ function Main() {
                         <option value="">Select an article</option>
                         {articles.map((article) => (
                             <option key={article.id} value={article.id}>
-                                {article.Articel}
+                                {article.articel}
                             </option>
                         ))}
                     </select>

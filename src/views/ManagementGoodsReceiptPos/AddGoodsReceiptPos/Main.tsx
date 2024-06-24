@@ -52,8 +52,8 @@ export function Main() {
                 }, 3000); // 3-second delay
             } else {
                 // Add API call to add goods receipt pos
-                await apiService.AddGoodsReceiptPos(ApiUrls.ADD_GOODS_RECEIPT_POS, goodsReceiptPos);
-                navigate("/dashboard"); // Redirect to dashboard or any other page
+                await apiService.AddGoodsReceiptPos(ApiUrls.GOODSRECEIPTPOS, goodsReceiptPos);
+                navigate("/dashboard/listgoodsreceiptpos"); // Redirect to dashboard or any other page
             }
         } catch (error) {
             console.error("Error adding goods receipt pos:", error);

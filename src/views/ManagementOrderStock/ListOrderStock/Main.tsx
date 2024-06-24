@@ -3,15 +3,18 @@ import { Modal, Form, Input, Button } from "antd";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import Table from "../../../base-components/Table/Table";
 import TableColumn from "../../../Entity/TableColumn"; // Assuming TableColumn is reused for OrderStock
+import ApiService from "../../../Service/ApiService";
+import ApiUrls from "../../../API/apiUrls";
+import OrderStock from "../../../Entity/OrderStock";
  
 
-interface OrderStock {
-    id: number;
-    orderStockNb: number;
-    description: string;
-    quantityNeeded: number;
-    supplier: string; // Assuming supplier is represented as a string for simplicity
-  }
+// interface OrderStock {
+//     id: number;
+//     orderStockNb: number;
+//     description: string;
+//     quantityNeeded: number;
+//     supplier: string; // Assuming supplier is represented as a string for simplicity
+//   }
 
 
 const orderStockColumns: TableColumn<OrderStock>[] = [
@@ -23,24 +26,14 @@ const orderStockColumns: TableColumn<OrderStock>[] = [
 ];
 
 const fetchOrderStocks = async (): Promise<OrderStock[]> => {
-  // Replace this with your actual fetch logic
-  return [
-    {
-      id: 1,
-      orderStockNb: 1001,
-      description: "Order Stock 1 Description",
-      quantityNeeded: 10,
-      supplier: "Supplier A",
-    },
-    {
-      id: 2,
-      orderStockNb: 1002,
-      description: "Order Stock 2 Description",
-      quantityNeeded: 15,
-      supplier: "Supplier B",
-    },
-    // Add more data as needed
-  ];
+  try {
+    const response  = await ApiService.GetListOrderStock(ApiUrls.ORDERSTOCK);
+    console.log("order stc : " + JSON.stringify(response));
+    return response;
+  }catch(err){
+    console.log("Error fetching data" + err);
+    throw err;
+  }
 };
 
 const deleteOrderStock = async (id: number): Promise<void> => {

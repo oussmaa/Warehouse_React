@@ -3,13 +3,16 @@ import { Modal, Form, Input, Button } from "antd";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import Table from "../../../base-components/Table/Table";
  import TableColumn from "../../../Entity/TableColumn"; // Adjust path as necessary
+import ApiService from "../../../Service/ApiService";
+import ApiUrls from "../../../API/apiUrls";
+import Globalestock from "../../../Entity/Globalestock";
 
-interface Globalestock {
-    id: number; // Optional for new entries
-    quantityUsed: number;
-    article: string;
-    openingQuantity: number;
-  }
+// interface Globalestock {
+//     id: number; // Optional for new entries
+//     quantityUsed: number;
+//     article: string;
+//     openingQuantity: number;
+//   }
 // Define table columns for the new entity
 const globalestockColumns: TableColumn<Globalestock>[] = [
   { title: "ID", dataIndex: "id" },
@@ -20,15 +23,16 @@ const globalestockColumns: TableColumn<Globalestock>[] = [
 
 // Fetch function to get globalestocks
 const fetchGlobalestocks = async (): Promise<Globalestock[]> => {
-  // Mock data for demonstration
-  return [
-    {
-      id: 1,
-      quantityUsed: 10,
-      article:  "dddd",
-      openingQuantity: 200,
-    },
-   ];
+  // Mock data, replace with actual API call logic
+  // try {
+  //   const response  = await ApiService.GetListGlobalStock(ApiUrls.GLOBALSTOCK);
+  //   return response;
+  // }catch(err){
+  //   console.log("Error fetching data" + err);
+  //   throw err;
+  // }
+  const response : Globalestock[]= [];
+  return response;
 };
 
 // Function to delete a globalestock

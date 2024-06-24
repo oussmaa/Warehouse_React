@@ -29,7 +29,7 @@ import ListGlobalestock from "@/views/ManagementGlobalStock/ListGlobalStock/Main
 import AddGoodsReceipt from "@/views/ManagementGoodsReceipt/AddGoodsReceipt/Main";
 import ListGoodsReceipt from "@/views/ManagementGoodsReceipt/ListGoodsReceipt/Main";
 
-import AddGoodsReceiptPos from "@/views/ManagementGoodsReceipt/AddGoodsReceipt/Main";
+import AddGoodsReceiptPos from "@/views/ManagementGoodsReceiptPos/AddGoodsReceiptPos/Main";
 import ListGoodsReceiptPos from "@/views/ManagementGoodsReceiptPos/ListGoodsReceiptPos/Main";
 
 import OrderStock from "@/views/ManagementOrderStock/OrderStock/Main";

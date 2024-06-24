@@ -33,7 +33,7 @@ import Article from "../../../Entity/Article";
 
         const fetchArticles = async () => {
             try {
-                const articlesData = await apiService.getArticles(ApiUrls.GET_ARTICLES);
+                const articlesData = await apiService.GetListArticel(ApiUrls.ARTICLEAPI);
                 setArticles(articlesData);
             } catch (error) {
                 console.error("Error fetching articles:", error);
@@ -50,7 +50,7 @@ import Article from "../../../Entity/Article";
         if (!description.trim()) {
             return "Description cannot be empty";
         }
-        if (!isNaN(Number(quantityNeeded)) || Number(quantityNeeded) <= 0) {    
+        if (isNaN(Number(quantityNeeded)) || Number(quantityNeeded) <= 0) {    
              return "Quantity Needed must be a positive number";
         }
         if (!supplierId) {
@@ -81,7 +81,8 @@ import Article from "../../../Entity/Article";
         };
 
         try {
-            await apiService.addOrderStock(ApiUrls.ADD_ORDER_STOCK, newOrderStock);
+            await apiService.AddOrderStock(ApiUrls.ORDERSTOCK, newOrderStock);
+            console.log("added with succussfully");
             //navigate("/dashboard"); // Redirect to dashboard or any other page after successful addition
         } catch (error) {
             console.error("Error adding order stock:", error);
@@ -150,6 +151,7 @@ import Article from "../../../Entity/Article";
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                 >
                                     <option value="">Select Supplier</option>
+                                    <option value={1}>1</option>
                                     {suppliers.map((supplier) => (
                                         <option key={supplier.id} value={supplier.id}>{supplier.name}</option>
                                     ))}
@@ -169,9 +171,9 @@ import Article from "../../../Entity/Article";
                                     id="articleId"
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                 >
-                                    <option value="">Select Article</option>
+                                    <option disabled value="">Select Article</option>
                                     {articles.map((article) => (
-                                        <option key={article.id} value={article.id}>{article.Articel}</option>
+                                        <option key={article.id} value={article.id}>{article.articel}</option>
                                     ))}
                                 </select>
                             </div>
