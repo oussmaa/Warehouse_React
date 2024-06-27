@@ -276,13 +276,14 @@ class ApiService {
     }
   }
 
-  async getUser(endpoint: string, body: any): Promise<User> {
+  async getUser(endpoint: string, id : number): Promise<User> {
+    console.log(JSON.stringify(id));
+    console.log(`${endpoint}/${id}`);
     try {
       const token = this.getToken();
-      console.log(body);
-      const response = await axios.post<User>(endpoint, body, {
+      const URL = id > 0? `${endpoint}/${id}` : `${endpoint}`;
+      const response = await axios.get<User>(URL, {
         headers: {
-          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
       });
@@ -299,6 +300,22 @@ class ApiService {
     try {
       const token = this.getToken();
       const response = await axios.post<User>(endpoint, data, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return response.data;
+    } catch (error) {
+       console.error("Error posting data:", error);
+      throw error;
+    }
+  }
+
+  async EditUser(endpoint: string, id:number, data: User): Promise<User> {
+    try {
+      const token = this.getToken();
+      const response = await axios.put<User>(`${endpoint}/${id}`, data, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -563,6 +580,37 @@ async GetListOrderStock(endpoint: string): Promise<OrderStock[]> {
     console.error("Error fetching data:", error);
     throw error;
   }
+}
+
+async EditOrderStock(endpoint: string, id:number, data: OrderStock): Promise<OrderStock> {
+  try {
+    const token = this.getToken();
+    const response = await axios.put<OrderStock>(`${endpoint}/${id}`, data, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+     console.error("Error posting data:", error);
+    throw error;
+  }
+}
+
+async DeletetOrderStock(endpoint: string, id : number): Promise<OrderStock[]> {
+try {
+  const token = this.getToken();
+  const response = await axios.delete<OrderStock[]>(`${endpoint}/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+} catch (error) {
+  console.error("Error fetching data:", error);
+  throw error;
+}
 }
 //------------------------
 //---End : OrderStock

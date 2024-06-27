@@ -37,6 +37,7 @@ import ListOrderStock from "@/views/ManagementOrderStock/ListOrderStock/Main";
 
 import AddSupplier from "@/views/ManagementSupplier/AddSupplier/Main";
 import ListSupplier from "@/views/ManagementSupplier/ListSupplier/Main";
+import ErrorPage from "@/views/page-2/Main";
 
 function Router() {
   var isAuthenticated = false;
@@ -147,7 +148,7 @@ function Router() {
         },
         {
           path: "*",
-          element: <AddUsers />,
+          element: <ErrorPage />,
         },
       ],
     },

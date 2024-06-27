@@ -64,7 +64,7 @@ function Main() {
           setShowAlert(false);
         }, 3000); // 3-second delay
       } else {
-        await ApiService.AddArticel(ApiUrls.ADDARTICLE, article);
+        await ApiService.AddArticel(ApiUrls.ARTICLEAPI, article);
         navigate("/dashboard/listarticles");
       }
     } catch (error) {

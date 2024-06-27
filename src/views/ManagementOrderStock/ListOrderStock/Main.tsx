@@ -38,12 +38,22 @@ const fetchOrderStocks = async (): Promise<OrderStock[]> => {
 
 const deleteOrderStock = async (id: number): Promise<void> => {
   console.log("Deleting Order Stock with ID:", id);
-  // Implement your delete logic here
+  try {
+    const response = await ApiService.DeletetOrderStock(ApiUrls.ORDERSTOCK, id);
+    console.log('OrderStock deleted:', response);
+  } catch (error) {
+    console.error('Error deleting OrderStock:', error);
+  }
 };
 
 const editOrderStock = async (orderStock: OrderStock): Promise<void> => {
   console.log("Editing Order Stock:", orderStock);
-  // Implement your edit logic here
+  try {
+    const response = await ApiService.EditOrderStock(ApiUrls.ORDERSTOCK, orderStock.id, orderStock);
+  } catch (error) {
+    console.error('Error update OrderStock:', error);
+  }
+  console.log("Edit OrderStock:", orderStock);
 };
 
 const Main = () => {

@@ -8,7 +8,7 @@ interface TableProps<T> {
   columns: TableColumn<T>[];
   fetchData: () => Promise<T[]>;
   deleteData: (id: number) => Promise<void>;
- 
+  navigateTo?: (id : number) => void;
  
 }
 
@@ -17,7 +17,8 @@ const { confirm } = Modal;
 function TableUser<T extends { id: number }>({
   columns,
   fetchData,
-  deleteData
+  deleteData,
+  navigateTo
 }: TableProps<T>) {
   const [data, setData] = useState<T[]>([]);
   const [filteredData, setFilteredData] = useState<T[]>([]);
@@ -77,8 +78,11 @@ function TableUser<T extends { id: number }>({
     });
   };
 
-  const handleEdit = (item: T) => {
-console.log(item.id)
+  const handleEdit = (item: number) => {
+    console.log("from handle edit : " + item);
+    if(navigateTo){
+      navigateTo(item);
+    }
   };
 
 
@@ -94,7 +98,7 @@ console.log(item.id)
       render: (_: any, record: T) => (
         <Space size="middle">
      
-          <Button type="default" onClick={() => handleEdit(record)}>
+          <Button type="default" onClick={() => handleEdit(record.id)}>
             Edit
           </Button>
           <Button

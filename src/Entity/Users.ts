@@ -15,7 +15,8 @@ interface Users {
   images:string;
   adress:string;
   password:string;
-  rolesRequest:RolesRequest;
+  roleNames: string[];
+  permissionNames: string[];
 
 }
 export default Users;

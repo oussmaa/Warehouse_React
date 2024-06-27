@@ -4,6 +4,7 @@ import TableColumn from "../../../Entity/TableColumn";
 import apiService from "@/Service/ApiService";
 import ApiUrls from "@/API/apiUrls";
 import TableUser from "../../../base-components/Table/TableUser";
+import { Navigation, useNavigate } from "react-router-dom";
 
 interface User {
   id: any;
@@ -46,12 +47,16 @@ const deleteUsers = async (id: any): Promise<void> => {
   console.log("Delete user with ID:", id);
 };
 
+
+
+
  
 
 const Main = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const navigation = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -72,6 +77,11 @@ const Main = () => {
     return users;
   };
 
+  const handleNavigate = async (id:number) : Promise<void> => {
+    navigation("/dashboard/updateusers", {state : {userId : id}});
+  }
+
+
   return (
     <>
       <div>
@@ -86,7 +96,7 @@ const Main = () => {
               columns={userColumns}
               fetchData={fetchData}
               deleteData={deleteUsers} 
-                   
+              navigateTo={(id : number)=>{handleNavigate(id)}}
         />
       )}
     </>

@@ -75,7 +75,8 @@ function Main() {
       adress: Adress,
       userrole: 1,
       password: Password,
-      rolesRequest: rolesandpermissions,
+      roleNames: [Userrole],
+      permissionNames: [PermissionsInsert, PermissionsUpdate, Permissionsdelete],
     };
     function validateUser(user: Users): string | null {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

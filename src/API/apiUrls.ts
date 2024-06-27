@@ -18,10 +18,12 @@ interface ApiUrls {
   readonly GETSUBSUBMENUBYID: string;
   
   //---User
+  readonly USERAPI: string;
   readonly GETIMAGEUSER: string;
   readonly GETALLUSERS: string;
   readonly ADDUSER: string;
   readonly GETUSERWITHTOKEN: string;
+  readonly GETUSERBYID : string;
 
   readonly LOGINUSER: string;
 
@@ -51,9 +53,6 @@ interface ApiUrls {
 
   //---Supplier
   readonly SUPPLIER : string;
-  
-
-
 }
 
 const ApiUrls: ApiUrls = {
@@ -76,7 +75,9 @@ const ApiUrls: ApiUrls = {
   GETSUBSUBMENUBYID: "http://127.0.0.1:5050/SubMenuRequest/getsubmenubyid/",
   
   //---User
+  USERAPI : "http://127.0.0.1:6090/login",
   GETUSERWITHTOKEN: "http://127.0.0.1:6090/login/GetUser",
+  GETUSERBYID: "http://127.0.0.1:6090/login/GetUserById",
   GETIMAGEUSER: "http://127.0.0.1:6090/login/images/",
   GETALLUSERS :"http://127.0.0.1:6090/login/GetAllUsers",
   ADDUSER:"http://127.0.0.1:6090/register/adduser",
@@ -107,7 +108,7 @@ const ApiUrls: ApiUrls = {
   GLOBALSTOCK : "http://127.0.0.1:8090/globalestocks",
 
   //---Supplier
-  SUPPLIER : "http://127.0.0.1:8090/api/suppliers"
+  SUPPLIER : "http://127.0.0.1:8090/suppliers"
 
 
 };

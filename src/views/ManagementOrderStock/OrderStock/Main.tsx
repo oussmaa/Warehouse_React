@@ -83,7 +83,7 @@ import Article from "../../../Entity/Article";
         };
 
         try {
-            await apiService.AddOrderStock(ApiUrls.ORDERSTOCK, newOrderStock);
+            await apiService.AddOrderStock(ApiUrls.ORDERSTOCK  + "/addstock", newOrderStock);
             console.log("added with succussfully");
             //navigate("/dashboard"); // Redirect to dashboard or any other page after successful addition
         } catch (error) {

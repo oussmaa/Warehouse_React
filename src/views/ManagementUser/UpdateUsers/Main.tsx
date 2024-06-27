@@ -4,6 +4,7 @@ import apiService from "@/Service/ApiService";
 import ApiUrls from "@/API/apiUrls";
 import { useLocation, useNavigate } from "react-router-dom";
 import Users from "../../../Entity/Users";
+import { any, number } from "prop-types";
 
 const { Option } = Select;
 
@@ -11,16 +12,20 @@ const Main: React.FC = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
   const location = useLocation();
-  const userId = location.state?.userId as string | undefined;
+  const userId = location.state?.userId as number | undefined;
   const [initialValues, setInitialValues] = useState<Partial<Users>>({});
   const buttonBackground = {
     background: "#4CAF50", // Change this to any color or dynamic value
     color: "#fff", // Text color
   };
   useEffect(() => {
+    console.log("befor user id -------------- : ", userId)
     if (userId) {
+      console.log("befor user id -------------- : ")
       // Fetch user data based on userId and set initial values
-      apiService.getUser(ApiUrls.GETUSER + userId).then((data:any) => {
+      console.log("id of user =>> " + JSON.stringify(userId));
+      apiService.getUser(ApiUrls.GETUSERBYID, userId).then((data:any) => {
+        console.log("user data from update profile : " + JSON.stringify(data));
         setInitialValues(data);
         form.setFieldsValue(data);
       });
@@ -28,10 +33,10 @@ const Main: React.FC = () => {
   }, [userId]);
 
   const onFinish = async (values: Users) => {
-    console.log(values)
-   /* try {
+    console.log(JSON.stringify(values))
+    try {
       if (userId) {
-        await apiService.updateUser(ApiUrls.UPDATEUSER + userId, values);
+        await apiService.EditUser(ApiUrls.USERAPI + userId, values);
       } else {
         await apiService.createUser(ApiUrls.CREATEUSER, values);
       }
@@ -40,7 +45,7 @@ const Main: React.FC = () => {
     } catch (error) {
       message.error("Error updating user");
       console.error("Error updating user:", error);
-    }*/
+    }
   };
 
   return (
@@ -86,13 +91,6 @@ const Main: React.FC = () => {
         <Input />
       </Form.Item>
       <Form.Item
-        name="password"
-        label="Password"
-        rules={[{ required: true, message: "Please input the password!" }]}
-      >
-        <Input.Password />
-      </Form.Item>
-      <Form.Item
         name="themeid"
         label="Theme ID"
         rules={[{ required: true, message: "Please input the theme ID!" }]}
@@ -105,8 +103,8 @@ const Main: React.FC = () => {
         rules={[{ required: true, message: "Please select the user role!" }]}
       >
         <Select>
-          <Option value="admin">Admin</Option>
-          <Option value="user">User</Option>
+          <Option value={1}>Admin</Option>
+          <Option value={13}>User</Option>
         </Select>
       </Form.Item>
       <Form.Item
