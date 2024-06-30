@@ -18,20 +18,23 @@ import { faker as $f } from "@/utils";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import RolesRequest from "../../Entity/RolesRequest";
+import Permission from "../../Entity/Permission";
 
 function Main() {
 
   const [UserState, setUserSate] = useState < Users |null>(null);
   const [userRole, setUserRole] = useState<RolesRequest[] | []>([]);
+  const [userpermission, setPermission] = useState<Permission[] | []>([]);
+
   const navigate = useNavigate();
 
   const GetUserWithToken = async () => {
     try {
       let token = localStorage.getItem('token');
-      const userdata = await apiService.getUser(ApiUrls.GETUSERWITHTOKEN);
-      console.log("user data : " + JSON.stringify(userdata))
-      // const role = await apiService.GetRoleById(ApiUrls.GETROLEBYID, userdata.userrole);
-      setUserRole(userdata.roles);
+      const userdata = await apiService.GetUserProfiles(ApiUrls.GETUSERWITHTOKEN,token);
+        setUserRole(userdata.roles);
+        setPermission(userdata.permissions)
+        console.log(userpermission)
       setUserSate(userdata);
     } catch (error) {
       console.error("Error fetching menu data:", error);
@@ -73,12 +76,27 @@ function Main() {
                    role  
                </div>
                {
+                
                 userRole?.map((rl)=>{
                   return <div className="text-slate-500"> {rl.roles}</div>
                 })
                }
                 {/* <div className="text-slate-500"> {userRole?.roles}</div> */}
               </div>
+              <div className="w-24 sm:w-40 truncate sm:whitespace-normal font-medium text-lg">
+            Permission   
+               </div>
+               {
+    userpermission?.map((rl, index) => {
+        return (
+            <div key={index} className="text-slate-500" style={{ marginBottom: '10px' }}>
+                 <p>   {rl.code}</p>
+            </div>
+        );
+    })
+}
+
+
             </div>
             <div className="mt-6 lg:mt-0 flex-1 px-5 border-l border-r border-slate-200/60 dark:border-darkmode-400 border-t lg:border-t-0 pt-5 lg:pt-0">
               <div className="font-medium text-center lg:text-left lg:mt-3">

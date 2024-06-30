@@ -1,31 +1,62 @@
 import DarkModeSwitcher from "@/components/dark-mode-switcher/Main";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import apiService from "@/Service/ApiService";
 import ApiUrls from "@/API/apiUrls";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Alert } from "@/base-components";
 import GoodsReceiptPos from "../../../Entity/GoodsReceiptPos";
+import Location from "../../../Entity/Location";
  
 export function Main() {
-    const [quantityBooket, setQuantityBooket] = useState(0);
+
+    const [quantityBooked, setQuantityBooket] = useState(0);
     const [description, setDescription] = useState("");
     const [articleid, setArticle] = useState("");
-    const [goodsReceiptid, setGoodsReceiptid] = useState(0);
+    const [location, setLocation] = useState<Location[]>([]);
     const [showAlert, setShowAlert] = useState(false);
+    const [location_area, setLocationId] = useState("");
+
     const [alertMessage, setAlertMessage] = useState("");
     const navigate = useNavigate();
+     const uselocation = useLocation();
+    const idgoods = uselocation.state?.idgoods
+
+
+    useEffect(() => {
+ 
+    
+        const fetcheLocation = async (): Promise<Location[]> => {
+            try {
+           console.log(idgoods)
+              const location = await apiService.GetListLocationArea(ApiUrls.GetListLocationArea);
+              location.sort((a: { id: number; }, b: { id: number; }) => a.id - b.id);
+              setLocation(location)
+              return location
+        
+            } catch (error) {
+              console.error('Error fetching menu data:', error);
+              throw error;
+            }
+             
+          };
+    
+          fetcheLocation();
+      }, []);
+
+
+ 
+
 
     const ValidateInput = async () => {
-        const goodsReceiptPos: GoodsReceiptPos = {
-            id:0,
-            quantityBooket,
+        const goodsReceiptPos = {
+            quantityBooked,
             description,
-            articleid, // Assuming you will set this later based on the selected article
-            goodsReceiptid,
+            location_area,
+            idgoodesreciept:idgoods
         };
 
-        function validateGoodsReceiptPos(goodsReceiptPos: GoodsReceiptPos) {
-            if (goodsReceiptPos.quantityBooket <= 0) {
+        function validateGoodsReceiptPos(goodsReceiptPos: any) {
+            if (goodsReceiptPos.quantityBooked <= 0) {
                 return "Quantity must be greater than 0";
             }
 
@@ -33,9 +64,6 @@ export function Main() {
                 return "Description cannot be empty";
             }
 
-            if (goodsReceiptPos.articleid.trim()=="") {
-                return "Article cannot be empty";
-            }
 
      
             return null;
@@ -52,7 +80,7 @@ export function Main() {
                 }, 3000); // 3-second delay
             } else {
                 // Add API call to add goods receipt pos
-                await apiService.AddGoodsReceiptPos(ApiUrls.GOODSRECEIPTPOS, goodsReceiptPos);
+                await apiService.AddGoodsReceiptPos(ApiUrls.GOODSRECEIPTPOS,goodsReceiptPos);
                 navigate("/dashboard/listgoodsreceiptpos"); // Redirect to dashboard or any other page
             }
         } catch (error) {
@@ -88,7 +116,7 @@ export function Main() {
                                     </label>
                                     <div className="mt-2">
                                         <input
-                                            value={quantityBooket}
+                                            value={quantityBooked}
                                             onChange={(e) => setQuantityBooket(parseFloat(e.target.value))}
                                             type="number"
                                             id="quantity-booked"
@@ -113,39 +141,26 @@ export function Main() {
                                     </div>
                                 </div>
 
+                 
                                 <div className="sm:col-span-3">
-                                    <label
-                                        htmlFor="article"
-                                        className="block text-sm font-medium leading-6 text-gray-900"
-                                    >
-                                        Article
-                                    </label>
-                                    <div className="mt-2">
-                                        <input
-                                            value={articleid}
-                                            onChange={(e) => setArticle(e.target.value)}
-                                            type="text"
-                                            id="articleid"
-                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-                                    </div>
-                                </div>
-
-                                <div className="sm:col-span-3">
-                                    <label
-                                        htmlFor="goods-receipt-id"
-                                        className="block text-sm font-medium leading-6 text-gray-900"
-                                    >
-                                        Goods Receipt ID
-                                    </label>
-                                    <div className="mt-2">
-                                        <input
-                                            value={goodsReceiptid}
-                                            onChange={(e) => setGoodsReceiptid(parseFloat(e.target.value))}
-                                            type="number"
-                                            id="goods-receipt-id"
-                                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-                                    </div>
-                                </div>
+                            <label htmlFor="supplierId" className="block text-sm font-medium leading-6 text-gray-900">
+                                Location
+                            </label>
+                            <div className="mt-2">
+                                <select
+                                    value={location_area}
+                                    onChange={(e) => setLocationId(e.target.value)}
+                                    id="locationid"
+                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                >
+                                    <option value="">Select Location</option>
+                                     {location.map((loc) => (
+                                        <option key={loc.id} value={loc.area}>{loc.area}</option>
+                                    ))}
+                                </select>
+                            </div>
+                        </div>
+ 
                             </div>
                         </div>
                     </div>

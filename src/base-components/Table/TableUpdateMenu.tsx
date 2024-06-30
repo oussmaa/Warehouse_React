@@ -124,7 +124,7 @@ function TableUpdateMenu<T extends { id: number }>({
       render: (_: any, record: T) => (
         <Space size="middle">
            <Button type="default" onClick={() => handleRowClick(record)}>
-            Display Sub Menu
+            Display Sub  
           </Button>   
           <Button type="default" onClick={() => handleEdit(record)}>
             Edit

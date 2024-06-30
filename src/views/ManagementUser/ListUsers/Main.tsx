@@ -5,6 +5,7 @@ import apiService from "@/Service/ApiService";
 import ApiUrls from "@/API/apiUrls";
 import TableUser from "../../../base-components/Table/TableUser";
 import { Navigation, useNavigate } from "react-router-dom";
+import ApiService from "../../../Service/ApiService";
 
 interface User {
   id: any;
@@ -44,7 +45,11 @@ const fetchUsers = async (): Promise<User[]> => {
 };
 
 const deleteUsers = async (id: any): Promise<void> => {
-  console.log("Delete user with ID:", id);
+  try {
+    const response = await ApiService.DeleteUser(ApiUrls.DELETUSER, id);
+   } catch (error) {
+    console.error('Error deleting article:', error);
+  }
 };
 
 

@@ -6,15 +6,26 @@ import { GoodsReceipt } from "../../../Entity/GoodsReceipt"; // Adjust path as n
 import TableColumn from "../../../Entity/TableColumn"; // Adjust path as necessary
 import ApiService from "../../../Service/ApiService";
 import ApiUrls from "../../../API/apiUrls";
+import TableUpdateMenu from "../../../base-components/Table/TableUpdateMenu";
+import { useNavigate } from "react-router-dom";
 
 // Define table columns for the new entity
 const goodsReceiptColumns: TableColumn<GoodsReceipt>[] = [
   { title: "ID", dataIndex: "id" },
   { title: "Description", dataIndex: "description" },
-  { title: "Goods Receipt Posid", dataIndex: "goodsReceiptPosid" },
-  { title: "Order Stockid", dataIndex: "orderStockid" },
+   { title: "Order Stockid", dataIndex: "orderStockId" },
 ];
 
+// Main component
+const Main = () => {
+
+  const navigate = useNavigate();
+
+  const handleNavigate = (path: string, menuId: any) => {
+ 
+    navigate('/dashboard/listgoodsreceiptpos',{ state: { menuId } });
+     
+  };
 // Fetch function to get goods receipts
 const fetchGoodsReceipts = async (): Promise<GoodsReceipt[]> => {
   try {
@@ -45,20 +56,20 @@ const editGoodsReceipt = async (goodsReceipt: GoodsReceipt): Promise<void> => {
   }
   console.log("Edit goodsReceipt:", goodsReceipt);
 };
-
-// Main component
-const Main = () => {
+ 
   return (
     <>
       <div>
         <h1 className="text-2xl font-bold mb-4">List Of Goods Receipts</h1>
       </div>
-      <Table<GoodsReceipt>
-        columns={goodsReceiptColumns}
-        fetchData={fetchGoodsReceipts}
-        deleteData={deleteGoodsReceipt}
-        editData={editGoodsReceipt}
-      />
+      <TableUpdateMenu<GoodsReceipt>
+       columns={goodsReceiptColumns}
+       fetchData={fetchGoodsReceipts}
+       deleteData={deleteGoodsReceipt}
+      editData={editGoodsReceipt} 
+      navigateTo={handleNavigate}             
+                   
+        />
     </>
   );
 };

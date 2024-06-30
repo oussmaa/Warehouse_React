@@ -41,6 +41,7 @@ const deleteSupplier = async (id: number): Promise<void> => {
 
 const editSupplier = async (supplier: Supplier): Promise<void> => {
   try {
+    console.log(supplier)
     const response = await ApiService.EditSupplier(ApiUrls.SUPPLIER, supplier.id, supplier);
   } catch (error) {
     console.error('Error update supplier:', error);

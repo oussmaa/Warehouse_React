@@ -17,7 +17,8 @@ import Article from "../../../Entity/Article";
     const [articles, setArticles] = useState<Article[]>([]);
     const [showAlert, setShowAlert] = useState(false);
     const [alertMessage, setAlertMessage] = useState("");
-    
+    const navigate = useNavigate();
+
 
   useEffect(() => {
          const fetchSuppliers = async () => {
@@ -76,16 +77,16 @@ import Article from "../../../Entity/Article";
 
          const newOrderStock = {
         
-            Description: description,
-            QuantityNeeded: quantityNeeded,
+            description: description,
+            quantityNeeded: quantityNeeded,
             supplier_id: supplierId,
-            article_id: articleId
+            articel: articleId
         };
 
         try {
             await apiService.AddOrderStock(ApiUrls.ORDERSTOCK  + "/addstock", newOrderStock);
             console.log("added with succussfully");
-            //navigate("/dashboard"); // Redirect to dashboard or any other page after successful addition
+            navigate("/dashboard/listorderstock"); // Redirect to dashboard or any other page after successful addition
         } catch (error) {
             console.error("Error adding order stock:", error);
             setAlertMessage("Error adding order stock");
@@ -153,8 +154,7 @@ import Article from "../../../Entity/Article";
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                 >
                                     <option value="">Select Supplier</option>
-                                    <option value={1}>1</option>
-                                    {suppliers.map((supplier) => (
+                                     {suppliers.map((supplier) => (
                                         <option key={supplier.id} value={supplier.id}>{supplier.name}</option>
                                     ))}
                                 </select>
@@ -175,7 +175,7 @@ import Article from "../../../Entity/Article";
                                 >
                                     <option disabled value="">Select Article</option>
                                     {articles.map((article) => (
-                                        <option key={article.id} value={article.id}>{article.articel}</option>
+                                        <option key={article.articel} value={article.articel}>{article.articel}</option>
                                     ))}
                                 </select>
                             </div>

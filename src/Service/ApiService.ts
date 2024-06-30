@@ -10,6 +10,7 @@ import OrderStock from "../Entity/OrderStock";
 import Globalestock from "../Entity/Globalestock";
 import Supplier from "../Entity/Supplier";
 import RolesRequest from "../Entity/RolesRequest";
+import Location from "../Entity/Location";
 
 class ApiService {
   // Function to get the token from local storage
@@ -277,8 +278,7 @@ class ApiService {
   }
 
   async getUser(endpoint: string, id : number): Promise<User> {
-    console.log(JSON.stringify(id));
-    console.log(`${endpoint}/${id}`);
+ 
     try {
       const token = this.getToken();
       const URL = id > 0? `${endpoint}/${id}` : `${endpoint}`;
@@ -311,11 +311,25 @@ class ApiService {
       throw error;
     }
   }
-
-  async EditUser(endpoint: string, id:number, data: User): Promise<User> {
+  async GetUserProfiles(endpoint: string, token: String): Promise<User> {
     try {
       const token = this.getToken();
-      const response = await axios.put<User>(`${endpoint}/${id}`, data, {
+      const response = await axios.post<User>(endpoint, { token }, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return response.data;
+    } catch (error) {
+       console.error("Error posting data:", error);
+      throw error;
+    }
+  }
+  async EditUser(endpoint: string,data: any): Promise<User> {
+    try {
+      const token = this.getToken();
+      const response = await axios.put<User>(`${endpoint}`, data, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -396,6 +410,21 @@ async DeletetArticel(endpoint: string, id : number): Promise<Article[]> {
     throw error;
   }
 }
+async DeleteUser(endpoint: string, id : number): Promise<User[]> {
+  try {
+    const token = this.getToken();
+    const response = await axios.delete<User[]>(`${endpoint}${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error;
+  }
+}
+
 //--------------------------
 //--- END : articel requests
 //--------------------------
@@ -422,7 +451,20 @@ async AddGoodsReceiptPos(endpoint: string, data: GoodsReceiptPos): Promise<Goods
             }
 }
 
-
+async GetListLocationArea(endpoint: string): Promise<Location[]> {
+  try {
+    const token = this.getToken();
+    const response = await axios.get<Location[]>(endpoint, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error;
+  }
+}
 async GetListGoodsReceiptPos(endpoint: string): Promise<GoodsReceiptPos[]> {
             try {
               const token = this.getToken();

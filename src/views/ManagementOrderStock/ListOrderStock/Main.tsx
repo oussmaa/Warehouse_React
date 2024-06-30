@@ -6,23 +6,13 @@ import TableColumn from "../../../Entity/TableColumn"; // Assuming TableColumn i
 import ApiService from "../../../Service/ApiService";
 import ApiUrls from "../../../API/apiUrls";
 import OrderStock from "../../../Entity/OrderStock";
- 
-
-// interface OrderStock {
-//     id: number;
-//     orderStockNb: number;
-//     description: string;
-//     quantityNeeded: number;
-//     supplier: string; // Assuming supplier is represented as a string for simplicity
-//   }
-
+import Supplier from "../../../Entity/Supplier";
 
 const orderStockColumns: TableColumn<OrderStock>[] = [
   { title: "ID", dataIndex: "id" },
-  { title: "Order Stock Number", dataIndex: "orderStockNb" },
   { title: "Description", dataIndex: "description" },
   { title: "Quantity Needed", dataIndex: "quantityNeeded" },
-  { title: "Supplier", dataIndex: "supplier" },
+  { title: "Supplier", dataIndex: "supplier", render: (supplier: Supplier) => supplier.name },  
 ];
 
 const fetchOrderStocks = async (): Promise<OrderStock[]> => {

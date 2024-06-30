@@ -65,7 +65,7 @@ function Main() {
         }, 3000); // 3-second delay
       } else {
         await ApiService.AddArticel(ApiUrls.ARTICLEAPI, article);
-        navigate("/dashboard/listarticles");
+        navigate("/dashboard/listarticle");
       }
     } catch (error) {
       console.error("Error adding article:", error);

@@ -5,7 +5,7 @@ export interface GoodsReceipt {
     id: number;
     description: string;
     goodsReceiptPosid:number
-    orderStockid:number
+    orderStockId:number
   }
 
   export default GoodsReceipt;

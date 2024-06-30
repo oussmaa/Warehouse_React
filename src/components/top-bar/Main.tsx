@@ -41,7 +41,7 @@ const logout = () =>{
   const GetUserWithToken = async () => {
     try {
       let token = localStorage.getItem('token');
-      const userdata = await apiService.getUser(ApiUrls.GETUSERWITHTOKEN,{'token':token});
+      const userdata = await apiService.GetUserProfiles(ApiUrls.GETUSERWITHTOKEN,{'token':token});
       setUserSate(userdata);
     } catch (error) {
       console.error("Error fetching menu data:", error);

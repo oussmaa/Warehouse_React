@@ -4,7 +4,6 @@ import apiService from "@/Service/ApiService";
 import ApiUrls from "@/API/apiUrls";
 import { useLocation, useNavigate } from "react-router-dom";
 import Users from "../../../Entity/Users";
-import { any, number } from "prop-types";
 
 const { Option } = Select;
 
@@ -14,38 +13,59 @@ const Main: React.FC = () => {
   const location = useLocation();
   const userId = location.state?.userId as number | undefined;
   const [initialValues, setInitialValues] = useState<Partial<Users>>({});
+  const [initialPassword, setInitialPaswword] = useState<string>();
+
   const buttonBackground = {
-    background: "#4CAF50", // Change this to any color or dynamic value
-    color: "#fff", // Text color
+    background: "#4CAF50",
+    color: "#fff",
   };
+
   useEffect(() => {
-    console.log("befor user id -------------- : ", userId)
     if (userId) {
-      console.log("befor user id -------------- : ")
-      // Fetch user data based on userId and set initial values
-      console.log("id of user =>> " + JSON.stringify(userId));
-      apiService.getUser(ApiUrls.GETUSERBYID, userId).then((data:any) => {
-        console.log("user data from update profile : " + JSON.stringify(data));
-        setInitialValues(data);
-        form.setFieldsValue(data);
+      apiService.getUser(ApiUrls.GETUSERBYID, userId).then((data: any) => {
+        // Transforming roles and permissions to the expected format
+        const transformedData = {
+          ...data,
+          roleNames: data.roles
+            ? data.roles.map((role: any) => role.roles)
+            : [],
+          permissionNames: data.permissions
+            ? data.permissions.map((perm: any) => perm.code)
+            : [],
+        };
+        setInitialValues(transformedData);
+        setInitialPaswword(transformedData.password)
+         form.setFieldsValue(transformedData);
       });
     }
   }, [userId]);
 
-  const onFinish = async (values: Users) => {
-    console.log(JSON.stringify(values))
+  const onFinish = async (values: any) => {
     try {
-      if (userId) {
-        await apiService.EditUser(ApiUrls.USERAPI + userId, values);
-      } else {
-        await apiService.createUser(ApiUrls.CREATEUSER, values);
-      }
-      message.success("User updated successfully");
-      navigate("/dashboard/users");
+      // Transforming back roles and permissions to the original format for submission
+      const transformedValues = {
+        ...values,
+        roles: values.roleNames.map((role: string) => ({ roles: role })),
+        permissions: values.permissionNames.map((perm: string) => ({
+          code: perm,
+        })),
+      };
+
+if(initialPassword==transformedValues.password)
+  {
+    transformedValues.password ="";
+  }
+         if (userId) {
+ 
+        console.log(transformedValues);
+        await apiService.EditUser(ApiUrls.USERAPI + userId, transformedValues);
+      } 
+     navigate("/dashboard/listusers");
     } catch (error) {
       message.error("Error updating user");
       console.error("Error updating user:", error);
     }
+
   };
 
   return (
@@ -98,46 +118,42 @@ const Main: React.FC = () => {
         <Input />
       </Form.Item>
       <Form.Item
-        name="userrole"
-        label="User Role"
-        rules={[{ required: true, message: "Please select the user role!" }]}
+        name="password"
+        label="Password"
+        rules={[{ required: true, message: "Please input the password!" }]}
       >
-        <Select>
-          <Option value={1}>Admin</Option>
-          <Option value={13}>User</Option>
+        <Input.Password />
+      </Form.Item>
+      <Form.Item name="locked" valuePropName="checked" label="Locked">
+        <Checkbox />
+      </Form.Item>
+      <Form.Item
+        name="roleNames"
+        label="Role Names"
+        rules={[{ required: true, message: "Please input the role names!" }]}
+      >
+        <Select mode="tags" style={{ width: "100%" }} placeholder="Roles">
+          <Option value="Admin">Admin</Option>
+          <Option value="User">User</Option>
+          {/* Add other roles as needed */}
         </Select>
       </Form.Item>
       <Form.Item
-        name="locked"
-        valuePropName="checked"
-        label="Locked"
-      >
-        <Checkbox />
-      </Form.Item>
- 
-      <Form.Item
-        name={["rolesRequest", "descrption"]}
-        label="Description"
-        rules={[{ required: true, message: "Please input the description!" }]}
-      >
-        <Input />
-        
-      </Form.Item>
-      <Form.Item
-        name={["rolesRequest", "permissions"]}
+        name="permissionNames"
         label="Permissions"
         rules={[{ required: true, message: "Please input the permissions!" }]}
       >
-        <Select mode="tags" style={{ width: '100%' }} placeholder="Permissions">
-          <Option value="READ">READ</Option>
-          <Option value="WRITE">WRITE</Option>
-          <Option value="Delete">Delete</Option>
+        <Select mode="tags" style={{ width: "100%" }} placeholder="Permissions">
+          <Option value="INSERT">INSERT</Option>
+          <Option value="DELETE">DELETE</Option>
+          <Option value="UPDATE">UPDATE</Option>
+
+          {/* Add other permissions as needed */}
         </Select>
       </Form.Item>
-
       <Form.Item>
         <Button type="primary" style={buttonBackground} htmlType="submit">
-          { "Update User"}
+          {userId ? "Update User" : "Create User"}
         </Button>
       </Form.Item>
     </Form>
