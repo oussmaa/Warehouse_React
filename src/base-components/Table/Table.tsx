@@ -9,7 +9,7 @@ interface TableProps<T> {
   fetchData: () => Promise<T[]>;
   deleteData: (id: number) => Promise<void>;
   editData: (data: T) => Promise<void>;
- 
+  navigateTo?: (path: string, state?: any) => void;
 }
 
 const { confirm } = Modal;
@@ -19,6 +19,7 @@ function Table<T extends { id: number }>({
   fetchData,
   deleteData,
   editData,
+  navigateTo
 }: TableProps<T>) {
   const [data, setData] = useState<T[]>([]);
   const [filteredData, setFilteredData] = useState<T[]>([]);
@@ -35,7 +36,7 @@ function Table<T extends { id: number }>({
         const result = await fetchData();
         setData(result);
         setFilteredData(result);
-      } catch (error) {
+      } catch (error) { 
         console.error("Error fetching data:", error);
       } finally {
         setLoading(false);
@@ -107,6 +108,13 @@ function Table<T extends { id: number }>({
     setSearchTerm(event.target.value);
   };
 
+  const handleRowClick = (record: T) => { 
+    const id = record.id; // Assuming record.id is the menuId you want to pass
+     if (navigateTo) {
+     navigateTo('',{ id }); // Replace '/your-path' with your actual route
+    }
+  };
+
   const columnsWithActions = [
     ...columns,
     {
@@ -114,7 +122,9 @@ function Table<T extends { id: number }>({
       key: "actions",
       render: (_: any, record: T) => (
         <Space size="middle">
-     
+          {navigateTo && <Button type="default" onClick={() => handleRowClick(record)}>
+            Display Location bin  
+          </Button> }  
           <Button type="default" onClick={() => handleEdit(record)}>
             Edit
           </Button>

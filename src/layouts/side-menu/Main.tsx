@@ -21,7 +21,7 @@ function Main() {
     try {
       const menuData = await apiService.get(ApiUrls.GETMENUBYID + menuId);
       setFormattedMenu(menuData);
-    } catch (error) {
+    } catch (error) { 
       console.error("Error fetching menu data:", error);
     }
   };

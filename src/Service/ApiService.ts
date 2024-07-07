@@ -11,6 +11,8 @@ import Globalestock from "../Entity/Globalestock";
 import Supplier from "../Entity/Supplier";
 import RolesRequest from "../Entity/RolesRequest";
 import Location from "../Entity/Location";
+import LocationArea from "../Entity/LocationArea";
+import LocationBin from "../Entity/LocationBin";
 
 class ApiService {
   // Function to get the token from local storage
@@ -23,7 +25,7 @@ class ApiService {
   }
 
   // Function to make a GET request with token in headers
-  async get(endpoint: string): Promise<Menu> {
+  async get(endpoint: string): Promise<Menu> { 
     try {
       const token = this.getToken();
       const response = await axios.get<Menu>(endpoint, {
@@ -834,6 +836,170 @@ async GetRoleById(endpoint: string, id : number): Promise<RolesRequest[]> {
 }
 //------------------------
 //---End : Role
+//------------------------
+
+
+//------------------------
+//---Begin : LocationArea
+//------------------------
+async AddLocationArea(endpoint: string, data : LocationArea): Promise<LocationArea> {
+  console.log("data of location area" , data)
+  try {
+    const token = this.getToken();
+    const response = await axios.post<LocationArea>(endpoint, data, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+     console.error("Error posting data:", error);
+    throw error;
+  }
+}
+
+
+async GetLocationAreaList(endpoint: string): Promise<LocationArea[]> {
+  try {
+    const token = this.getToken();
+    const response = await axios.get<LocationArea[]>(endpoint, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error;
+  }
+}
+
+
+async GetLocationAreaById(endpoint: string, id : number): Promise<LocationArea[]> {
+  try {
+    const token = this.getToken();
+    const response = await axios.get<LocationArea[]>(`${endpoint}/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error;
+  }
+}
+
+
+async EditLocationArea(endpoint: string, id:number, data: LocationArea ): Promise<LocationArea > {
+  try {
+    const token = this.getToken();
+    const response = await axios.put<LocationArea >(`${endpoint}/${id}`, data, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+     console.error("Error posting data:", error);
+    throw error;
+  }
+}
+
+//------------------------
+//---End : LocationArea
+//------------------------
+
+
+//------------------------
+//---Begin : LocationBin
+//------------------------
+async AddLocationBin(endpoint: string, id : number, data : LocationBin): Promise<LocationBin> {
+  console.log("data of location Bin" , data)
+  try {
+    const token = this.getToken();
+    const response = await axios.post<LocationBin>(`${endpoint}/${id}`, data, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+    });
+    return response.data;
+  } catch (error) {
+     console.error("Error posting data:", error);
+    throw error;
+  }
+}
+
+
+async GetLocationBinListById(endpoint: string, id : number): Promise<LocationBin[]> {
+  try {
+    const token = this.getToken();
+    const response = await axios.get<LocationBin[]>(`${endpoint}/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error;
+  }
+}
+
+
+async GetLocationBinList(endpoint: string): Promise<LocationBin[]> {
+  try {
+    const token = this.getToken();
+    const response = await axios.get<LocationBin[]>(endpoint, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error;
+  }
+}
+
+
+async GetLocationBinById(endpoint: string, id : number): Promise<LocationBin[]> {
+  try {
+    const token = this.getToken();
+    const response = await axios.get<LocationBin[]>(`${endpoint}/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error;
+  }
+}
+
+
+async EditLocationBin(endpoint: string, id:number, data: LocationBin ): Promise<LocationBin > {
+  try {
+    const token = this.getToken();
+    const response = await axios.put<LocationBin>(`${endpoint}/${id}`, data, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+     console.error("Error posting data:", error);
+    throw error;
+  }
+}
+
+//------------------------
+//---End : LocationBin
 //------------------------
 
 }

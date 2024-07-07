@@ -6,12 +6,15 @@ import Router from "./router";
 function App() {
   return (
     <RecoilRoot>
-      <BrowserRouter>
+      <BrowserRouter> 
         <Router />
         <ScrollToTop />
       </BrowserRouter>
     </RecoilRoot>
   );
 }
+  
+
+
 
 export default App;

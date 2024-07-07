@@ -39,6 +39,13 @@ import AddSupplier from "@/views/ManagementSupplier/AddSupplier/Main";
 import ListSupplier from "@/views/ManagementSupplier/ListSupplier/Main";
 import ErrorPage from "@/views/page-2/Main";
 
+import AddLocationArea from "@/views/ManagementLocationArea/AddLocationArea/Main";
+import ListLocationArea from "@/views/ManagementLocationArea/ListLocationArea/Main";
+
+import AddLocationBin from "@/views/ManagementLocationBin/AddLocationBin/Main";
+import ListLocationBin from "@/views/ManagementLocationBin/ListLocationBin/Main";
+
+
 function Router() {
   var isAuthenticated = false;
 
@@ -58,9 +65,25 @@ function Router() {
       path: "/dashboard",
       element: isAuthenticated ? <SideMenu /> : <Navigate to="/" />,
       children: [
-        {
+        { 
           path: "updateusers",
           element: <UpdateUsers />,
+        },
+        { 
+          path: "addlocationarea",
+          element: <AddLocationArea />,
+        },
+        { 
+          path: "listlocationarea",
+          element: <ListLocationArea />,
+        },
+        { 
+          path: "addlocationbin",
+          element: <AddLocationBin />,
+        },
+        { 
+          path: "listlocationbin",
+          element: <ListLocationBin />,
         },
         {
           path: "listsupplier",

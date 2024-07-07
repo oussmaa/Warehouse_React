@@ -56,66 +56,78 @@ interface ApiUrls {
   //---Supplier
   readonly SUPPLIER : string;
 
-  readonly GetListLocationArea:string;
+  // readonly GetListLocationArea:string;
+
+  //---location area
+  readonly LOCATIONAREA: string;
+
+  //---LOCATIONBIN
+  readonly LOCATIONBIN : string;
 }
+
+
+
 
 const ApiUrls: ApiUrls = {
   //-----Menu
-  MENU : "http://127.0.0.1:7070/menurequest",
-  GETALLMENU: "http://127.0.0.1:7070/menurequest/getallmenu",
-  GETMENUBYID: "http://127.0.0.1:7070/menurequest/getmenubyid/",
-  POSTMENU: "http://127.0.0.1:7070/menurequest/addmenu",
+  MENU : "http://127.0.0.1:5050/menurequest",
+  GETALLMENU: "http://127.0.0.1:5050/menurequest/getallmenu",
+  GETMENUBYID: "http://127.0.0.1:5050/menurequest/getmenubyid/",
+  POSTMENU: "http://127.0.0.1:5050/menurequest/addmenu",
 
-  GetListLocationArea:"http://localhost:7070/locationAreaStocks",
   //---Menulabel
-  MENULABEL : "http://127.0.0.1:7070/MenuLabelRequest",
-  GETLISTLABELBYID: "http://127.0.0.1:7070/MenuLabelRequest/getmenulabelbyid/",
-  POSTMENULABEL: "http://127.0.0.1:7070/MenuLabelRequest/addlabelsandMenu/",
+  MENULABEL : "http://127.0.0.1:5050/MenuLabelRequest",
+  GETLISTLABELBYID: "http://127.0.0.1:5050/MenuLabelRequest/getmenulabelbyid/",
+  POSTMENULABEL: "http://127.0.0.1:5050/MenuLabelRequest/addlabelsandMenu/",
   
   //---submenu
-  SUBMENU : "http://127.0.0.1:7070/SubMenuRequest",
-  GETLISTSUBMENUBYID: "http://127.0.0.1:7070/SubMenuRequest/getsubmenubyid/",
-  POSTSUBMENU: "http://127.0.0.1:7070/SubMenuRequest/addsunMenul/",
-  GETSUBSUBMENUBYID: "http://127.0.0.1:7070/SubMenuRequest/getsubmenubyid/",
+  SUBMENU : "http://127.0.0.1:5050/SubMenuRequest",
+  GETLISTSUBMENUBYID: "http://127.0.0.1:5050/SubMenuRequest/getsubmenubyid/",
+  POSTSUBMENU: "http://127.0.0.1:5050/SubMenuRequest/addsunMenul/",
+  GETSUBSUBMENUBYID: "http://127.0.0.1:5050/SubMenuRequest/getsubmenubyid/",
   
   //---User
-  USERAPI : "http://127.0.0.1:7070/login/UpdateUser/",
-  GETUSERWITHTOKEN: "http://127.0.0.1:7070/login/GetUser",
-  GETUSERBYID: "http://127.0.0.1:7070/login/GetUserById",
-  GETIMAGEUSER: "http://127.0.0.1:7070/login/images/",
-  GETALLUSERS :"http://127.0.0.1:7070/login/GetAllUsers",
-  ADDUSER:"http://127.0.0.1:7070/register/adduser",
-  LOGINUSER:"http://127.0.0.1:7070/login/loginuser",
-  DELETUSER:"http://127.0.0.1:7070/login/deleteUser/",
-
+  USERAPI : "http://127.0.0.1:6090/login/UpdateUser/",
+  GETUSERWITHTOKEN: "http://127.0.0.1:6090/login/GetUser",
+  GETUSERBYID: "http://127.0.0.1:6090/login/GetUserById",
+  GETIMAGEUSER: "http://127.0.0.1:6090/login/images/",
+  GETALLUSERS :"http://127.0.0.1:6090/login/GetAllUsers",
+  ADDUSER:"http://127.0.0.1:6090/register/adduser",
+  LOGINUSER:"http://127.0.0.1:6090/login/loginuser",
+  DELETUSER:"http://127.0.0.1:6090/login/deleteUser/",
+  
   //---Rolle
-  ROLEAPI : "http://127.0.0.1:7070/RolesRequest",
-  ALLROLES : "http://127.0.0.1:7070/RolesRequest/getallroles",
-  GETROLEBYID : "http://127.0.0.1:7070/RolesRequest/getrolesbyid",
-  ADDROLE : "http://127.0.0.1:7070/RolesRequest/addroles",
-  UPDATEROLLE : "http://127.0.0.1:7070/RolesRequest/updateroles",
-  DELETEROLE : "http://127.0.0.1:7070/RolesRequest/delete",
-
+  ROLEAPI : "http://127.0.0.1:6090/RolesRequest",
+  ALLROLES : "http://127.0.0.1:6090/RolesRequest/getallroles",
+  GETROLEBYID : "http://127.0.0.1:6090/RolesRequest/getrolesbyid",
+  ADDROLE : "http://127.0.0.1:6090/RolesRequest/addroles",
+  UPDATEROLLE : "http://127.0.0.1:6090/RolesRequest/updateroles",
+  DELETEROLE : "http://127.0.0.1:6090/RolesRequest/delete",
+  
   //---Articel
-  ARTICLEAPI : "http://127.0.0.1:7070/articles",
-
-
+  ARTICLEAPI : "http://127.0.0.1:8090/articles",
+  
+  
   //---GoodsReceiptPos
-  GOODSRECEIPTPOS : "http://127.0.0.1:7070/goodsReceiptPos",
-
+  GOODSRECEIPTPOS : "http://127.0.0.1:8090/goodsReceiptPos",
+  
   //---GoodsReceipt
-  GOODSRECEIPT : "http://127.0.0.1:7070/goodsReceipts",
-
+  GOODSRECEIPT : "http://127.0.0.1:8090/goodsReceipts",
+  
   //---OrderStock 
-  ORDERSTOCK :"http://127.0.0.1:7070/orderstocks",
-
+  ORDERSTOCK :"http://127.0.0.1:8090/orderstocks",
+  
   //--GlobalStock
-  GLOBALSTOCK : "http://127.0.0.1:7070/globalestocks",
-
+  GLOBALSTOCK : "http://127.0.0.1:8090/globalestocks",
+  
   //---Supplier
-  SUPPLIER : "http://127.0.0.1:7070/suppliers"
+  SUPPLIER : "http://127.0.0.1:8090/suppliers",
+  
+  //---LocationArea
+  LOCATIONAREA : "http://localhost:8090/locationAreaStocks",
 
-
+  //---LocationBin 
+  LOCATIONBIN : "http://localhost:8090/locationBinStocks"
 };
 
 export default ApiUrls;

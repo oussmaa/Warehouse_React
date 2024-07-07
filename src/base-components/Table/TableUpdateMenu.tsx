@@ -17,7 +17,7 @@ interface TableProps<T> {
 const { confirm } = Modal;
 
 function TableUpdateMenu<T extends { id: number }>({
-  columns,
+  columns, 
   fetchData,
   deleteData,
   editData,
@@ -109,7 +109,7 @@ function TableUpdateMenu<T extends { id: number }>({
     setSearchTerm(event.target.value);
   };
 
-  const handleRowClick = (record: T) => {
+  const handleRowClick = (record: T) => { 
     const menuId = record.id; // Assuming record.id is the menuId you want to pass
      if (navigateTo) {
      navigateTo('',{ menuId }); // Replace '/your-path' with your actual route
