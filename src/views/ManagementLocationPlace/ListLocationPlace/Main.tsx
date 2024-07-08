@@ -13,7 +13,7 @@ import {
 //   import locationBIn from "../../../Entity/locationBIn";
   import { Button } from "antd";
   import Table from "../../../base-components/Table/Table";
-  import { Alert } from "@/base-components";
+
   import LocationBin from "../../../Entity/LocationBin";
   import LocationPlace from "../../../Entity/LocationPlace";
      
