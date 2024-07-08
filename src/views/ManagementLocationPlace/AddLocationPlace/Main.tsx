@@ -7,6 +7,7 @@ import staticData from "@/stores/staticData";
 import apiService from "@/Service/ApiService";
 import ApiUrls from "@/API/apiUrls";
 import LocationPlace from "../../../Entity/LocationPlace";
+import { Alert } from "@/base-components";
 // import locationPlaceLabel from "../../../Entity/LoactionPlace";
 
 const { Option } = Select;
@@ -18,9 +19,12 @@ function Main() {
   const location = useLocation();
   const locationBinId = location.state?.locationBinId;
 
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+
   const [locationPlace, setLocationPlace] = useState<LocationPlace>({
     id: 0,
-    Place: "",
+    location_Place: "",
 });
 
   useEffect(() => {
@@ -29,11 +33,21 @@ function Main() {
 
   const ValidateInput = async () => {
     console.log(locationBinId)
-    if (locationPlace.Place !== "") {
+    if (locationPlace.location_Place !== "") {
       try {
-        await apiService.AddLocationPlace(ApiUrls.LOCATIONPLACE, locationBinId.id, locationPlace);
+        const res = await apiService.AddLocationPlace(ApiUrls.LOCATIONPLACE, locationBinId.id, locationPlace);
         console.log(locationBinId)
-        navigate("/dashboard/listlocationPlace", { state: { locationBinId }});
+        if(res == "This Location is aleardy exist"){
+          setAlertMessage(res + "");
+
+          setShowAlert(true);
+          setTimeout(() => {
+  
+            setShowAlert(false);
+          }, 3000); // 3-second delay
+        }else {
+          navigate("/dashboard/listlocationPlace", { state: { locationBinId }});
+        }
       } catch (error) {
         console.error("Error adding locationPlace label:", error);
         // Handle error gracefully
@@ -60,6 +74,13 @@ function Main() {
           </div>
         </ModalBody>
       </Modal>
+      <Alert
+            show={showAlert}
+            className="alert-danger"
+            onHidden={() => setShowAlert(false)}
+          >
+            {alertMessage}
+          </Alert>
 
       <div className="intro-y flex items-center mt-8">
         <h2 className="text-lg font-medium mr-auto">Add locationPlace Label</h2>
@@ -81,8 +102,8 @@ function Main() {
                 type="text"
                 className="form-control"
                 placeholder="Name LocationPlace"
-                name="Place"
-                value={locationPlace.Place}
+                name="location_Place"
+                value={locationPlace.location_Place}
                 onChange={(e) => handleNameLoactionPlaceChange(e)}
               />
             </div>

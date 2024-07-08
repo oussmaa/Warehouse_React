@@ -7,6 +7,8 @@ import staticData from "@/stores/staticData";
 import apiService from "@/Service/ApiService";
 import ApiUrls from "@/API/apiUrls";
 import LocationBin from "../../../Entity/LocationBin";
+import { Alert } from "@/base-components";
+import { string } from "prop-types";
 // import locationBinLabel from "../../../Entity/LoactionBin";
 
 const { Option } = Select;
@@ -14,13 +16,15 @@ const { Option } = Select;
 function Main() {
   const [ValueName, setValueName] = useState("");
   const [deleteConfirmationModal, setDeleteConfirmationModal] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
   const locationAreaId = location.state?.locationAreaId;
 
   const [locationBin, setLocationBin] = useState<LocationBin>({
     id: 0,
-    Bin: "",
+    location_bin: "",
 });
 
   useEffect(() => {
@@ -29,11 +33,22 @@ function Main() {
 
   const ValidateInput = async () => {
     console.log(locationAreaId)
-    if (locationBin.Bin !== "") {
+    if (locationBin.location_bin !== "") {
       try {
-        await apiService.AddLocationBin(ApiUrls.LOCATIONBIN, locationAreaId.id, locationBin);
-        console.log(locationAreaId)
-        navigate("/dashboard/listlocationbin", { state: { locationAreaId }});
+        const res = await apiService.AddLocationBin(ApiUrls.LOCATIONBIN, locationAreaId.id, locationBin);
+        if(res == "This Location is aleardy exist"){
+          setAlertMessage(res + "");
+
+          setShowAlert(true);
+          setTimeout(() => {
+  
+            setShowAlert(false);
+          }, 3000); // 3-second delay
+        }
+        else {
+          console.log(res);
+          navigate("/dashboard/listlocationbin", { state: { locationAreaId }});
+        }
       } catch (error) {
         console.error("Error adding locationBin label:", error);
         // Handle error gracefully
@@ -60,7 +75,13 @@ function Main() {
           </div>
         </ModalBody>
       </Modal>
-
+      <Alert
+            show={showAlert}
+            className="alert-danger"
+            onHidden={() => setShowAlert(false)}
+          >
+            {alertMessage}
+          </Alert>
       <div className="intro-y flex items-center mt-8">
         <h2 className="text-lg font-medium mr-auto">Add locationBin Label</h2>
       </div>
@@ -81,8 +102,8 @@ function Main() {
                 type="text"
                 className="form-control"
                 placeholder="Name LocationBin"
-                name="Bin"
-                value={locationBin.Bin}
+                name="location_bin"
+                value={locationBin.location_bin}
                 onChange={(e) => handleNameLoactionBinChange(e)}
               />
             </div>

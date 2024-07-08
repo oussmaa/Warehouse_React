@@ -26,7 +26,7 @@ function Main() {
   const [Password, setPassword] = useState("");
   const navigate = useNavigate();
   const [showAlert, setShowAlert] = useState(false);
-  const [alertMessage, setAlertMessage] = useState("");
+  const [alertMessage, setAlertMessage] = useState(""); 
   const [checkboxes, setCheckboxes] = useState({
     Insert: false,
     Delete: false,

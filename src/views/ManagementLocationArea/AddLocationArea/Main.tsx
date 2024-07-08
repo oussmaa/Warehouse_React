@@ -7,6 +7,7 @@ import staticData from "@/stores/staticData";
 import apiService from "@/Service/ApiService";
 import ApiUrls from "@/API/apiUrls";
 import MenuLabel from "../../../Entity/MenuLabel";
+import { Alert } from "@/base-components";
 import LocationArea from "../../../Entity/LocationArea";
 
 const { Option } = Select;
@@ -14,6 +15,8 @@ const { Option } = Select;
 function Main() {
   
   const [deleteConfirmationModal, setDeleteConfirmationModal] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -21,7 +24,7 @@ function Main() {
 
 const [locationArea, setLocationArea] = useState<LocationArea>({
                                                     id: 0,
-                                                    area: "",
+                                                    location_area: "",
                                                 });
 
 
@@ -33,12 +36,23 @@ const [locationArea, setLocationArea] = useState<LocationArea>({
   }, []);
 
   const ValidateInput = async () => {
-    if (locationArea.area !== "") {
+    if (locationArea.location_area !== "") {
 
       try {
-        await apiService.AddLocationArea(ApiUrls.LOCATIONAREA, locationArea);
-        // navigate("/dashboard/listmenu");
-        console.log("location added")
+        const res = await apiService.AddLocationArea(ApiUrls.LOCATIONAREA, locationArea);
+        if(res == "This Location is aleardy exist"){
+          setAlertMessage(res + "");
+
+          setShowAlert(true);
+          setTimeout(() => {
+  
+            setShowAlert(false);
+          }, 3000); // 3-second delay
+        }else {
+          navigate("/dashboard/listlocationarea");
+          console.log("location added");
+        }
+
       } catch (error) {
         console.error("Error adding menu label:", error);
         // Handle error gracefully
@@ -67,7 +81,13 @@ const [locationArea, setLocationArea] = useState<LocationArea>({
           </div>
         </ModalBody>
       </Modal>
-
+      <Alert
+            show={showAlert}
+            className="alert-danger"
+            onHidden={() => setShowAlert(false)}
+          >
+            {alertMessage}
+          </Alert>
       <div className="intro-y flex items-center mt-8">
         <h2 className="text-lg font-medium mr-auto">Add Location Area</h2>
       </div>
@@ -92,8 +112,8 @@ const [locationArea, setLocationArea] = useState<LocationArea>({
                 type="text"
                 className="form-control"
                 placeholder="Name Area"
-                name="area"
-                value={locationArea.area}
+                name="location_area"
+                value={locationArea.location_area}
                 onChange={(e) => handleLocationAreaChange(e)}
               />
             </div>

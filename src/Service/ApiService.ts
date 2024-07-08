@@ -862,6 +862,7 @@ async AddLocationArea(endpoint: string, data : LocationArea): Promise<LocationAr
 
 
 async GetLocationAreaList(endpoint: string): Promise<LocationArea[]> {
+  // console.log(object)
   try {
     const token = this.getToken();
     const response = await axios.get<LocationArea[]>(endpoint, {

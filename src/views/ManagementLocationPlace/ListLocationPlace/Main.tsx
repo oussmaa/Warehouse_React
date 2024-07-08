@@ -13,13 +13,14 @@ import {
 //   import locationBIn from "../../../Entity/locationBIn";
   import { Button } from "antd";
   import Table from "../../../base-components/Table/Table";
-import LocationBin from "../../../Entity/LocationBin";
-import LocationPlace from "../../../Entity/LocationPlace";
+  import { Alert } from "@/base-components";
+  import LocationBin from "../../../Entity/LocationBin";
+  import LocationPlace from "../../../Entity/LocationPlace";
      
    
   const locationPlaceColumns: TableColumn<LocationPlace>[] = [
     { title: "ID", dataIndex: "id" },
-    { title: "Place", dataIndex: "Place" },
+    { title: "Place", dataIndex: "place" },
     { title: "Date Creation", dataIndex: "LocalDateTime" },
    
   ];
@@ -29,6 +30,8 @@ import LocationPlace from "../../../Entity/LocationPlace";
   function Main() {
     const [locationBIn, setLocationPlace] = useState<LocationPlace[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [showAlert, setShowAlert] = useState(false);
+    const [alertMessage, setAlertMessage] = useState("");
     const [error, setError] = useState<string | null>(null);
   
   
@@ -45,9 +48,9 @@ import LocationPlace from "../../../Entity/LocationPlace";
     const fetcheLocationPlace = async (): Promise<LocationPlace[]> => {
         console.log("id : " + locationBinId);
       try {
-        const locationBin = await apiService.GetLocationPlaceListById(ApiUrls.LOCATIONPLACE,locationBinId.id);
-        locationBin.sort((a: { id: number; }, b: { id: number; }) => a.id - b.id);
-        return locationBin
+        const locationPlace = await apiService.GetLocationPlaceListById(ApiUrls.LOCATIONPLACE,locationBinId.id);
+        locationPlace.sort((a: { id: number; }, b: { id: number; }) => a.id - b.id);
+        return locationPlace
   
       } catch (error) {
         console.error('Error fetching location bin data:', error);
@@ -74,7 +77,7 @@ import LocationPlace from "../../../Entity/LocationPlace";
     };
   
     useEffect(() => {
-        console.log("from use effect list lcbin", locationBinId);
+      console.log("from use effect list lcbin", locationBinId);
       const fetchData = async () => {
         try {
           const locationPlaceList = await fetcheLocationPlace();

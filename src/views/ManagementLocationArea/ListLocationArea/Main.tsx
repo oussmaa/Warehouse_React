@@ -55,6 +55,7 @@ function Main() {
       try {
         const locationAreaList = await fetchLocationArea();
         setLocationArea(locationAreaList.sort());
+        console.log("locatio ar from use effect " + [...locationAreaList]);
       } catch (error) {
         setError("Error fetching users. Please try again.");
       } finally {

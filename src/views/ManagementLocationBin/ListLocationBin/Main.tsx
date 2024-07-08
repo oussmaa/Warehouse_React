@@ -18,9 +18,8 @@ import LocationBin from "../../../Entity/LocationBin";
    
   const locationBinColumns: TableColumn<LocationBin>[] = [
     { title: "ID", dataIndex: "id" },
-    { title: "Bin", dataIndex: "Bin" },
+    { title: "Bin", dataIndex: "bin" },
     { title: "Date Creation", dataIndex: "creationDate" },
-   
   ];
   
   
@@ -80,6 +79,7 @@ import LocationBin from "../../../Entity/LocationBin";
         try {
           const locationBinList = await fetcheLocationBin();
           setLocationBIn(locationBinList.sort());
+          console.log("frm usefc : " + JSON.stringify(locationBinList))
         } catch (error) {
           setError("Error fetching location bin. Please try again.");
         } finally {

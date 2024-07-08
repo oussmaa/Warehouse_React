@@ -1,7 +1,8 @@
 interface LocationArea {
     id : number,
-    area : string,
+    location_area : string,
     locationBin? : [],
+    area? : string,
     creationDate? : string
 }
 
