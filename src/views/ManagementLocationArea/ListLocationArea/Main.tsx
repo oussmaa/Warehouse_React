@@ -91,7 +91,7 @@ function Main() {
     const navigate = useNavigate();
   }
     const handleNavigate = (path: string, locationAreaId: any) => {
-      navigate('/dashboard/listlocationbin',{ state: { locationAreaId } });
+      navigate('/dashboard/listlocationbin',{ state: { locationAreaId } }); 
        
     };
  

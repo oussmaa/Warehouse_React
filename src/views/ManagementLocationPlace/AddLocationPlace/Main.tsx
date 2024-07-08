@@ -6,8 +6,8 @@ import * as lucideIcons from "lucide-react"; // Import any necessary icons
 import staticData from "@/stores/staticData";
 import apiService from "@/Service/ApiService";
 import ApiUrls from "@/API/apiUrls";
-import LocationBin from "../../../Entity/LocationBin";
-// import locationBinLabel from "../../../Entity/LoactionBin";
+import LocationPlace from "../../../Entity/LocationPlace";
+// import locationPlaceLabel from "../../../Entity/LoactionPlace";
 
 const { Option } = Select;
 
@@ -16,26 +16,26 @@ function Main() {
   const [deleteConfirmationModal, setDeleteConfirmationModal] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  const locationAreaId = location.state?.locationAreaId;
+  const locationBinId = location.state?.locationBinId;
 
-  const [locationBin, setLocationBin] = useState<LocationBin>({
+  const [locationPlace, setLocationPlace] = useState<LocationPlace>({
     id: 0,
-    Bin: "",
+    Place: "",
 });
 
   useEffect(() => {
-    console.log("from use effect add lcbin", locationAreaId);
+    console.log("from use effect add lcPlace", locationBinId);
   }, []);
 
   const ValidateInput = async () => {
-    console.log(locationAreaId)
-    if (locationBin.Bin !== "") {
+    console.log(locationBinId)
+    if (locationPlace.Place !== "") {
       try {
-        await apiService.AddLocationBin(ApiUrls.LOCATIONBIN, locationAreaId.id, locationBin);
-        console.log(locationAreaId)
-        navigate("/dashboard/listlocationbin", { state: { locationAreaId }});
+        await apiService.AddLocationPlace(ApiUrls.LOCATIONPLACE, locationBinId.id, locationPlace);
+        console.log(locationBinId)
+        navigate("/dashboard/listlocationPlace", { state: { locationBinId }});
       } catch (error) {
-        console.error("Error adding locationBin label:", error);
+        console.error("Error adding locationPlace label:", error);
         // Handle error gracefully
       }
     } else {
@@ -43,9 +43,9 @@ function Main() {
     }
   };
 
-  const handleNameLoactionBinChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setLocationBin({...locationBin, [e.target.name] : e.target.value});
-    console.log(locationBin)
+  const handleNameLoactionPlaceChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setLocationPlace({...locationPlace, [e.target.name] : e.target.value});
+    console.log(locationPlace)
   };
 
   return (
@@ -62,11 +62,11 @@ function Main() {
       </Modal>
 
       <div className="intro-y flex items-center mt-8">
-        <h2 className="text-lg font-medium mr-auto">Add locationBin Label</h2>
+        <h2 className="text-lg font-medium mr-auto">Add locationPlace Label</h2>
       </div>
 
       <div className="intro-y box p-5 mt-5">
-        Hello! Here you can add a locationBin Label.
+        Hello! Here you can add a locationPlace Label.
       </div>
 
       <div className="grid grid-cols-12 gap-6 mt-8">
@@ -74,16 +74,16 @@ function Main() {
           <div className="intro-y box p-5">
           <div className="intro-y col-span-12 sm:col-span-6">
               <label htmlFor="input-wizard-1" className="form-label">
-                LocationBin
+                LocationPlace
               </label>
               <input
                 id="input-wizard-1"
                 type="text"
                 className="form-control"
-                placeholder="Name LocationBin"
-                name="Bin"
-                value={locationBin.Bin}
-                onChange={(e) => handleNameLoactionBinChange(e)}
+                placeholder="Name LocationPlace"
+                name="Place"
+                value={locationPlace.Place}
+                onChange={(e) => handleNameLoactionPlaceChange(e)}
               />
             </div>
           </div>

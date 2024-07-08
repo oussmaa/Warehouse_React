@@ -14,39 +14,38 @@ import {
   import { Button } from "antd";
   import Table from "../../../base-components/Table/Table";
 import LocationBin from "../../../Entity/LocationBin";
+import LocationPlace from "../../../Entity/LocationPlace";
      
    
-  const locationBinColumns: TableColumn<LocationBin>[] = [
+  const locationPlaceColumns: TableColumn<LocationPlace>[] = [
     { title: "ID", dataIndex: "id" },
-    { title: "Bin", dataIndex: "Bin" },
-    { title: "Date Creation", dataIndex: "creationDate" },
+    { title: "Place", dataIndex: "Place" },
+    { title: "Date Creation", dataIndex: "LocalDateTime" },
    
   ];
   
   
   
   function Main() {
-    const [locationBIn, setLocationBIn] = useState<LocationBin[]>([]);
+    const [locationBIn, setLocationPlace] = useState<LocationPlace[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
   
   
     const navigate = useNavigate();
     const location = useLocation();
-    const locationAreaId = location.state?.locationAreaId;
+    const locationBinId = location.state?.locationBinId;
     
-    const navigatetoaddLocationBin =()=>{
-        navigate("/dashboard/addlocationbin",{ state: { locationAreaId } })
-    
+    const navigatetoaddLocationPlace =()=>{
+        navigate("/dashboard/addlocationplace",{ state: { locationBinId } });
     };
    
 
   
-    const fetcheLocationBin = async (): Promise<LocationBin[]> => {
-        console.log("id : " + locationAreaId);
+    const fetcheLocationPlace = async (): Promise<LocationPlace[]> => {
+        console.log("id : " + locationBinId);
       try {
-     
-        const locationBin = await apiService.GetLocationBinListById(ApiUrls.LOCATIONBIN,locationAreaId.id);
+        const locationBin = await apiService.GetLocationPlaceListById(ApiUrls.LOCATIONPLACE,locationBinId.id);
         locationBin.sort((a: { id: number; }, b: { id: number; }) => a.id - b.id);
         return locationBin
   
@@ -57,11 +56,11 @@ import LocationBin from "../../../Entity/LocationBin";
        
     };
   
-    const editLocationBin = async (locationBin: LocationBin): Promise<void> => {
+    const editLocationPlace = async (locationPlace: LocationPlace): Promise<void> => {
       try {
-        await apiService.EditLocationBin(ApiUrls.LOCATIONBIN, locationBin.id, locationBin);
+        await apiService.EditLocationPlace(ApiUrls.LOCATIONPLACE, locationPlace.id, locationPlace);
       } catch (error) {
-        console.error('Error update location bin:', error);
+        console.error('Error update location place :', error);
       } 
     };
   
@@ -75,11 +74,11 @@ import LocationBin from "../../../Entity/LocationBin";
     };
   
     useEffect(() => {
-        console.log("from use effect list lcbin", locationAreaId);
+        console.log("from use effect list lcbin", locationBinId);
       const fetchData = async () => {
         try {
-          const locationBinList = await fetcheLocationBin();
-          setLocationBIn(locationBinList.sort());
+          const locationPlaceList = await fetcheLocationPlace();
+          setLocationPlace(locationPlaceList.sort());
         } catch (error) {
           setError("Error fetching location bin. Please try again.");
         } finally {
@@ -106,7 +105,7 @@ import LocationBin from "../../../Entity/LocationBin";
         <>
           <div>
             <h1 className="text-2xl font-bold mb-4">List Location Bin  </h1>
-            <Button type="default"  onClick={() => navigatetoaddLocationBin()} >
+            <Button type="default"  onClick={() => navigatetoaddLocationPlace()} >
               Add Location Bin
             </Button> 
           </div>
@@ -115,11 +114,11 @@ import LocationBin from "../../../Entity/LocationBin";
           ) : error ? (
             <p>{error}</p>
           ) : (
-            <Table<LocationBin>
-                  columns={locationBinColumns}
+            <Table<LocationPlace>
+                  columns={locationPlaceColumns}
                   fetchData={fetchData}
                   deleteData={DeleteLocationBin}
-                  editData={editLocationBin} 
+                  editData={editLocationPlace} 
                   navigateTo={handleNavigate}             
                        
             />

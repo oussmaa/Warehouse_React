@@ -5,7 +5,7 @@ import ApiUrls from "@/API/apiUrls";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Alert } from "@/base-components";
 import GoodsReceiptPos from "../../../Entity/GoodsReceiptPos";
-import Location from "../../../Entity/Location";
+import Location from "../../../Entity/LocationPlace";
  
 export function Main() {
 

@@ -45,6 +45,9 @@ import ListLocationArea from "@/views/ManagementLocationArea/ListLocationArea/Ma
 import AddLocationBin from "@/views/ManagementLocationBin/AddLocationBin/Main";
 import ListLocationBin from "@/views/ManagementLocationBin/ListLocationBin/Main";
 
+import AddLocationPlace from "@/views/ManagementLocationPlace/AddLocationPlace/Main";
+import ListLocationPlace from "@/views/ManagementLocationPlace/ListLocationPlace/Main";
+
 
 function Router() {
   var isAuthenticated = false;
@@ -84,6 +87,14 @@ function Router() {
         { 
           path: "listlocationbin",
           element: <ListLocationBin />,
+        },
+        { 
+          path: "addlocationplace",
+          element: <AddLocationPlace />,
+        },
+        { 
+          path: "listlocationplace",
+          element: <ListLocationPlace />,
         },
         {
           path: "listsupplier",

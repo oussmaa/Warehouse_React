@@ -97,9 +97,8 @@ import LocationBin from "../../../Entity/LocationBin";
     const ParentComponent = () => {
       const navigate = useNavigate();
     }
-      const handleNavigate = (path: string, menuId: any) => {
-        alert('Not found Another SubMenu')
-   
+      const handleNavigate = (path: string, locationBinId: any) => {
+        navigate('/dashboard/listLocationplace',{ state: { locationBinId } });
       };
   
       return (

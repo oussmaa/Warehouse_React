@@ -63,6 +63,9 @@ interface ApiUrls {
 
   //---LOCATIONBIN
   readonly LOCATIONBIN : string;
+
+  //---LOCATIONPLACES
+  readonly LOCATIONPLACE :string;
 }
 
 
@@ -127,7 +130,10 @@ const ApiUrls: ApiUrls = {
   LOCATIONAREA : "http://localhost:8090/locationAreaStocks",
 
   //---LocationBin 
-  LOCATIONBIN : "http://localhost:8090/locationBinStocks"
+  LOCATIONBIN : "http://localhost:8090/locationBinStocks",
+  
+  //---LocationPlace 
+  LOCATIONPLACE : "http://localhost:8090/locationPlaces",
 };
 
 export default ApiUrls;
