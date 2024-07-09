@@ -119,7 +119,8 @@ import LocationBin from "../../../Entity/LocationBin";
                   fetchData={fetchData}
                   deleteData={DeleteLocationBin}
                   editData={editLocationBin} 
-                  navigateTo={handleNavigate}             
+                  navigateTo={handleNavigate}  
+                  displayBtnTex="Display Location Place"           
                        
             />
           )}

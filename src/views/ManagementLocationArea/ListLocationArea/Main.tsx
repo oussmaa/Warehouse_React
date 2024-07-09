@@ -112,6 +112,7 @@ function Main() {
               deleteData={deleteLocationArea}
               editData={editLocationArea} 
               navigateTo={handleNavigate}
+              displayBtnTex="Display Location bin"
         />
       )}
     </>

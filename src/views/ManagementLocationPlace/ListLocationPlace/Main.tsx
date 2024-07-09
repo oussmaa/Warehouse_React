@@ -95,21 +95,13 @@ import {
     const fetchData = async () => {
       return locationBIn;
     };
-   
-    const ParentComponent = () => {
-      const navigate = useNavigate();
-    }
-      const handleNavigate = (path: string, menuId: any) => {
-        alert('Not found Another SubMenu')
-   
-      };
   
       return (
         <>
           <div>
             <h1 className="text-2xl font-bold mb-4">List Location Bin  </h1>
             <Button type="default"  onClick={() => navigatetoaddLocationPlace()} >
-              Add Location Bin
+              Add Location Place
             </Button> 
           </div>
           {isLoading ? (
@@ -121,8 +113,7 @@ import {
                   columns={locationPlaceColumns}
                   fetchData={fetchData}
                   deleteData={DeleteLocationBin}
-                  editData={editLocationPlace} 
-                  navigateTo={handleNavigate}             
+                  editData={editLocationPlace}        
                        
             />
           )}

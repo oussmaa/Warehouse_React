@@ -7,9 +7,10 @@ import TableColumn from "../../Entity/TableColumn";
 interface TableProps<T> {
   columns: TableColumn<T>[];
   fetchData: () => Promise<T[]>;
-  deleteData: (id: number) => Promise<void>;
-  editData: (data: T) => Promise<void>;
+  deleteData?: (id: number) => Promise<void>;
+  editData?: (data: T) => Promise<void>;
   navigateTo?: (path: string, state?: any) => void;
+  displayBtnTex? : string;
 }
 
 const { confirm } = Modal;
@@ -19,7 +20,8 @@ function Table<T extends { id: number }>({
   fetchData,
   deleteData,
   editData,
-  navigateTo
+  navigateTo,
+  displayBtnTex
 }: TableProps<T>) {
   const [data, setData] = useState<T[]>([]);
   const [filteredData, setFilteredData] = useState<T[]>([]);
@@ -70,6 +72,7 @@ function Table<T extends { id: number }>({
       icon: <ExclamationCircleOutlined />,
       content: "Are you sure you want to delete this item?",
       onOk() {
+        if(deleteData)
         deleteData(id).then(() => {
           setData(data.filter((item) => item.id !== id));
         });
@@ -89,6 +92,7 @@ function Table<T extends { id: number }>({
   const handleEditOk = () => {
     form.validateFields().then((values) => {
       const updatedItem = { ...editItem!, ...values };
+      if(editData)
       editData(updatedItem).then(() => {
         setEditModalVisible(false);
         setEditItem(null);
@@ -123,17 +127,17 @@ function Table<T extends { id: number }>({
       render: (_: any, record: T) => (
         <Space size="middle">
           {navigateTo && <Button type="default" onClick={() => handleRowClick(record)}>
-            Display Location bin  
+            {displayBtnTex}
           </Button> }  
-          <Button type="default" onClick={() => handleEdit(record)}>
+         {editData && <Button type="default" onClick={() => handleEdit(record)}>
             Edit
-          </Button>
-          <Button
+          </Button>}
+          {deleteData && <Button
             style={{ color: "red" }}
             onClick={() => handleDelete(record.id)}
           >
             Delete
-          </Button>
+          </Button>}
         </Space>
       ),
     },

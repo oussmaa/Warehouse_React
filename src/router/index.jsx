@@ -35,6 +35,7 @@ import ListGoodsReceiptPos from "@/views/ManagementGoodsReceiptPos/ListGoodsRece
 import OrderStock from "@/views/ManagementOrderStock/OrderStock/Main";
 import ListOrderStock from "@/views/ManagementOrderStock/ListOrderStock/Main";
 
+import Order from "@/views/ManagementOrder/ListOrder/Main";
 import AddOrderPosition from "@/views/ManagementOrderPosition/AddOrderPosition/Main";
 
 import AddSupplier from "@/views/ManagementSupplier/AddSupplier/Main";
@@ -107,6 +108,10 @@ function Router() {
           element: <AddSupplier />,
         },
         {
+          path: "listorderstock",
+          element: <OrderStock />,
+        },
+        {
           path: "addorderstock",
           element: <OrderStock />,
         },
@@ -121,6 +126,10 @@ function Router() {
         {
           path: "listorderstock",
           element: <ListOrderStock />,
+        },
+        {
+          path: "listorder",
+          element: <Order />,
         },
         {
           path: "addorderposition",
