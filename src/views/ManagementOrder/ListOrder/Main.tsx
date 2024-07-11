@@ -8,43 +8,68 @@ import ApiService from "../../../Service/ApiService";
 import ApiUrls from "../../../API/apiUrls";
 import TableUpdateMenu from "../../../base-components/Table/TableUpdateMenu";
 import { useNavigate } from "react-router-dom";
+import Order from "../../../Entity/Order";
 
 
 
-//---- Fake interface to test
-interface Order {
-    id: number,
-    ref : string,
-    description : string
-}
 
 //----static data 
 const orders: Order[] = [
     {
       id: 1,
-      ref: "ORD001",
-      description: "Order for electronic components",
+      articel: "Laptop",
+      quantity: 10,
+      description: "Order for high-end laptops",
+      status: "Pending",
+      goPinkinng: true,
+      locationArea: "A1",
+      locationBin: "B2",
+      locationPlace: "P3"
     },
     {
       id: 2,
-      ref: "ORD002",
-      description: "Order for office supplies",
+      articel: "Smartphone",
+      quantity: 50,
+      description: "Order for new smartphones",
+      status: "Processing",
+      goPinkinng: false,
+      locationArea: "A2",
+      locationBin: "B1",
+      locationPlace: "P4"
     },
     {
-      id : 3,
-      ref: "ORD003",
-      description: "Order for kitchen appliances",
+      id: 3,
+      articel: "Printer",
+      quantity: 5,
+      description: "Order for office printers",
+      status: "Completed",
+      goPinkinng: true,
+      locationArea: "A3",
+      locationBin: "B3",
+      locationPlace: "P1"
     },
     {
       id: 4,
-      ref: "ORD004",
-      description: "Order for books and stationery",
+      articel: "Monitor",
+      quantity: 20,
+      description: "Order for computer monitors",
+      status: "Pending",
+      goPinkinng: false,
+      locationArea: "A4",
+      locationBin: "B4",
+      locationPlace: "P2"
     },
     {
       id: 5,
-      ref: "ORD005",
-      description: "Order for computer accessories",
-    },
+      articel: "Keyboard",
+      quantity: 30,
+      description: "Order for mechanical keyboards",
+      status: "Processing",
+      goPinkinng: true,
+      locationArea: "A5",
+      locationBin: "B5",
+      locationPlace: "P5"
+    }
   ];
 
 
@@ -53,7 +78,12 @@ const orders: Order[] = [
 const ordersColumns: TableColumn<Order>[] = [
   { title: "ID", dataIndex: "id" },
   { title: "Description", dataIndex: "description" },
-  { title: "Order Reference", dataIndex: "ref" },
+  { title: "Articel", dataIndex: "articel" },
+  { title: "Quantity", dataIndex: "quantity" },
+  { title: "Status", dataIndex: "status" },
+  { title: "LocationArea", dataIndex: "locationArea" },
+  { title: "LocationBin", dataIndex: "locationBin" },
+  { title: "LocationPlace", dataIndex: "locationPlace" },
 ];
 
 // Main component

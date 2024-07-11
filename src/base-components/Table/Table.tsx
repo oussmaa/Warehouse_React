@@ -169,17 +169,17 @@ function Table<T extends { id: number }>({
           placeholder="Search..."
           onChange={handleSearch}
           allowClear
-          style={{
-            color: "blue",
-            borderColor: "blue",
-          }}
+          className="w-full max-w-xs border-blue-500 focus:ring-blue-500"
         />
       </div>
-      <AntdTable
-        columns={columnsWithActions}
-        dataSource={filteredData}
-        rowKey="id"
-      />
+      <div className="overflow-x-auto">
+        <AntdTable
+          columns={columnsWithActions}
+          dataSource={filteredData}
+          rowKey="id"
+          className="min-w-full"
+        />
+      </div>
       <Modal
         title="Edit Item"
         visible={editModalVisible}
@@ -192,7 +192,7 @@ function Table<T extends { id: number }>({
           <Button
             key="submit"
             type="primary"
-            style={{ backgroundColor: "green" }}
+            className="bg-green-500"
             onClick={handleEditOk}
           >
             OK
