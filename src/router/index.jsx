@@ -38,6 +38,11 @@ import ListOrderStock from "@/views/ManagementOrderStock/ListOrderStock/Main";
 import Order from "@/views/ManagementOrder/ListOrder/Main";
 import AddOrderPosition from "@/views/ManagementOrderPosition/AddOrderPosition/Main";
 
+import ListOrderPosition from "@/views/ManagementOrderPosition/ListOrderPosition/Main";
+
+import ListPiking from "@/views/ManagementPiking/ListPiking/Main";
+import ListPikingPosition from "@/views/ManagementPikingPosition/ListPikingPosition/Main";
+
 import AddSupplier from "@/views/ManagementSupplier/AddSupplier/Main";
 import ListSupplier from "@/views/ManagementSupplier/ListSupplier/Main";
 import ErrorPage from "@/views/page-2/Main";
@@ -132,8 +137,20 @@ function Router() {
           element: <Order />,
         },
         {
+          path: "listpiking",
+          element: <ListPiking />,
+        },
+        {
+          path: "listpikingposition",
+          element: <ListPikingPosition />,
+        },
+        {
           path: "addorderposition",
           element: <AddOrderPosition />,
+        },
+        {
+          path: "Listorderposition",
+          element: <ListOrderPosition/>,
         },
         {
           path: "addgoodsreceipt",

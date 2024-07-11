@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Table as AntdTable, Space, Button, Modal, Form, Input } from "antd";
+import { Table as AntdTable, Space, Button, Modal, Form, Input, InputNumber } from "antd";
 import { ColumnsType } from "antd/es/table";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import TableColumn from "../../Entity/TableColumn";
@@ -9,6 +9,7 @@ interface TableProps<T> {
   fetchData: () => Promise<T[]>;
   deleteData?: (id: number) => Promise<void>;
   editData?: (data: T) => Promise<void>;
+  bookAction?: (data: T) => void;
   navigateTo?: (path: string, state?: any) => void;
   displayBtnTex? : string;
   generate? : (path : string, state?:any)=> void;
@@ -23,13 +24,15 @@ function Table<T extends { id: number }>({
   editData,
   navigateTo,
   displayBtnTex,
-  generate
+  generate,
+  bookAction
 }: TableProps<T>) {
   const [data, setData] = useState<T[]>([]);
   const [filteredData, setFilteredData] = useState<T[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true);
   const [editModalVisible, setEditModalVisible] = useState<boolean>(false);
+  const [bookModalVisible, setBookModalVisible] = useState<boolean>(false);
   const [editItem, setEditItem] = useState<T | null>(null);
 
   const [form] = Form.useForm();
@@ -91,6 +94,7 @@ function Table<T extends { id: number }>({
     setEditModalVisible(true);
   };
 
+
   const handleEditOk = () => {
     form.validateFields().then((values) => {
       const updatedItem = { ...editItem!, ...values };
@@ -104,9 +108,24 @@ function Table<T extends { id: number }>({
       });
     });
   };
-
+  
   const handleEditCancel = () => {
     setEditModalVisible(false);
+    setEditItem(null);
+  };
+
+
+  const handleBook = (item: T) => {
+    console.log(item.id)
+    setEditItem(item);
+    setBookModalVisible(true);
+  };
+
+  const handleBookOk = () => {
+
+  };
+  const handleBookCancel = () => {
+    setBookModalVisible(false);
     setEditItem(null);
   };
 
@@ -144,8 +163,11 @@ function Table<T extends { id: number }>({
           </Button>
 
           }
+         {bookAction && <Button type="default" onClick={() => handleBook(record)}>
+            BOOK 
+          </Button>}
          {editData && <Button type="default" onClick={() => handleEdit(record)}>
-            Edit
+            Edit 
           </Button>}
           {deleteData && <Button
             style={{ color: "red" }}
@@ -199,7 +221,7 @@ function Table<T extends { id: number }>({
           </Button>,
         ]}
       >
-        <Form
+      <Form
           form={form}
           initialValues={editItem || undefined}
           onFinish={(values) => {
@@ -220,6 +242,39 @@ function Table<T extends { id: number }>({
               )}
             </Form.Item>
           ))}
+        </Form>
+      </Modal>
+     
+     
+      <Modal
+        title="Edit Item"
+        visible={bookModalVisible}
+        onOk={handleBookOk}
+        onCancel={handleBookCancel}
+        footer={[
+          <Button key="cancel" onClick={handleBookCancel}>
+            Cancel
+          </Button>,
+          <Button
+            key="submit"
+            type="primary"
+            className="bg-green-500"
+            onClick={handleBookOk}
+          >
+            save
+          </Button>,
+        ]}
+      >
+        <Form
+          form={form}
+        >
+            <Form.Item
+              label={"Quantity"}
+              name={"quantity"}
+              rules={[{ required: true, message: `Please input quantity!` }]}
+            >
+                <InputNumber min={0} />
+            </Form.Item>
         </Form>
       </Modal>
     </div>

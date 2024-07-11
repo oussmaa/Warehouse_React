@@ -36,7 +36,7 @@ function Main() {
     description : "",
     locationArea : "",
     locationBin : "",
-    loactionPlace : ""
+    locationPlace : ""
   })
 
   const [locationId, setLocationId] = useState({
@@ -92,6 +92,7 @@ function Main() {
   const handleInputChange = (e : ChangeEvent<HTMLInputElement>)=>{
     if(orderPosition){
         setOrderPosition({...orderPosition, [e.target.name] : e.target.value});
+        
       }
   }
 
@@ -105,8 +106,8 @@ function Main() {
   useEffect(() => {
     const fetchLocationBin = async () => {
       if (locationId.areaId) {
-        const locationBin = await apiService.GetLocationBinListById(ApiUrls.LOCATIONBIN, locationId.areaId);
-        setLcBin(locationBin);
+        const selectedLcArea = lcArea.find(lc => lc.id === locationId.areaId);
+        if(selectedLcArea?.locationBinStocks) setLcBin(selectedLcArea.locationBinStocks);
       }
       setLcPlace([]);
       setLocationId({...locationId, binId : 0})
@@ -118,8 +119,8 @@ function Main() {
   useEffect(() => {
     const fetchLocationPlace = async () => {
       if (locationId.binId) {
-        const locationPlace = await apiService.GetLocationPlaceListById(ApiUrls.LOCATIONPLACE, locationId.binId);
-        setLcPlace(locationPlace);
+        const selectedlocationBin = lcBin.find(lc => lc.id === locationId.binId);
+        if(selectedlocationBin?.locationPlaces) setLcPlace(selectedlocationBin.locationPlaces);
       }
     };
 
@@ -133,6 +134,7 @@ function Main() {
 
       setArticel(articel);
       setLcArea(locationArea);
+      console.log(locationArea)
     } catch (error) {
       console.error("Error fetching data:", error);
     }

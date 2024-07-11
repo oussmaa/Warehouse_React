@@ -1,7 +1,7 @@
 interface LocationBin {
     id : number,
     location_bin : string,
-    locationPlace? : [],
+    locationPlaces? : [],
     bin? : string,
     creationDate? : string
 }

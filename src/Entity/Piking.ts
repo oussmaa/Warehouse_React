@@ -1,12 +1,12 @@
-interface OrderPosition{
+interface Piking{
     id: number,
-    orderId : number,
-    articel : string,
-    quantity : number,
+    name : string,
     description : string,
+    status : string,
+    order : string,
     locationArea : string,
     locationBin : string,
     locationPlace : string
 }
 
-export default OrderPosition;
+export default Piking;

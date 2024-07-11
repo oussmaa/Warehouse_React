@@ -129,7 +129,7 @@ const navigateToGenerate = (path : string, orderId : any) =>{
       displayBtnTex="display Order position"   
       generate={navigateToGenerate}          
                    
-        />
+        /> 
     </>
   );
 };
