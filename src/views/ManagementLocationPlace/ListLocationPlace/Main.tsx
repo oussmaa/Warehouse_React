@@ -57,7 +57,7 @@ import {
         throw error;
       }
        
-    };
+    }; 
   
     const editLocationPlace = async (locationPlace: LocationPlace): Promise<void> => {
       try {
@@ -99,7 +99,7 @@ import {
       return (
         <>
           <div>
-            <h1 className="text-2xl font-bold mb-4">List Location Bin  </h1>
+            <h1 className="text-2xl font-bold mb-4">List Location Place</h1>
             <Button type="default"  onClick={() => navigatetoaddLocationPlace()} >
               Add Location Place
             </Button> 

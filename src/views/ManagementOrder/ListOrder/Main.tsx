@@ -78,6 +78,11 @@ const fetchOrder = async (): Promise<Order[]> => {
   }
 };
 
+// generate 
+const navigateToGenerate = (path : string, orderId : any) =>{
+    navigate("/dashboard/generate",{ state: { orderId } });
+}
+
 
 
 
@@ -91,7 +96,8 @@ const fetchOrder = async (): Promise<Order[]> => {
        columns={ordersColumns}
        fetchData={fetchOrder}
       navigateTo={handleNavigate}
-      displayBtnTex="display Order position"             
+      displayBtnTex="display Order position"   
+      generate={navigateToGenerate}          
                    
         />
     </>

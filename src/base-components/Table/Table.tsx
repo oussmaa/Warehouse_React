@@ -11,6 +11,7 @@ interface TableProps<T> {
   editData?: (data: T) => Promise<void>;
   navigateTo?: (path: string, state?: any) => void;
   displayBtnTex? : string;
+  generate? : (path : string, state?:any)=> void;
 }
 
 const { confirm } = Modal;
@@ -21,7 +22,8 @@ function Table<T extends { id: number }>({
   deleteData,
   editData,
   navigateTo,
-  displayBtnTex
+  displayBtnTex,
+  generate
 }: TableProps<T>) {
   const [data, setData] = useState<T[]>([]);
   const [filteredData, setFilteredData] = useState<T[]>([]);
@@ -119,6 +121,13 @@ function Table<T extends { id: number }>({
     }
   };
 
+  const handleGnerateRowClick = (record: T) => { 
+    const id = record.id; // Assuming record.id is the menuId you want to pass
+     if (generate) {
+     generate('',{ id }); // Replace '/your-path' with your actual route
+    }
+  };
+
   const columnsWithActions = [
     ...columns,
     {
@@ -129,6 +138,12 @@ function Table<T extends { id: number }>({
           {navigateTo && <Button type="default" onClick={() => handleRowClick(record)}>
             {displayBtnTex}
           </Button> }  
+          {generate &&
+            <Button type="default" onClick={() => handleGnerateRowClick(record)}>
+            Generate
+          </Button>
+
+          }
          {editData && <Button type="default" onClick={() => handleEdit(record)}>
             Edit
           </Button>}
