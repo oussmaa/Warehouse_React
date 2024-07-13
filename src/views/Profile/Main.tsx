@@ -90,7 +90,7 @@ function Main() {
     userpermission?.map((rl, index) => {
         return (
             <div key={index} className="text-slate-500" style={{ marginBottom: '10px' }}>
-                 <p>   {rl.code}</p>
+                  <p>    {rl.code}&nbsp; &nbsp; &nbsp; &nbsp;</p>
             </div>
         );
     })
@@ -108,7 +108,7 @@ function Main() {
                   {UserState?.email}
                 </div>
                 <div className="truncate sm:whitespace-normal flex items-center mt-3">
-                  <Lucide icon="Instagram" className="w-4 h-4 mr-2" />  
+                  <Lucide icon="Phone" className="w-4 h-4 mr-2" />  
                   {UserState?.phone}
                 </div>
               </div>

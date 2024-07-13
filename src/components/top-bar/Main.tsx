@@ -101,7 +101,7 @@ const logout = () =>{
             <img
               alt="Enigma Tailwind HTML Admin Template"
               className="logo__image w-6"
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/NewTux.svg/640px-NewTux.svg.png"
+              src={`http://localhost:7070/login/images/${UserState?.images}`} 
             />
             <span className="logo__text text-white text-lg ml-3">
               {" "}

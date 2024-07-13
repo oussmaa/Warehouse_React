@@ -16,9 +16,8 @@ import AddSubMenu from "@/views/ManagementSubMenu/AddSubMenu/Main";
 import Profile from "@/views/Profile/Main";
 
 import ListUsers from "@/views/ManagementUser/ListUsers/Main";
-import AddUsers from "@/views/ManagementUser/AddUsers/Main"; 
+import AddUsers from "@/views/ManagementUser/AddUsers/Main";
 import UpdateUsers from "@/views/ManagementUser/UpdateUsers/Main";
-
 
 import AddArticles from "@/views/ManagementArticle/AddArticles/Main";
 import ListArticles from "@/views/ManagementArticle/ListArticles/Main";
@@ -36,6 +35,9 @@ import OrderStock from "@/views/ManagementOrderStock/OrderStock/Main";
 import ListOrderStock from "@/views/ManagementOrderStock/ListOrderStock/Main";
 
 import Order from "@/views/ManagementOrder/ListOrder/Main";
+
+import AddOrder from "@/views/ManagementOrder/AddOrder/Main";
+
 import AddOrderPosition from "@/views/ManagementOrderPosition/AddOrderPosition/Main";
 
 import ListOrderPosition from "@/views/ManagementOrderPosition/ListOrderPosition/Main";
@@ -56,7 +58,6 @@ import ListLocationBin from "@/views/ManagementLocationBin/ListLocationBin/Main"
 import AddLocationPlace from "@/views/ManagementLocationPlace/AddLocationPlace/Main";
 import ListLocationPlace from "@/views/ManagementLocationPlace/ListLocationPlace/Main";
 
-
 function Router() {
   var isAuthenticated = false;
 
@@ -76,31 +77,31 @@ function Router() {
       path: "/dashboard",
       element: isAuthenticated ? <SideMenu /> : <Navigate to="/" />,
       children: [
-        { 
+        {
           path: "updateusers",
           element: <UpdateUsers />,
         },
-        { 
+        {
           path: "addlocationarea",
           element: <AddLocationArea />,
         },
-        { 
+        {
           path: "listlocationarea",
           element: <ListLocationArea />,
         },
-        { 
+        {
           path: "addlocationbin",
           element: <AddLocationBin />,
         },
-        { 
+        {
           path: "listlocationbin",
           element: <ListLocationBin />,
         },
-        { 
+        {
           path: "addlocationplace",
           element: <AddLocationPlace />,
         },
-        { 
+        {
           path: "listlocationplace",
           element: <ListLocationPlace />,
         },
@@ -114,7 +115,7 @@ function Router() {
         },
         {
           path: "listorderstock",
-          element: <OrderStock />,
+          element: <ListOrderStock />,
         },
         {
           path: "addorderstock",
@@ -137,6 +138,10 @@ function Router() {
           element: <Order />,
         },
         {
+          path: "addorder",
+          element: <AddOrder />,
+        },
+        {
           path: "listpiking",
           element: <ListPiking />,
         },
@@ -149,8 +154,8 @@ function Router() {
           element: <AddOrderPosition />,
         },
         {
-          path: "Listorderposition",
-          element: <ListOrderPosition/>,
+          path: "listorderpositions",
+          element: <ListOrderPosition />,
         },
         {
           path: "addgoodsreceipt",
@@ -159,7 +164,7 @@ function Router() {
         {
           path: "listgoodsreceipt",
           element: <ListGoodsReceipt />,
-        },        
+        },
         {
           path: "addgoodsreceiptpos",
           element: <AddGoodsReceiptPos />,
@@ -167,7 +172,7 @@ function Router() {
         {
           path: "listgoodsreceiptpos",
           element: <ListGoodsReceiptPos />,
-        },        
+        },
         {
           path: "addarticle",
           element: <AddArticles />,

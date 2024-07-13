@@ -1,5 +1,5 @@
 const staticData = {
- 
+
     Pages: [
       {  name: "Select Page ", value: "Select Page" },
       {  name: "Add Menus ", value: "/dashboard/addmenu" },
@@ -17,12 +17,27 @@ const staticData = {
       {  name: "List Goodsreceipt ", value: "/dashboard/listgoodsreceipt" },
       {  name: "Add Goodsreceipt ", value: "/dashboard/addgoodsreceipt" },
       {  name: "List Order Stocks ", value: "/dashboard/listorderstock" },
-      {  name: "List Stocks Menus ", value: "/dashboard/liststock" },
+      {  name: "List Stocks", value: "/dashboard/liststock" },
       {  name: "Add Stock ", value: "/dashboard/addstock" },
       {  name: "Add Order of stock ", value: "/dashboard/addorderstock" },
       {  name: "Add Supplier ", value: "/dashboard/addsupplier" },
       {  name: "List Supplier  ", value: "/dashboard/listsupplier" },
-
+      {  name: "Add Article  ", value: "/dashboard/addarticle" },
+      {  name: "List Article  ", value: "/dashboard/listarticle" },
+      {  name: "List Area  ", value: "/dashboard/listlocationarea" },
+      {  name: "Add Location Area  ", value: "/dashboard/addlocationarea" },
+      {  name: "Add Location Bin  ", value: "/dashboard/addlocationbin" },
+      {  name: "List Location Bin  ", value: "/dashboard/listlocationbin" },
+      {  name: "Add Location Place  ", value: "/dashboard/addlocationplace" },
+      {  name: "List Location Place   ", value: "/dashboard/listlocationplace" },
+      {  name: "Add OderStock ", value: "/dashboard/addorderstock" },
+      {  name: "List OderStock  ", value: "/dashboard/listorderstock" },
+      {  name: "List Order  ", value: "/dashboard/listorder" },
+      {  name: "Add Order  ", value: "/dashboard/addorder" },
+      {  name: "Add Order Position  ", value: "/dashboard/addorderposition" },
+      {  name: "List Order Position   ", value: "/dashboard/Listorderposition" },
+      {  name: "List Picking Position  ", value: "/dashboard/listpikingposition" },
+      {  name: "List Picking  ", value: "/dashboard/listpiking" },
 
       ],
    };

@@ -14,6 +14,7 @@ import Location from "../Entity/LocationPlace";
 import LocationArea from "../Entity/LocationArea";
 import LocationBin from "../Entity/LocationBin";
 import LocationPlace from "../Entity/LocationPlace";
+import OrderPosition from "../Entity/OrderPosition";
 
 class ApiService {
   // Function to get the token from local storage
@@ -109,6 +110,72 @@ class ApiService {
 //--- END : menu requests
 //-----------------------
 
+//----------------
+//---- Begin Order  
+//-----------------------
+async AddOder(endpoint: string, data: any): Promise<any> {
+  try {
+    const token = this.getToken();
+    const response = await axios.post<any>(endpoint, data, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error posting data:", error);
+    throw error;
+  }
+}
+
+async GetListOrder(endpoint: string): Promise<any[]> {
+  try {
+    const token = this.getToken();
+    const response = await axios.get<any[]>(endpoint, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error;
+  }
+}
+async GetListOrderPosition(endpoint: string): Promise<OrderPosition[]> {
+  try {
+    const token = this.getToken();
+    const response = await axios.get<OrderPosition[]>(endpoint, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error;
+  }
+}
+async AddOrderPosition(endpoint: string, data: any): Promise<any> {
+  try {
+    const token = this.getToken();
+    const response = await axios.post<any>(endpoint, data, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error posting data:", error);
+    throw error;
+  }
+}
+
+//-----------------------
+//--- END :   Order
+//-----------------------
 
 
 //-------------------------------

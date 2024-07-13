@@ -72,18 +72,11 @@ const orders: Order[] = [
     }
   ];
 
-
-
 // Define table columns for the new entity
-const ordersColumns: TableColumn<Order>[] = [
+const ordersColumns: TableColumn<any>[] = [
   { title: "ID", dataIndex: "id" },
   { title: "Description", dataIndex: "description" },
-  { title: "Articel", dataIndex: "articel" },
-  { title: "Quantity", dataIndex: "quantity" },
-  { title: "Status", dataIndex: "status" },
-  { title: "LocationArea", dataIndex: "locationArea" },
-  { title: "LocationBin", dataIndex: "locationBin" },
-  { title: "LocationPlace", dataIndex: "locationPlace" },
+  { title: "Type", dataIndex: "type" },
 ];
 
 // Main component
@@ -91,16 +84,18 @@ const Main = () => {
 
   const navigate = useNavigate();
 
-  const handleNavigate = (path: string, menuId: any) => {
- 
-    navigate('/dashboard/listgoodsreceiptpos',{ state: { menuId } });
+  const handleNavigate = (path: string, orderId: any
+  ) => {
+ console.log(orderId)
+    navigate('/dashboard/listorderpositions',{ state: { orderId } });
      
   };
-// Fetch function to get goods receipts
-const fetchOrder = async (): Promise<Order[]> => {
+
+  
+const fetchOrder = async (): Promise<any[]> => {
   try {
-    // const response  = await ApiService.GetListOrder(ApiUrls.ORDER);
-    //return response
+     const response  = await ApiService.GetListOrder(ApiUrls.GetALLORDER);
+     return response
     return orders;
   }catch(err){
     console.log("Error fetching data" + err);
@@ -112,10 +107,6 @@ const fetchOrder = async (): Promise<Order[]> => {
 const navigateToGenerate = (path : string, orderId : any) =>{
     navigate("/dashboard/generate",{ state: { orderId } });
 }
-
-
-
-
  
   return (
     <>
