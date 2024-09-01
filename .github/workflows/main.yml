@@ -36,6 +36,3 @@ jobs:
       - name: Publish image to Docker Hub
         run: docker push oussama020899/warehouseview:${{ github.sha }}
 
-      - name: Publish latest tag
-        run: docker tag oussama020899/warehouseview:${{ github.sha }} oussama020899/warehouseview:latest
-        run: docker push oussama020899/warehouseview:latest
