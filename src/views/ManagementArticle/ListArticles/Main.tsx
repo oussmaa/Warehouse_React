@@ -15,7 +15,7 @@ const articleColumns: TableColumn<Article>[] = [
   { title: "Creation Date", dataIndex: "creationDate" },
   { title: "Type", dataIndex: "typeArticle" },
   { title: "Description", dataIndex: "description" },
-  { title: "Price", dataIndex: "price" },
+  { title: "Price DT", dataIndex: "price" },
   { title: "Article", dataIndex: "articel" },
 ];
 

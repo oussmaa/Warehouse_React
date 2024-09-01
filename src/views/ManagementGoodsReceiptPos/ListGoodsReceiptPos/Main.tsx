@@ -10,9 +10,12 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 const goodsReceiptColumns: TableColumn<GoodsReceiptPos>[] = [
   { title: "ID", dataIndex: "id" },
-  { title: "Quantity Booked", dataIndex: "quantityBooket" },
+  { title: "Quantity Booked", dataIndex: "quantityBooked" },
   { title: "Description", dataIndex: "description" },
   { title: "Article ", dataIndex: "article" },
+  { title: "Location Area ", dataIndex: "location_area" },
+  { title: "Location Bin ", dataIndex: "location_bin" },
+  { title: "Location Place ", dataIndex: "location_place" },
 ];
 
 

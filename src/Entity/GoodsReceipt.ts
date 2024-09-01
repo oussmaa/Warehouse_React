@@ -6,6 +6,7 @@ export interface GoodsReceipt {
     description: string;
     goodsReceiptPosid:number
     orderStockId:number
+    status:string
   }
 
   export default GoodsReceipt;

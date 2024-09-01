@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Form, Input, Button, Select, Checkbox, message } from "antd";
+import { Form, Input, Button, Select, Checkbox, message, Radio } from "antd";
 import apiService from "@/Service/ApiService";
 import ApiUrls from "@/API/apiUrls";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -13,7 +13,7 @@ const Main: React.FC = () => {
   const location = useLocation();
   const userId = location.state?.userId as number | undefined;
   const [initialValues, setInitialValues] = useState<Partial<Users>>({});
-  const [initialPassword, setInitialPaswword] = useState<string>();
+  const [initialPassword, setInitialPassword] = useState<string>();
 
   const buttonBackground = {
     background: "#4CAF50",
@@ -23,49 +23,44 @@ const Main: React.FC = () => {
   useEffect(() => {
     if (userId) {
       apiService.getUser(ApiUrls.GETUSERBYID, userId).then((data: any) => {
-        // Transforming roles and permissions to the expected format
+        // Setting roles directly as a string
         const transformedData = {
           ...data,
-          roleNames: data.roles
-            ? data.roles.map((role: any) => role.roles)
-            : [],
+          roles: data.roles, // Assuming roles are coming as a string from the API
           permissionNames: data.permissions
             ? data.permissions.map((perm: any) => perm.code)
             : [],
         };
         setInitialValues(transformedData);
-        setInitialPaswword(transformedData.password)
-         form.setFieldsValue(transformedData);
+        setInitialPassword(transformedData.password);
+        form.setFieldsValue(transformedData);
       });
     }
   }, [userId]);
 
   const onFinish = async (values: any) => {
     try {
-      // Transforming back roles and permissions to the original format for submission
+      // No need to transform roles, it's already a string
       const transformedValues = {
         ...values,
-        roles: values.roleNames.map((role: string) => ({ roles: role })),
         permissions: values.permissionNames.map((perm: string) => ({
           code: perm,
         })),
       };
 
-if(initialPassword==transformedValues.password)
-  {
-    transformedValues.password ="";
-  }
-         if (userId) {
- 
+      if (initialPassword === transformedValues.password) {
+        transformedValues.password = "";
+      }
+
+      if (userId) {
         console.log(transformedValues);
-        await apiService.EditUser(ApiUrls.USERAPI + userId, transformedValues);
-      } 
-     navigate("/dashboard/listusers");
+         await apiService.EditUser(ApiUrls.USERAPI + userId, transformedValues);
+      }
+        navigate("/dashboard/listusers");
     } catch (error) {
       message.error("Error updating user");
       console.error("Error updating user:", error);
     }
-
   };
 
   return (
@@ -128,15 +123,15 @@ if(initialPassword==transformedValues.password)
         <Checkbox />
       </Form.Item>
       <Form.Item
-        name="roleNames"
-        label="Role Names"
-        rules={[{ required: true, message: "Please input the role names!" }]}
+        name="roles"
+        label="Roles"
+        rules={[{ required: true, message: "Please select a role!" }]}
       >
-        <Select mode="tags" style={{ width: "100%" }} placeholder="Roles">
-          <Option value="Admin">Admin</Option>
-          <Option value="User">User</Option>
+        <Radio.Group>
+          <Radio value="Admin">Admin</Radio>
+          <Radio value="User">User</Radio>
           {/* Add other roles as needed */}
-        </Select>
+        </Radio.Group>
       </Form.Item>
       <Form.Item
         name="permissionNames"
@@ -147,7 +142,6 @@ if(initialPassword==transformedValues.password)
           <Option value="INSERT">INSERT</Option>
           <Option value="DELETE">DELETE</Option>
           <Option value="UPDATE">UPDATE</Option>
-
           {/* Add other permissions as needed */}
         </Select>
       </Form.Item>

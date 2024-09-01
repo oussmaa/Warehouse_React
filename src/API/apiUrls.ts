@@ -52,6 +52,8 @@ interface ApiUrls {
 
   //--GlobalStock 
   readonly GLOBALSTOCK : string;
+  
+  readonly DELETESTOCK : string;
 
   //---Supplier
   readonly SUPPLIER : string;
@@ -71,8 +73,19 @@ interface ApiUrls {
   readonly GetALLORDER :string;
   readonly AddOrderPosition :string;
   readonly GetOrderPosition :string;
+  readonly GENRATEPICKING:string;
+  readonly PICKING:string;
+  readonly PICKINGPOSITION:string;
+  readonly BOOKPOSITION:string;
 
-  
+  readonly GetLISTCustomer:string;
+  readonly AddCustomer:string;
+
+  readonly AddShipmment:String;
+  readonly GetListShippment:string;
+  readonly GetListPickingNotShippment:string;
+
+ 
   
 }
 
@@ -130,6 +143,8 @@ const ApiUrls: ApiUrls = {
   
   //--GlobalStock
   GLOBALSTOCK : "http://127.0.0.1:7070/globalestocks",
+
+  DELETESTOCK:"http://127.0.0.1:7070/globalestocks/",
   
   //---Supplier
   SUPPLIER : "http://127.0.0.1:7070/suppliers",
@@ -142,14 +157,26 @@ const ApiUrls: ApiUrls = {
   
   //---LocationPlace 
   LOCATIONPLACE : "http://localhost:7070/locationPlaces",
+//----Picking
+  GENRATEPICKING: "http://localhost:7070/ordersgenrate/picking/genratepicking/",
+  PICKINGPOSITION:"http://localhost:7070/Picking/getallpickingbyposition/",
+  PICKING:"http://localhost:7070/Picking/getallpicking",
+  BOOKPOSITION:"http://localhost:7070/picking/position/bookposition/",
 
-
-  //----Oder
+  //----ORder
   AddOrder: "http://localhost:7070/ordersgenrate/addorder",
   GetALLORDER: "http://localhost:7070/ordersgenrate/getallorder",
   AddOrderPosition: "http://localhost:7070/ordersgenrate/position/addposition",
-  GetOrderPosition:"http://localhost:7070/ordersgenrate/positions/getallpositionbyorder/"
+  GetOrderPosition:"http://localhost:7070/ordersgenrate/positions/getallpositionbyorder/",
   
+
+  AddShipmment:"http://localhost:7070/shippment/addshipment",
+  GetListShippment:"http://localhost:7070/shippment/GetAllshippment", 
+  //---Customer
+    AddCustomer: "http://localhost:7070/Customer/addcustomer",
+    GetLISTCustomer: "http://localhost:7070/Customer/getallcustomer",
+
+    GetListPickingNotShippment:"http://localhost:8090/picking/getallpickingClosed"
 };
 
 export default ApiUrls;

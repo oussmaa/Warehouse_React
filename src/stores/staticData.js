@@ -30,14 +30,25 @@ const staticData = {
       {  name: "List Location Bin  ", value: "/dashboard/listlocationbin" },
       {  name: "Add Location Place  ", value: "/dashboard/addlocationplace" },
       {  name: "List Location Place   ", value: "/dashboard/listlocationplace" },
-      {  name: "Add OderStock ", value: "/dashboard/addorderstock" },
-      {  name: "List OderStock  ", value: "/dashboard/listorderstock" },
       {  name: "List Order  ", value: "/dashboard/listorder" },
       {  name: "Add Order  ", value: "/dashboard/addorder" },
       {  name: "Add Order Position  ", value: "/dashboard/addorderposition" },
       {  name: "List Order Position   ", value: "/dashboard/Listorderposition" },
       {  name: "List Picking Position  ", value: "/dashboard/listpikingposition" },
       {  name: "List Picking  ", value: "/dashboard/listpiking" },
+
+      {  name: "Add Customer  ", value: "/dashboard/addcustomer" },
+
+      {  name: "List Customer  ", value: "/dashboard/listcustomer" },
+
+      {  name: "Display Warehouse", value: "/dashboard/dashboard" },
+
+      {  name: "List Shipment", value: "/dashboard/listshipmment" },
+
+      {  name: "Pack Shipment ", value: "/dashboard/packshipment" },
+
+
+
 
       ],
    };

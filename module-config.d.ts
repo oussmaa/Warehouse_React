@@ -40,6 +40,11 @@ declare module "@/views/ManagementOrderStock/ListOrderStock/Main"
 
 declare module "@/views/ManagementSupplier/AddSupplier/Main"
 declare module "@/views/ManagementSupplier/ListSupplier/Main"
+declare module "@/views/Dashbored/Main"
+
+declare module "@/views/ManagementShipment/ListShipment/Main"
+declare module "@/views/ManagementShipment/PackShipment/Main"
+
 
 declare module "@/base-components/Table/Table"
 declare module "@/base-components/Table/TableUser"

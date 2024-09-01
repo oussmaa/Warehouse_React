@@ -66,7 +66,7 @@ function TableUser<T extends { id: number }>({
       title: "Confirm Delete",
       okType: 'danger', // This sets the button type to be red
       icon: <ExclamationCircleOutlined />,
-      content: "Are you sure you want to delete this item?",
+      content: "Are you sure you want to delete this ?",
       onOk() {
         deleteData(id).then(() => {
           setData(data.filter((item) => item.id !== id));

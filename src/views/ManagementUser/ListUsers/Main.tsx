@@ -90,7 +90,7 @@ const Main = () => {
   return (
     <>
       <div>
-        <h1 className="text-2xl font-bold mb-4">List Of Users</h1>
+        <h1 className="text-2xl font-bold mb-4">List Of Compt</h1>
       </div>
       {isLoading ? (
         <p>Loading...</p>

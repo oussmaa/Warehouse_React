@@ -55,11 +55,7 @@ function Main() {
       PermissionsInsert = "INSERT";
     }
 
-    const rolesandpermissions: RolesRequest = {
-      roles: Userrole,
-      descrption: "roles",
-      permissions: [PermissionsInsert, PermissionsUpdate, Permissionsdelete],
-    };
+ 
 
     const user: Users = {
       id: 0,
@@ -73,10 +69,10 @@ function Main() {
       themeid: Number(Themeid),
       images: "test.png",
       adress: Adress,
-      userrole: 1,
       password: Password,
-      roleNames: [Userrole],
+      roles: Userrole,
       permissionNames: [PermissionsInsert, PermissionsUpdate, Permissionsdelete],
+      permissions: []
     };
     function validateUser(user: Users): string | null {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -129,9 +125,8 @@ function Main() {
       }
        else {
         console.log("clg add user : " + JSON.stringify(user));
-      const response=  await apiService.AddUser(ApiUrls.ADDUSER, user);
- 
-        navigate("/dashboard/listusers");
+         const response=  await apiService.AddUser(ApiUrls.ADDUSER, user);
+         navigate("/dashboard/listusers");
       }
     } catch (error:any) {
      
@@ -175,7 +170,7 @@ function Main() {
           <div className="space-y-12">
             <div className="border-b border-gray-900/10 pb-12">
               <h2 className="text-base font-semibold leading-7 text-gray-900">
-                Personal Information of User
+                Personal Information of Employee
               </h2>
 
               <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">

@@ -119,11 +119,21 @@ function Table<T extends { id: number }>({
     console.log(item.id)
     setEditItem(item);
     setBookModalVisible(true);
+
   };
 
   const handleBookOk = () => {
-
+    form.validateFields().then((values) => {
+      const updatedItem = { ...editItem!, ...values };
+      if (bookAction) {
+        bookAction(updatedItem as T & { bookedquantity: number; pickingPosition: string });
+      }
+      setBookModalVisible(false);
+      setEditItem(null);
+    });
+ 
   };
+
   const handleBookCancel = () => {
     setBookModalVisible(false);
     setEditItem(null);

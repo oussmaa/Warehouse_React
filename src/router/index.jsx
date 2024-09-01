@@ -57,6 +57,13 @@ import ListLocationBin from "@/views/ManagementLocationBin/ListLocationBin/Main"
 
 import AddLocationPlace from "@/views/ManagementLocationPlace/AddLocationPlace/Main";
 import ListLocationPlace from "@/views/ManagementLocationPlace/ListLocationPlace/Main";
+import Dashbored from "@/views/Dashbored/Main";
+
+import ListCustomer from "@/views/MangementCustomer/ListCustomer/Main";
+import AddCustomer from "@/views/MangementCustomer/AddCustomer/Main";
+
+import ListShipment from "@/views/ManagementShipment/ListShipment/Main";
+import PackShipment from "@/views/ManagementShipment/PackShipment/Main";
 
 function Router() {
   var isAuthenticated = false;
@@ -77,6 +84,18 @@ function Router() {
       path: "/dashboard",
       element: isAuthenticated ? <SideMenu /> : <Navigate to="/" />,
       children: [
+        {
+          path: "dashboard",
+          element: <Dashbored />,
+        },
+        {
+          path: "packshipment",
+          element: <PackShipment />,
+        },
+        {
+          path: "listshipmment",
+          element: <ListShipment />,
+        },
         {
           path: "updateusers",
           element: <UpdateUsers />,
@@ -217,6 +236,17 @@ function Router() {
           path: "addusers",
           element: <AddUsers />,
         },
+
+        {
+          path: "listcustomer",
+          element: <ListCustomer />,
+        },
+        {
+          path: "addcustomer",
+          element: <AddCustomer />,
+        },
+
+
         {
           path: "*",
           element: <ErrorPage />,

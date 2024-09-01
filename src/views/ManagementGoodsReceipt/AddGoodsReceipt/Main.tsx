@@ -64,7 +64,10 @@ function Main() {
 
       await apiService.AddGoodsReceipt(ApiUrls.GOODSRECEIPT, newGoodsReceipt);
       navigate("/dashboard/listgoodsreceipt");
-    } catch (error) {
+    } catch (error:any) {
+      setAlertMessage(error.response.data);
+      setShowAlert(true);
+      setTimeout(() => setShowAlert(false), 20000); // 3-second delay
       console.error("Error adding goods receipt:", error);
     }
   };

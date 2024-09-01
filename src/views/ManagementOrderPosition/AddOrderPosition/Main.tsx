@@ -20,7 +20,7 @@ function Main() {
   const orderId = location.state?.orderId;
   console.log(orderId?.id);
   //data to fech
-  const [articel, setArticel] = useState<Article[] | []>([]);
+  const [article, setArticel] = useState<Article[] | []>([]);
   const [lcArea, setLcArea] = useState<LocationArea[] | []>([]);
   const [lcBin, setLcBin] = useState<LocationBin[] | []>([]);
   const [lcPlace, setLcPlace] = useState<LocationPlace[] | []>([]);
@@ -30,7 +30,7 @@ function Main() {
   const [orderPosition, setOrderPosition] = useState<OrderPosition | null>({
     id: 0,
     orderId: orderId?.id,
-    articel: "",
+    article: "", 
     quantity: 0,
     description: "",
     locationArea: "",
@@ -50,7 +50,7 @@ function Main() {
   const [alertMessage, setAlertMessage] = useState("");
 
   function validateOrderPosition(orderPosition: OrderPosition): string | null {
-    if (!orderPosition.articel) {
+    if (!orderPosition.article) {
       return "Articel is required.";
     }
     if (orderPosition.quantity <= 0) {
@@ -97,7 +97,7 @@ function Main() {
           navigate("/dashboard/listorderPositions", { state: { orderId } });
         }
       } catch (error: any) {
-        setAlertMessage(error.response);
+        setAlertMessage(error.response.data);
         setShowAlert(!isValid);
         setTimeout(() => {
           setShowAlert(false);
@@ -275,15 +275,15 @@ function Main() {
                   </label>
                   <div className="mt-2">
                     <select
-                      value={orderPosition?.articel}
+                      value={orderPosition?.article}
                       onChange={(e) => handleSelectArticel(e)}
-                      name="articel"
+                      name="article"
                       className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
                     >
                       <option value="" selected disabled>
                         choose Choose articel
                       </option>
-                      {articel.map((artc, index) => (
+                      {article.map((artc, index) => (
                         <option
                           key={`${index}-${artc.id}`}
                           value={artc.articel}
@@ -294,7 +294,7 @@ function Main() {
                     </select>
                   </div>
                 </div>
-
+ 
                 <div className="sm:col-span-3">
                   <div>
                     <label

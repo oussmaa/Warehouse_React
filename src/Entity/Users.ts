@@ -1,3 +1,4 @@
+import Permission from "./Permission";
 import RolesRequest from "./RolesRequest";
 
  
@@ -11,11 +12,11 @@ interface Users {
   locked: boolean;
   phone: string;
   themeid: number;
-  userrole: number;
+  roles: string;
   images:string;
   adress:string;
   password:string;
-  roleNames: string[];
+  permissions:Permission[]
   permissionNames: string[];
 
 }

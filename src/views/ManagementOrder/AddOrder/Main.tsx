@@ -9,43 +9,61 @@ import ApiUrls from "@/API/apiUrls";
 import MenuLabel from "../../../Entity/MenuLabel";
 import { Alert } from "@/base-components";
 import LocationArea from "../../../Entity/LocationArea";
-
-const { Option } = Select;
+import Customer from "../../../Entity/Customer";
+import ApiService from "../../../Service/ApiService";
 
 function Main() {
+  const [customers, setCustomers] = useState<Customer[]>([]);
   const [deleteConfirmationModal, setDeleteConfirmationModal] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
-
+  const [idcustomer, setIdcustomer] = useState("");
   const [order, setOrder] = useState<any>({
     id: 0,
     description: "",
     type: "",
+    idcustomer: "",
   });
 
   useEffect(() => {
-    // Fetch initial data if needed
+    const fetchCustomers = async () => {
+      try {
+        const customerData = await ApiService.GetListCustomer(ApiUrls.GetLISTCustomer);
+        setCustomers(customerData);
+      } catch (error) {
+        console.error("Error fetching customers:", error);
+        setAlertMessage("Error fetching customers");
+        setShowAlert(true);
+      }
+    };
+    fetchCustomers();
   }, []);
 
-  const ValidateInput = async () => {
-    if (order.description !== "" && order.type !== "") {
+  useEffect(() => {
+    setOrder((prevOrder: any) => ({
+      ...prevOrder,
+      idcustomer: idcustomer,
+    }));
+  }, [idcustomer]);
+
+  const validateInput = async () => {
+    if (order.description !== "" && order.type !== "" && idcustomer) {
       try {
-        const res = await apiService.AddOder(ApiUrls.AddOrder, order);
-          navigate("/dashboard/listorder");
-         
-      } catch (error) {
-        console.error("Error adding location area:", error);
+         const res = await apiService.AddOrder(ApiUrls.AddOrder, order);
+         navigate("/dashboard/listorder");
+       } catch (error) {
+        console.error("Error adding order:", error);
       }
     } else {
       setDeleteConfirmationModal(true);
     }
   };
 
-  const handleLocationAreaChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setOrder({ ...order, [e.target.name]: e.target.value });
-   };
+  };
 
   return (
     <>
@@ -60,11 +78,11 @@ function Main() {
         {alertMessage}
       </Alert>
       <div className="intro-y flex items-center mt-8">
-        <h2 className="text-lg font-medium mr-auto">Add Order </h2>
+        <h2 className="text-lg font-medium mr-auto">Add Order</h2>
       </div>
 
       <div className="intro-y box p-5 mt-5">
-        Hello! Here you can add a Order.
+        Hello! Here you can add an Order.
       </div>
 
       <div className="grid grid-cols-12 gap-6 mt-8">
@@ -79,7 +97,7 @@ function Main() {
                 placeholder="Description"
                 name="description"
                 value={order.description}
-                onChange={handleLocationAreaChange}
+                onChange={handleInputChange}
               />
             </div>
             <div className="mt-3">
@@ -91,14 +109,33 @@ function Main() {
                 placeholder="Type"
                 name="type"
                 value={order.type}
-                onChange={handleLocationAreaChange}
+                onChange={handleInputChange}
               />
+            </div>
+            <div className="sm:col-span-3">
+              <label htmlFor="idcustomer" className="block text-sm font-medium leading-6 text-gray-900">
+                Customer
+              </label>
+              <div className="mt-2">
+                <select
+                  value={idcustomer}
+                  onChange={(e) => setIdcustomer(e.target.value)}
+                  id="idcustomer"
+                  name="idcustomer"
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                >
+                  <option value="">Select Customer</option>
+                  {customers.map((customer) => (
+                    <option key={customer.id} value={customer.id}>{customer.name}</option>
+                  ))}
+                </select>
+              </div>
             </div>
           </div>
         </div>
 
         <div className="intro-y col-span-12 lg:col-span-6 flex justify-end items-end">
-          <Button onClick={ValidateInput} className="w-24">
+          <Button onClick={validateInput} className="w-24">
             Add
           </Button>
         </div>

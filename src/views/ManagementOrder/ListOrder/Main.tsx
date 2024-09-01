@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Modal, Form, Input, Button } from "antd";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import Table from "../../../base-components/Table/Table"; // Ensure this path is correct
@@ -9,84 +9,30 @@ import ApiUrls from "../../../API/apiUrls";
 import TableUpdateMenu from "../../../base-components/Table/TableUpdateMenu";
 import { useNavigate } from "react-router-dom";
 import Order from "../../../Entity/Order";
+import { Alert } from "@/base-components";
 
 
 
-
-//----static data 
-const orders: Order[] = [
-    {
-      id: 1,
-      articel: "Laptop",
-      quantity: 10,
-      description: "Order for high-end laptops",
-      status: "Pending",
-      goPinkinng: true,
-      locationArea: "A1",
-      locationBin: "B2",
-      locationPlace: "P3"
-    },
-    {
-      id: 2,
-      articel: "Smartphone",
-      quantity: 50,
-      description: "Order for new smartphones",
-      status: "Processing",
-      goPinkinng: false,
-      locationArea: "A2",
-      locationBin: "B1",
-      locationPlace: "P4"
-    },
-    {
-      id: 3,
-      articel: "Printer",
-      quantity: 5,
-      description: "Order for office printers",
-      status: "Completed",
-      goPinkinng: true,
-      locationArea: "A3",
-      locationBin: "B3",
-      locationPlace: "P1"
-    },
-    {
-      id: 4,
-      articel: "Monitor",
-      quantity: 20,
-      description: "Order for computer monitors",
-      status: "Pending",
-      goPinkinng: false,
-      locationArea: "A4",
-      locationBin: "B4",
-      locationPlace: "P2"
-    },
-    {
-      id: 5,
-      articel: "Keyboard",
-      quantity: 30,
-      description: "Order for mechanical keyboards",
-      status: "Processing",
-      goPinkinng: true,
-      locationArea: "A5",
-      locationBin: "B5",
-      locationPlace: "P5"
-    }
-  ];
+ 
 
 // Define table columns for the new entity
 const ordersColumns: TableColumn<any>[] = [
   { title: "ID", dataIndex: "id" },
   { title: "Description", dataIndex: "description" },
   { title: "Type", dataIndex: "type" },
+  { title: "Status", dataIndex: "status" },
+
 ];
 
 // Main component
 const Main = () => {
-
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
   const navigate = useNavigate();
 
   const handleNavigate = (path: string, orderId: any
   ) => {
- console.log(orderId)
+ 
     navigate('/dashboard/listorderpositions',{ state: { orderId } });
      
   };
@@ -96,16 +42,30 @@ const fetchOrder = async (): Promise<any[]> => {
   try {
      const response  = await ApiService.GetListOrder(ApiUrls.GetALLORDER);
      return response
-    return orders;
+     
   }catch(err){
     console.log("Error fetching data" + err);
     throw err;
   }
 };
-
+  
 // generate 
-const navigateToGenerate = (path : string, orderId : any) =>{
-    navigate("/dashboard/generate",{ state: { orderId } });
+const navigateToGenerate = async (path : string, orderId : any) =>{
+    
+   try {
+     await ApiService.GenratePicking(ApiUrls.GENRATEPICKING+orderId.id);
+    navigate('/dashboard/listpiking');
+ }catch(err:any){
+  setAlertMessage(err.response.data);
+  setShowAlert(true);
+  setTimeout(() => {
+      setShowAlert(false);
+  }, 3000); // 3-second delay
+
+    throw err;
+ }
+
+
 }
  
   return (
@@ -113,6 +73,13 @@ const navigateToGenerate = (path : string, orderId : any) =>{
       <div>
         <h1 className="text-2xl font-bold mb-4">List Orders</h1>
       </div>
+      <Alert
+                        show={showAlert}
+                        className="alert-danger"
+                        onHidden={() => setShowAlert(false)}
+                    >
+                        {alertMessage}
+                    </Alert>
       <Table<Order>
        columns={ordersColumns}
        fetchData={fetchOrder}

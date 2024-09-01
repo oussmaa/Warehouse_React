@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { Link ,useNavigate } from 'react-router-dom';
- 
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+
 import DarkModeSwitcher from "@/components/dark-mode-switcher/Main";
 import dom from "@left4code/tw-starter/dist/js/dom";
 import logoUrl from "@/assets/images/logo.svg";
 import illustrationUrl from "@/assets/images/illustration.svg";
-import axios from 'axios';
-import ApiUrls from "@/API/apiUrls"
- function Main() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+import axios from "axios";
+import ApiUrls from "@/API/apiUrls";
+function Main() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
   useEffect(() => {
     dom("body").removeClass("main").removeClass("error-page").addClass("login");
@@ -18,30 +18,31 @@ import ApiUrls from "@/API/apiUrls"
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post("http://127.0.0.1:6090/login/loginuser", {
-        email,
-        password
-      });
-      const themeid =  response.data.themeid ; 
-       localStorage.setItem('token', response.data.token);
-       localStorage.setItem('themid', themeid);
-    navigate('/dashboard');
+      const response = await axios.post(
+        "http://127.0.0.1:7070/login/loginuser",
+        {
+          email,
+          password,
+        }
+      );
+      const themeid = response.data.themeid;
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("themid", themeid);
+      navigate("/dashboard");
     } catch (error) {
       setError(error.response.data.message);
-      console.error('Login error:', error);
+      console.error("Login error:", error);
     }
   };
 
   return (
     <>
       <div>
-        <DarkModeSwitcher />
         <div className="container sm:px-10">
           <div className="block xl:grid grid-cols-2 gap-4">
             {/* BEGIN: Login Info */}
             <div className="hidden xl:flex flex-col min-h-screen">
               <a href="/" className="-intro-x flex items-center pt-5">
-     
                 <span className="text-white text-lg ml-3"> Warehouse </span>
               </a>
               <div className="my-auto">
@@ -51,11 +52,9 @@ import ApiUrls from "@/API/apiUrls"
                   src={illustrationUrl}
                 />
                 <div className="-intro-x text-white font-medium text-4xl leading-tight mt-10">
-                  Warehouse System Mangement<br />
-                  
+                  Warehouse Mangement System <br />
                 </div>
-                <div className="-intro-x mt-5 text-lg text-white text-opacity-70 dark:text-slate-400">
-                 </div>
+                <div className="-intro-x mt-5 text-lg text-white text-opacity-70 dark:text-slate-400"></div>
               </div>
             </div>
             {/* END: Login Info */}
@@ -74,7 +73,7 @@ import ApiUrls from "@/API/apiUrls"
                     type="text"
                     className="intro-x login__input form-control py-3 px-4 block"
                     placeholder="Email"
-                    value={email} 
+                    value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
                   <input
@@ -100,7 +99,6 @@ import ApiUrls from "@/API/apiUrls"
                       Remember me
                     </label>
                   </div>
-                  <a href="/">Forgot Password?</a>
                 </div>
                 <div className="intro-x mt-5 xl:mt-8 text-center xl:text-left">
                   <button

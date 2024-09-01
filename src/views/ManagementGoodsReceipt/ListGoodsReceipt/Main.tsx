@@ -13,7 +13,9 @@ import { useNavigate } from "react-router-dom";
 const goodsReceiptColumns: TableColumn<GoodsReceipt>[] = [
   { title: "ID", dataIndex: "id" },
   { title: "Description", dataIndex: "description" },
-   { title: "Order Stockid", dataIndex: "orderStockId" },
+   { title: "Order Stockid", dataIndex: "orderStockId" }, 
+   { title: "status", dataIndex: "status" },
+
 ];
 
 // Main component

@@ -1,4 +1,5 @@
 interface PikingPosition{
+    
     id: number,
     Picking : string,
     openquantity : number,
@@ -7,6 +8,7 @@ interface PikingPosition{
     locationArea : string,
     locationBin : string,
     locationPlace : string
+    quantity:any
 }
 
 export default PikingPosition;

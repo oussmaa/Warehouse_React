@@ -6,27 +6,23 @@ import Table from "../../../base-components/Table/Table";
 import ApiService from "../../../Service/ApiService";
 import ApiUrls from "../../../API/apiUrls";
 import Globalestock from "../../../Entity/Globalestock";
-
-// interface Globalestock {
-//     id: number; // Optional for new entries
-//     quantityUsed: number;
-//     article: string;
-//     openingQuantity: number;
-//   }
-// Define table columns for the new entity
-const globalestockColumns: TableColumn<Globalestock>[] = [
+ 
+ 
+ const globalestockColumns: TableColumn<Globalestock>[] = [
   { title: "ID", dataIndex: "id" },
-  { title: "Quantity Used", dataIndex: "quantityUsed" },
-  { title: "Article", dataIndex: "articleId"}, // Assuming 'article' has a 'name' property
-  { title: "Opening Quantity", dataIndex: "openingQuantity" },
+  { title: "Quantity Used", dataIndex: "openingQuantity" },
+  { title: "Article", dataIndex: "articleID"}, 
+  { title: "Location Area", dataIndex: "locationArea" },
+  { title: "Location Bin", dataIndex: "locationBin" },
+  { title: "Location Place", dataIndex: "locationPlace" },
+  { title: "Reserved Stock", dataIndex: "reservedStock" },
+
+  
+
 ];
-
-
 
 // Main component
 const Main = () => {
-
-
 
   // Fetch function to get globalestocks
 const fetchGlobalestocks = async (): Promise<Globalestock[]> => {
@@ -45,7 +41,8 @@ const fetchGlobalestocks = async (): Promise<Globalestock[]> => {
 // Function to delete a globalestock
 const deleteGlobalestock = async (id: number): Promise<void> => {
   try {
-    const response = await ApiService.DeletetGlobalStock(ApiUrls.GLOBALSTOCK, id);
+    console.log(id)
+    const response = await ApiService.DeletetGlobalStock(ApiUrls.DELETESTOCK+ id);
     console.log('globalestock deleted:', response);
   } catch (error) {
     console.error('Error deleting globalestock:', error);
@@ -55,7 +52,8 @@ const deleteGlobalestock = async (id: number): Promise<void> => {
 // Function to edit a globalestock
 const editGlobalestock = async (globalestock: Globalestock): Promise<void> => {
   try {
-    const response = await ApiService.EditGlobalStock(ApiUrls.GLOBALSTOCK, globalestock.id, globalestock);
+    console.log(globalestock)
+   // const response = await ApiService.EditGlobalStock(ApiUrls.GLOBALSTOCK+globalestock.id, globalestock);
   } catch (error) {
     console.error('Error update globalestock:', error);
   }

@@ -4,9 +4,8 @@ interface Piking{
     description : string,
     status : string,
     order : string,
-    locationArea : string,
-    locationBin : string,
-    locationPlace : string
+    goShipmment:Boolean
+ 
 }
 
 export default Piking;

@@ -15,6 +15,10 @@ import LocationArea from "../Entity/LocationArea";
 import LocationBin from "../Entity/LocationBin";
 import LocationPlace from "../Entity/LocationPlace";
 import OrderPosition from "../Entity/OrderPosition";
+import Piking from "../Entity/Piking";
+import PikingPosition from "../Entity/PikingPosition";
+import Customer from "../Entity/Customer";
+import shippment from "../Entity/Shippment";
 
 class ApiService {
   // Function to get the token from local storage
@@ -128,6 +132,21 @@ async AddOder(endpoint: string, data: any): Promise<any> {
     throw error;
   }
 }
+async bookPosition(endpoint: string, data: any): Promise<any> {
+  try {
+    const token = this.getToken();
+    const response = await axios.post<any>(endpoint, data, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error posting data:", error);
+    throw error;
+  }
+}
 
 async GetListOrder(endpoint: string): Promise<any[]> {
   try {
@@ -157,6 +176,50 @@ async GetListOrderPosition(endpoint: string): Promise<OrderPosition[]> {
     throw error;
   }
 }
+async GetListPickingPosition(endpoint: string): Promise<PikingPosition[]> {
+  try {
+    const token = this.getToken();
+    const response = await axios.get<PikingPosition[]>(endpoint, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error;
+  }
+}
+async GetListPicking(endpoint: string): Promise<Piking[]> {
+  try {
+    const token = this.getToken();
+    const response = await axios.get<Piking[]>(endpoint, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error;
+  }
+}
+
+async GenratePicking(endpoint: string): Promise<any> {
+  try {
+    const token = this.getToken();
+    const response = await axios.post<any>(endpoint, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error posting data:", error);
+    throw error;
+  }
+}
 async AddOrderPosition(endpoint: string, data: any): Promise<any> {
   try {
     const token = this.getToken();
@@ -172,12 +235,58 @@ async AddOrderPosition(endpoint: string, data: any): Promise<any> {
     throw error;
   }
 }
+async AddOrder(endpoint: string, data: any): Promise<any> {
+  try {
+    const token = this.getToken();
+    const response = await axios.post<any>(endpoint, data, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error posting data:", error);
+    throw error;
+  }
+}
+
 
 //-----------------------
 //--- END :   Order
 //-----------------------
 
+async AddShipmment(endpoint: string, data: any): Promise<any> {
+  try {
+    const token = this.getToken();
+    const response = await axios.post<any>(endpoint, data, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error posting data:", error);
+    throw error;
+  }
+}
 
+
+async GetListShippment(endpoint: string): Promise<shippment[]> {
+  try {
+    const token = this.getToken();
+    const response = await axios.get<shippment[]>(endpoint, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error;
+  }
+}
 //-------------------------------
 //--- BEGIN : menu label requests
 //-------------------------------
@@ -765,10 +874,10 @@ async GetListGlobalStock(endpoint: string): Promise<Globalestock[]> {
   }
 }
 
-async EditGlobalStock(endpoint: string, id:number, data: Globalestock): Promise<Globalestock> {
+async EditGlobalStock(endpoint: string, data: Globalestock): Promise<Globalestock> {
   try {
     const token = this.getToken();
-    const response = await axios.put<Globalestock>(`${endpoint}/${id}`, data, {
+    const response = await axios.put<Globalestock>(`${endpoint}`, data, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
@@ -781,10 +890,10 @@ async EditGlobalStock(endpoint: string, id:number, data: Globalestock): Promise<
   }
 }
 
-async DeletetGlobalStock(endpoint: string, id : number): Promise<Globalestock[]> {
+async DeletetGlobalStock(endpoint: string): Promise<Globalestock[]> {
 try {
   const token = this.getToken();
-  const response = await axios.delete<Globalestock[]>(`${endpoint}/${id}`, {
+  const response = await axios.delete<Globalestock[]>(`${endpoint}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -819,7 +928,36 @@ async AddSupplier(endpoint: string, data: Globalestock): Promise<Globalestock> {
     throw error;
   }
 }
+async AddCustomer(endpoint: string, data: Customer): Promise<Customer> {
+  try {
+    const token = this.getToken();
+    const response = await axios.post<Customer>(endpoint, data, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+     console.error("Error posting data:", error);
+    throw error;
+  }
+}
 
+async GetListCustomer(endpoint: string): Promise<Customer[]> {
+  try {
+    const token = this.getToken();
+    const response = await axios.get<Customer[]>(endpoint, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    throw error;
+  }
+}
 
 async GetListSupplier(endpoint: string): Promise<Supplier[]> {
   try {
